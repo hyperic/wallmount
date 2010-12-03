@@ -1,0 +1,68 @@
+.dijitContentPane {
+    padding: 0 !important;
+}
+
+div.fieldset {
+    background-color: #ffffb0;
+}
+fieldSet {
+    border: none;
+    padding: 0;
+}
+legend {
+    background-color: #E6E6E7;
+    background-image: url("images/commonHighlight.png");
+    color: black;
+    width: 100%;
+    padding: 5px 0;
+    border-bottom: 1px solid #B5BCC7;
+}
+label.propertytext {
+    text-align: right;
+    width: 80px;
+    float: left;
+    font-weight: bold;
+}
+input.textbox {
+    width: 300px;
+    float: left;
+}
+fieldset p {
+    clear: both;
+    padding: 5px;
+    margin-top: 0;
+}
+label span, .required {
+    color: red;
+    font-weight: bold;
+}
+      
+.moveable {
+    -moz-border-radius: 8pt 8pt 8pt 8pt;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #CCCCCC;
+    cursor: move;
+    float: left;
+}
+
+.hypericMoveablePane {
+    -moz-border-radius: 8pt 8pt 8pt 8pt;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #CCCCCC;
+    cursor: move;
+    float: left;
+}
+
+.container {
+    padding: 1em 3em; 
+    cursor: default;
+    radius: 8pt;
+    background: #fff;
+}
+
+html, body { height: 100%; width: 100%; padding: 0; border: 0; }
+#main { height: 100%; width: 100%; border: 0; }
+#header { margin: 0px; }
+#leftAccordion { width: 25%; }
+#bottomTabs { height: 40%; }
+#wallmountpane { width: 900px; height: 700px; border:3px solid;}

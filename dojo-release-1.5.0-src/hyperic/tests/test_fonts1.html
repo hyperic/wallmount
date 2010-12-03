@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Testing font sizing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+</style>
+<script type="text/javascript" src="../../dojo/dojo.js" djConfig="isDebug: true"></script>
+<script type="text/javascript">
+dojo.require("dojox.gfx");
+dojo.require("hyperic.util.FontUtil");
+
+
+
+makeShape = function(surface, w, h){
+    var rect1 = surface.createRect({x: 0, y: 0, width: w-1, height: h-1}).setStroke("black");
+};
+
+
+makeText = function(surface, text, font, fill, w, h){
+    var params = {x: w/2, y: h-(h*0.25), text: text, align: "middle"};
+    var t = surface.createText(params);
+    if(font)   t.setFont(font);
+    if(fill)   t.setFill(fill);
+    return t;
+};
+
+makeShapes = function(){
+
+    var testdata = [
+        ['s1', 100, 50, 'jee'],
+        ['s2', 200, 100, 'jee'],
+        ['s3', 200, 100, 'jeejee'],
+        ['s4', 100, 200, 'jeejee'],
+        ['s5', 200, 400, 'jeeje'],
+        ['s6', 30, 100, 'jeejeee'],
+        ['s7', 100, 130, 'je'],
+        ['s8', 100, 100, 'j'],
+        ['s9', 500, 500, 'juu'],
+        ['s10', 50, 30, '1'],
+        ['s11', 50, 20, '1'],
+        ['s12', 50, 15, '1']
+    ];
+
+    dojo.forEach(
+        testdata, function(item, idx, arr){
+            var s = dojox.gfx.createSurface(item[0], item[1], item[2]);
+            makeShape(s, item[1], item[2]);
+            var tmpsize = hyperic.util.FontUtil.findGoodSizeFontByRect(item[3],item[1],item[2]);
+            makeText(s,
+                     item[3],
+                     {family: "Helvetica", size: tmpsize+"px", weight: "bold"},
+                     "black",
+                     item[1],
+                     item[2]);
+            dojo.byId('s'+item[0]).innerHTML=item[3];
+        }
+        
+    );
+
+
+};
+
+dojo.addOnLoad(makeShapes);
+
+</script>
+</head>
+<body>
+    <h1>dojox.gfx Font test</h1></br>
+<div id="s1"></div><div id="ss1"></div></br>
+<div id="s2"></div><div id="ss2"></div></br>
+<div id="s3"></div><div id="ss3"></div></br>
+<div id="s4"></div><div id="ss4"></div></br>
+<div id="s5"></div><div id="ss5"></div></br>
+<div id="s6"></div><div id="ss6"></div></br>
+<div id="s7"></div><div id="ss7"></div></br>
+<div id="s8"></div><div id="ss8"></div></br>
+<div id="s9"></div><div id="ss9"></div></br>
+<div id="s10"></div><div id="ss10"></div></br>
+<div id="s11"></div><div id="ss11"></div></br>
+<div id="s12"></div><div id="ss12"></div></br>
+</body>
+</html>

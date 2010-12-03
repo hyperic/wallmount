@@ -1,0 +1,101 @@
+<html>
+<head>
+
+<title>Hyperic unit format Test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.unit.UnitsConvert");
+</script>
+
+<script type="text/javascript">
+dojo.addOnLoad(function(){
+
+    testdata = [
+        [123456789, 'none'],
+        [123.456789, 'none'],
+        [110, 'cents'], //$1.10
+        [50, 'cents'], //$0.50
+        [234.1, 'cents'], //$3.34
+        [123456789, 'B'],
+        [123456789, 'KB'],
+        [123456789, 'MB'],
+        [123456789, 'GB'],
+        [123456789, 'TB'],
+        [123456789, 'PB'],
+        [1000, 'Mb'],
+        [1000, 'MB'],
+        [3737373, 'epoch-millis'], // 01/01/70 01:02:17
+        [3737373, 'epoch-seconds'], // 13/02/70 06:09:33
+        [1287851090, 'epoch-seconds'], // 23/10/10 16:24:50
+        [1293213600, 'epoch-seconds'], // 24/12/10 18:00:00
+        [0, 'percentage'],
+        [0.01, 'percentage'],
+        [0.56, 'percentage'],
+        [0.567, 'percentage'],
+        [1.0, 'percentage'],
+        [2.1, 'percentage'],
+        [0.01, 'percent'],
+        [1.0, 'percent'],
+        [56.7, 'percent'],
+        [100.0, 'percent']
+    ];
+    
+    var out = "<table cellspacing=5>";
+    out += "<tr>";
+    out += "<th>Raw</th>";
+    out += "<th>Unit</th>";
+    out += "<th>Conversion</th>";
+    out += "</tr>";
+    
+    dojo.forEach(
+        testdata, function(item, idx, arr){
+            out += "<tr>";
+            out += "<td>";
+            out += item[0];
+            out += "</td>";
+            out += "<td>";
+            out += item[1];
+            out += "</td>";
+            out += "<td>";
+            out += hyperic.unit.UnitsConvert.convert(item[0], item[1]);
+            out += "</td>";
+            out += "</tr>";
+        }
+        
+    );
+    
+    out += "</table>";
+
+    var data = dojo.byId("data");
+    data.innerHTML = out;
+
+});
+</script>
+
+</head>
+<body class="claro">
+<div id="data"></div>
+</body>
+</html>

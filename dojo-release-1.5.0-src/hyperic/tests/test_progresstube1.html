@@ -1,0 +1,107 @@
+<html>
+<head>
+
+<title>Hyperic Progresstube Test 1</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript">
+    var update = function() {
+        var s = dijit.byId("tank");
+        s.width = dijit.byId("width").get('value');
+        s.height = dijit.byId("height").get('value');
+        s.value = dijit.byId("value").get('value');
+        s.max = dijit.byId("max").get('value');
+        s.min = dijit.byId("min").get('value');
+        
+        s.reset();
+    }
+</script>
+
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.ProgressTube");
+    dojo.require("dijit.form.NumberSpinner");
+</script>
+
+</head>
+<body class="claro">
+
+<label for="width">width</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="200"
+                constraints="{max:1200,min:10}"
+                name="width"
+                id="width">
+</br>
+<label for="width">height</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="100"
+                constraints="{max:200,min:10}"
+                name="height"
+                id="height">
+</br>
+<label for="value">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="50"
+                constraints="{max:99999999,min:-100}"
+                name="value"
+                id="value">
+
+</br>
+<label for="min">min</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="0"
+                constraints="{max:10000,min:-1}"
+                name="min"
+                id="min">
+
+</br>
+<label for="max">max</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="100"
+                constraints="{max:99999999,min:-1}"
+                name="max"
+                id="max">
+
+</br>
+
+
+<div id="tank" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.ProgressTube"
+     value="50" min="0" max="100"
+     title="Reminder" width="200" height="100" autoStart="true"></div>
+
+
+</body>
+</html>

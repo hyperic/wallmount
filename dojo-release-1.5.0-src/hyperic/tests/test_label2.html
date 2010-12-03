@@ -1,0 +1,110 @@
+<html>
+<head>
+
+<title>Ellipse label text widget test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.EllipseLabel");
+    dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.CheckBox");
+    dojo.require("dijit.form.Button");
+    dojo.require("dijit.ColorPalette");
+</script>
+
+<script type="text/javascript">
+
+    var c1;
+
+    var update = function() {
+        var s = dijit.byId("avail");
+        
+        var size = dijit.byId("size").get('value');
+//        s.setSize(size);
+        s.set("size", size);
+        
+        var value = dijit.byId("value").get('value');
+        s.value = value;
+                    
+        
+        s.reset();
+    };
+    
+    var start = function() {
+        var s = dijit.byId("avail");
+        s.eid = "1:10000";
+        
+        update();        
+    };
+
+
+
+    
+    dojo.addOnLoad(start);
+    
+</script>
+
+</head>
+<body class="claro">
+
+
+
+
+
+
+<label for="size">size</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="64"
+                constraints="{max:625,min:32}"
+                name="size"
+                id="size">
+</br>
+
+<label for="value">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="64"
+                constraints="{max:999999999,min:32}"
+                name="value"
+                id="value">
+</br>
+
+
+
+                
+
+<div>&nbsp;</div>
+
+<div id="avail" 
+     dojoType="hyperic.widget.EllipseLabel" 
+     value=1
+     width="64" 
+     height="64"
+     autoStart="true"></div>
+
+</body>
+</html>

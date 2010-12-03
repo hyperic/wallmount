@@ -1,0 +1,6 @@
+{ id: 'r-1-10303', name: 'bear.intranet.hyperic.net', children: [
+  { $ref: '3.1-10303', name: 'Platform Services', children: true},
+  { id: 'm10594', name:'Availability', units:'percentage' },
+  { id: 'm10522', name:'Free Memory', units:'B' }
+]
+}

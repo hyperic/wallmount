@@ -1,0 +1,4 @@
+[   
+  { $ref: 'r-1-10303', name: 'bear.intranet.hyperic.net', prototype: 'Win32', children: true},
+  { id: 'r-1-10304', name: 'demo2.hyperic.net', prototype: 'Linux'}
+]

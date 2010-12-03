@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<project name="wallmount" default="dist" basedir=".">
+
+    <property name="dist.dir" location="dist"/>
+    <property name="assemble.dir" location="assemble"/>
+	
+    <property name="dojo.source.dir" location="dojo-release-1.5.0-src" />
+    <property name="dojobuild.lib" location="${dojo.source.dir}/util/shrinksafe" />
+    <property name="dojobuild.dir" location="${dojo.source.dir}/util/buildscripts" />
+    <property name="dojobuild.js" location="${dojobuild.dir}/build.js" />
+    <property name="dojoprofile" value="wallmount" />
+
+    <path id="dojojars">
+    	<fileset dir="${dojobuild.lib}" includes="js.jar" />
+        <fileset dir="${dojobuild.lib}" includes="shrinksafe.jar" />
+	</path>
+
+    <target name="clean">
+    	<delete dir="${assemble.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="dist" depends="clean,assemble-wallmount,assemble-dojo">    
+	    <mkdir dir="${dist.dir}"/>
+		<zip file="${dist.dir}/hqu_wallmount-2.0.zip">
+			<fileset dir="${assemble.dir}">
+				<include name="wallmount/**"/>
+			</fileset>
+		</zip>
+	</target>
+	
+    <target name="build-dojo">
+    	<java fork="true" dir="${dojobuild.dir}"
+    		  classname="org.mozilla.javascript.tools.shell.Main">
+    		<classpath>
+    			<path refid="dojojars"/>
+    		</classpath>
+    		<arg line="${dojobuild.js}"/>
+            <arg line="profile=${dojoprofile}"/>
+            <arg line="action=release"/>
+            <arg line="copyTests=true"/>
+            <arg line="mini=false"/>
+    	</java>
+    </target>
+
+    <target name="assemble-wallmount">
+        <copy todir="${assemble.dir}">
+            <fileset dir=".">
+                <include name="wallmount/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="assemble-dojo" depends="build-dojo">
+    	<copy todir="${assemble.dir}/wallmount/public/js">
+    		<fileset dir="${dojo.source.dir}/release/dojo">
+                <include name="**"/>
+            </fileset>
+    	</copy>
+    </target>
+
+</project>

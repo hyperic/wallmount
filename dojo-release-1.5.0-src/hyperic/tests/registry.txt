@@ -1,0 +1,57 @@
+
+should define all possible components what can be used on wallmount.
+- for now, only for designer, player 
+
+define component structure
+- what components a resource prototype can use
+- default component
+
+What this registry should know about components?
+- object path
+- params???
+
+Attach
+- resource (based on proto)
+- group (compatible - filter by res proto, mixed)
+- application (only one type, no special filters)
+- resourcetype (proto)
+- metric
+    - availability
+    - rate
+    - based on units ???
+
+    <div dojoType="hyperic.wallmount.Registry"
+         id="registry1"
+         jsId="registry2"
+         plugins="[
+             {plugin: 'hyperic.widget.EllipseLabel', attach: [{type: 'all'}]}
+         ]"></div>
+
+[
+  {
+    plugin: 'hyperic.widget.Spinner',
+    attach: [{
+      type: 'metric',
+      exclude:['availability']
+      }]
+  },
+  {
+    plugin: 'hyperic.widget.AvailIcon',
+    attach: [{
+      type: 'resource',
+      include:['Win32','Apache 2.0']
+      },
+      {
+      type: 'resourcetype',
+      exclude:['Win32']
+      }]
+  },
+  {
+    plugin: 'hyperic.widget.EllipseLabel',
+    attach: [{
+      type: 'metric'
+      }]
+  }
+]
+
+   

@@ -1,0 +1,63 @@
+<html>
+<head>
+
+<title>Hyperic Tank Test 1</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/lighting.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/gradient.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/object.js"></script>
+
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.Tank");
+</script>
+
+</head>
+<body>
+
+
+<div id="tank" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+
+<div id="tank2" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     value="50" min="30" max="200"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+<div id="tank3" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     value="50" min="30" max="200" fillcolor="yellow" emptycolor="blue"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+<div id="tank4" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     value="0" min="0" max="200" fillcolor="yellow" emptycolor="blue"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+<div id="tank5" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     value="200" min="0" max="200" fillcolor="yellow" emptycolor="blue"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+</body>
+</html>

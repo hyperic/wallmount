@@ -1,0 +1,24 @@
+dojox\gfx3d\object.js
+
+        var X = dojox.gfx3d.matrix.multiplyPoint(dojox.gfx3d.matrix.invert(A), B[0], B[1], B[2]);
+        var theta = Math.atan2(X.x, 1 - X.y) / 2;
++       theta= 0;
+
+--------------------------------
+
+
+dojox\gfx\_base.js
+
+    var uniqueId = 0;
+    b._getUniqueId = function(){
+        // summary: returns a unique string for use with any DOM element
+        var id;
+        do{
+-           id = dojo._scopeName + "Unique" + (++uniqueId);
++           id = dojo._scopeName + "Unique0" + (++uniqueId);
+        }while(dojo.byId(id));
+        return id;
+    };
+
+
+

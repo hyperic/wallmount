@@ -1,0 +1,206 @@
+<html>
+
+  <head>
+    <title>Wallmount Designer Test 1</title>
+    <style type="text/css">
+      @import "../../dijit/themes/claro/claro.css";
+      @import "../../dojo/resources/dojo.css";
+      @import "../../dojox/layout/resources/ExpandoPane.css";
+      @import "../../dojox/layout/resources/ResizeHandle.css"; 
+      @import "../../dojox/layout/resources/FloatingPane.css";
+      @import "../data/resources/hypericicons.css";
+      @import "designer.css";
+    </style>
+  
+    <script type="text/javascript"
+            src="../../dojo/dojo.js"
+            djConfig="parseOnLoad: true, isDebug: true",
+            gfxRenderer: 'canvas'></script>
+          
+    <script type="text/javascript">
+      dojo.require("hyperic.wallmount.base");
+      dojo.require("hyperic.wallmount.Designer");
+      dojo.require("hyperic.wallmount.Registry");
+//      function init(){
+//      }    
+//      dojo.addOnLoad(init);      
+    </script>
+    
+  </head>
+
+  <body class="claro">
+  
+    <div dojoType="hyperic.wallmount.Registry"
+         id="registry"
+         jsId="registry"
+         plugins="[
+             {obj: 'hyperic.widget.Spinner', attach: '*'}
+         ]"></div>
+    
+    <div id="main"
+         dojoType="dijit.layout.BorderContainer"
+         liveSplitters="true"
+         design="sidebar">
+      <div id="header"
+           dojoType="dijit.MenuBar"
+           region="top">
+        <div dojoType="dijit.PopupMenuBarItem"
+             id="file">
+          <span>File</span>
+          <div dojoType="dijit.Menu" id="fileMenu">
+            <div dojoType="dijit.MenuItem"
+                 id="fileMenuOpen" 
+                 onClick="logStrayGlobals();">Open...</div>
+            <div dojoType="dijit.MenuItem"
+                 id="fileMenuSave"
+                 onClick="logWidgets();">Save</div>
+            <div dojoType="dijit.MenuItem"
+                 id="fileMenuSaveAs"
+                 onClick="logWidgets();">Save As...</div>
+          </div>
+        </div>
+        <div dojoType="dijit.PopupMenuBarItem" id="window">
+          <span>Window</span>
+          <div dojoType="dijit.Menu" id="windowMenu">
+            <div dojoType="dijit.MenuItem"
+                 id="newWindow"
+                 onClick="hyperic.wallmount.WindowUtil.newEmptyWindow(registry);">New Window</div>
+            <div dojoType="dijit.MenuItem"
+                 id="newWindow2"
+                 onClick="hyperic.wallmount.WindowUtil.NewSingleItemFloater();">New Window2</div>
+            <div dojoType="dijit.MenuItem"
+                 id="newWindow3"
+                 onClick="hyperic.wallmount.WindowUtil.NewSingleItemFloater2();">New Window3</div>
+          </div>
+        </div>
+        <div dojoType="dijit.PopupMenuBarItem" id="settings">
+          <span>Settings</span>
+          <div dojoType="dijit.Menu" id="settingsMenu">
+            <div dojoType="dijit.MenuItem"
+                 id="settingsDashboardSize">Dashboard Size</div>
+            <div dojoType="dijit.MenuItem"
+                 id="settingsTest">Test this configuration</div>
+          </div>
+        </div>
+      </div>
+            
+      <div dojoType="dojox.layout.ExpandoPane" 
+           splitter="true" 
+           title="Toolbar" 
+           region="right" 
+           id="rightPane" 
+           maxWidth="375" 
+           style="width:375px" 
+           easeIn="dojo.fx.easing.backOut" 
+           easeOut="dojo.fx.easing.backInOut">
+                
+        <div dojoType="dijit.layout.SplitContainer"
+             orientation="vertical"
+             sizerWidth="5"
+             activeSizing="true"
+             style="border: 1px solid #bfbfbf; float: left; ">
+             
+          <div dojoType="dijit.layout.AccordionContainer"
+               id="rightAccordion"
+               style="height:300px;"
+               attachParent="true">
+               
+            <div dojoType="dojox.data.JsonRestStore" 
+                 jsId="metricStore" 
+                 target="./data/" 
+                 labelAttribute="name"></div>
+               
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Metrics">
+                   
+              <div dojoType="hyperic.data.ForestStoreModel" 
+                   jsId="metricModel"
+                   store="metricStore"
+                   deferItemLoadingUntilExpand="true"
+                   childrenAttrs="children"></div>
+              <div dojoType="hyperic.data.ResourceTree"
+                   id="metricTree"
+                   dndController="hyperic.data.TreeDndSource"
+                   label="Platforms"
+                   persist="false"
+                   deferItemLoadingUntilExpand="true" 
+                   model="metricModel" 
+                   labelAttr="name"></div>
+
+              
+            </div>
+
+<!--
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Groups">
+                 
+              <div dojoType="hyperic.data.GroupsStoreModel" 
+                   jsId="groupModel"
+                   store="metricStore"
+                   deferItemLoadingUntilExpand="true"
+                   childrenAttrs="children"></div>
+              <div dojoType="hyperic.data.ResourceTree"
+                   id="groupsTree"
+                   dndController="hyperic.data.TreeDndSource"
+                   label="Groups" 
+                   persist="false"
+                   deferItemLoadingUntilExpand="true" 
+                   model="groupModel" 
+                   labelAttr="name"></div>
+            </div>
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Applications">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Resource Types">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+            
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Search">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+-->
+            
+          </div>
+
+          <div dojoType="dijit.layout.AccordionContainer"
+               id="rightAccordion2" 
+               style="height:200px;"
+               attachParent="true">
+
+<!--
+-->               
+            <div dojoType="hyperic.layout.PropertiesPane" 
+                 style="height:300px;"
+                 attachParent="true"
+                 widgetsInTemplate="true"
+                 title="Properties"></div>
+          </div>
+        
+        </div>
+        
+      </div>
+      
+      <div dojoType="dijit.layout.ContentPane"
+           region="center"
+           splitter="false">
+         <div id="wallmountpane"></div>
+      </div>
+      
+    </div>
+  
+
+  </body>
+
+</html>

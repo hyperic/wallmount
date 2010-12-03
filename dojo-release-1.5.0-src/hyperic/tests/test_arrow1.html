@@ -1,0 +1,188 @@
+<html>
+<head>
+
+<title>Hyperic arrow Test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.HorizontalArrowPipe");
+    dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.CheckBox");
+    dojo.require("dijit.ColorPalette");
+</script>
+
+<script type="text/javascript">
+    var val;
+    var updatearrows = function() {
+        var s = dijit.byId("tube");
+        
+        s.width = dijit.byId("width").get('value');
+        s.height = dijit.byId("height").get('value');
+        s.numOfArrows = dijit.byId("numOfArrows").get('value');
+        s.arrowGap = dijit.byId("arrowGap").get('value');
+        s.arrowHeadLength = dijit.byId("arrowHeadLength").get('value');
+        s.rotationTime = dijit.byId("rotationTime").get('value');
+        s.value = dijit.byId("value").get('value');
+        s.reverse = dijit.byId("reverse").get('checked');
+        
+        val = dijit.byId("value").get('value');
+        s.value = val;
+        
+        if(val != s.value) {
+            s.resetValue();        
+        } else {
+            s.reset();
+        }
+    }
+    
+    var animate = function() {
+        var s = dijit.byId("tube");
+        var cb = dijit.byId("animate");
+        var status = cb.get('checked');
+        s.animate(status);    
+    }
+</script>
+
+</head>
+<body class="claro">
+
+
+
+
+
+<label for="width">component length</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="700"
+                constraints="{max:1200,min:10}"
+                name="width"
+                id="width">
+</br>
+<label for="width">component width</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="40"
+                constraints="{max:200,min:10}"
+                name="height"
+                id="height">
+</br>
+<label for="numOfArrows">numOfArrows</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="3"
+                constraints="{max:10,min:1}"
+                name="numOfArrows"
+                id="numOfArrows">
+</br>
+<label for="arrowGap">arrowGap</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="25"
+                constraints="{max:100,min:1}"
+                name="arrowGap"
+                id="arrowGap">
+
+</br>
+<label for="arrowHeadLength">arrowHeadLength</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="15"
+                constraints="{max:100,min:1}"
+                name="arrowHeadLength"
+                id="arrowHeadLength">
+
+</br>
+<label for="rotationTime">rotationTime</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="2500"
+                smallDelta="300"
+                constraints="{max:10000,min:100}"
+                name="rotationTime"
+                id="rotationTime">
+
+</br>
+<label for="value">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="20"
+                constraints="{max:10000,min:-1}"
+                name="value"
+                id="value">
+
+</br>
+<label for="animate">animate</label>
+<input name="animate" 
+       id="animate"
+       type="checkbox"
+       value="false"
+       dojoType="dijit.form.CheckBox"
+       onClick="animate">
+
+</br>
+<label for="reverse">reverse</label>
+<input name="reverse" 
+       id="reverse"
+       type="checkbox"
+       value="false"
+       dojoType="dijit.form.CheckBox"
+       onClick="updatearrows">
+</br>
+<label for="gradient">gradient</label>
+<input name="gradient" 
+       id="gradient"
+       type="checkbox"
+       checked="checked"
+       dojoType="dijit.form.CheckBox"
+       onClick="updatearrows">
+</br>
+<div dojoType="dijit.form.DropDownButton" iconClass="noteIcon">
+  <span>Color</span>
+  <div dojoType="dijit.ColorPalette"
+       id="legend3c"
+       style="display: none"
+       palette="3x4"
+       onChange="legend3"></div>
+</div>
+                
+
+<div>&nbsp;</div>
+
+<div id="tube" 
+     dojoType="hyperic.widget.HorizontalArrowPipe" 
+     value="20" 
+     width="700" 
+     height="40"
+     ranges="[{low: 30, high: 50, color: 'yellow'},{low: 49, high: 80, color: 'red'}]" 
+     autoStart="true"></div>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+
+
+
+    drawCircle: function(){
+        var radius = ((Math.min(this.width,this.height) / 2) - this.size);
+        var j = this.width/2;
+        var k = this.height/2;
+        var _X = radius * Math.cos(this.degree*Math.PI/180) + j;
+        var _Y = radius * Math.sin(this.degree*Math.PI/180) + k;
+
+        if(this._circle) {
+           this._circle.setShape({cx: _X,cy: _Y, r: this.size});
+        } else {
+        var t = this.surface.createCircle({cx: _X, cy: _Y, r: this.size});
+        t.setFill("yellow");
+        this._circle = t;
+        return t;           
+        }
+    },
+
+    
+        _createArrow: function(rotation){
+        var _x = 0;
+        var _y = 0;
+        var rLength = this._arrowTotalLength();
+        var _w = this.rLength;
+        var _h = this.height;
+        var headLength = rLength - this.arrowGap;
+        var headRootLength = headLength - this.arrowHeadLength;     
+        
+        var path = this.surface.createPath();
+        path.moveTo(_x, _y);
+        path.hLineTo(headRootLength);
+        path.lineTo(headLength, (_h - _y) / 2);
+        path.lineTo(headRootLength, _h);        
+        path.hLineTo(_x);
+        path.closePath();
+        path.setFill("blue");
+        return path;
+    },
+    
+    
+    
+    
+            
+//        var sret = this._getLegendPath(x,y,inRad,val);
+//        var spath = sret.path;
+//        var strans = {dx:trans.dx, dy:trans.dy+bW*2};
+//
+//        var pattern = {
+//            type: "pattern",
+//            x: 0, y: 0, width: sret.w, height: 2*inRad+1,
+//            src: this.baseImgUrl + "/shadow.png"
+//        };
+//
+//        spath.setTransform(strans);
+//        spath.setFill(pattern);
+//        spath.setFill('black');
+//        spath.setStroke({color: 'black', width: bW, join: "round" });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    drawLegend: function(data){
+        // summary:
+        //     Draws a single legend
+                
+        var insets = this.legendsInsets();
+        var val = data.value+''; // make sure it's a string
+                
+        // for now, inRad is e.g. top from insets       
+        var inRad = insets.top;
+
+        // just estimate border width from total size       
+        var bW = Math.max(Math.round(inRad/6), 1); 
+
+        // starting point, we don't start from top-left corner
+        var x = inRad;
+        var y = 0;
+        
+        var ret = this._getLegendPath(x,y,inRad,val);
+        var pathstr = ret.path;
+        var w = ret.w;        
+
+        var trans = {};
+        if(data.position == 1){ // top-left
+            // shift by half a border
+            trans.dx = bW/2;
+            // shift by half a border + one pixel
+            trans.dy = 1+bW/2;
+        } else if(data.position == 3){ // top-right
+            trans.dx = bW/2 + this.width - insets.left - bW - w;
+            trans.dy = 1+bW/2;            
+        } else {
+            return;
+        }
+
+        //shadow
+        var shadowpat = {
+            type: "pattern",
+            x: 0, y: 0, width: ret.w*2, height: 2*inRad+1,
+            src: this.baseImgUrl + "/shadow.png"
+        };
+        var shadowpath = this.surface.createPath({path: pathstr});
+        shadowpath.setTransform({dx:trans.dx,dy:trans.dy+bW*3});
+        shadowpath.setFill(shadowpat);
+
+        //legend
+        var path = this.surface.createPath({path: pathstr});
+        path.setTransform(trans);
+        path.setFill(data.color);
+        path.setStroke({color: "whitesmoke", width: bW, join: "round" });
+        
+        var fS = hyperic.util.FontUtil.findGoodSizeFontByRect('X', inRad*2, inRad*2);
+        var text = this.drawText(data.value, w, inRad+fS*0.35 , "middle", "white", {family:"Helvetica",weight:"bold",size:fS+'px'});
+        text.setTransform(trans);
+        
+    },
+    
+    _getLegendPath: function(x,y,inRad,val) {
+        // summary:
+        //     Constructs legend svg path as string
+        var path = 'M' + x + ',' + y + ' ';
+        var w = 0;
+        if(val.length < 2) {
+            w = inRad;
+            y = 2*inRad;
+            path += 'A'+inRad+','+inRad+','+'0,0,0,'+x+','+y+' ';
+            y = 0;
+            path += 'A'+inRad+','+inRad+','+'0,0,0,'+x+','+y+' ';
+            path += 'z';
+        } else {
+            w = (inRad + (val.length-1) * inRad) / 2;
+            y = 2*inRad;
+            path += 'A'+inRad+','+inRad+','+'0,0,0,'+x+','+y+' ';
+            x = (val.length-1) * inRad;
+            path += 'H'+x+' ';
+            y = 0;
+            path += 'A'+inRad+','+inRad+','+'0,0,0,'+x+','+y+' ';
+            x = inRad;
+            path += 'H'+x+' ';
+            path += 'z';
+        }
+        return {path:path,w:w};             
+    },
+    
+    
+    
+    ----
+    
+    <div id="dojoUnique5" class="dojoDndItem">
+    
+    <lineargradient id="dojoUnique5"
+    <path fill="url(#dojoUnique5)"
+    
+    dojox/gfx/_base.js
+    
+        var uniqueId = 0;
+    b._getUniqueId = function(){
+        // summary: returns a unique string for use with any DOM element
+        var id;
+        do{
+            id = dojo._scopeName + "Unique" + (++uniqueId);
+        }while(dojo.byId(id));
+        return id;
+    };
+    
+    to
+    
+    var uniqueId = 0;
+    b._getUniqueId = function(){
+        // summary: returns a unique string for use with any DOM element
+        var id;
+        do{
+            id = dojo._scopeName + "Unique0" + (++uniqueId);
+        }while(dojo.byId(id));
+        return id;
+    };
+    
+    
+    ---

@@ -1,0 +1,23 @@
+.hypericIconPlatform {
+  background-image: url("icons/platform.png");
+  height: 16px;
+  width: 16px;
+}
+
+.hypericIconMetric {
+  background-image: url("icons/metric.png");
+  height: 16px;
+  width: 16px;
+}
+
+.hypericIconServer {
+  background-image: url("icons/server.png");
+  height: 16px;
+  width: 16px;
+}
+
+.hypericIconService {
+  background-image: url("icons/service.png");
+  height: 16px;
+  width: 16px;
+}

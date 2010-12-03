@@ -1,0 +1,74 @@
+<html>
+<head>
+
+<title>Hyperic Chart Test 1</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/lighting.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/gradient.js"></script>
+<script type="text/javascript" src="../../dojox/gfx3d/object.js"></script>
+
+<script type="text/javascript">
+    var update = function() {
+        var s = dijit.byId("chart");
+        s.width = dijit.byId("width").getValue();
+        s.height = dijit.byId("height").getValue();
+        
+        s.reset();
+    }
+</script>
+
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.chart.Chart");
+    dojo.require("dijit.form.NumberSpinner");
+</script>
+
+</head>
+<body class="claro">
+
+<label for="width">width</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="400"
+                constraints="{max:1200,min:10}"
+                name="width"
+                id="width">
+</br>
+<label for="width">height</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="200"
+                constraints="{max:700,min:10}"
+                name="height"
+                id="height">
+</br>
+
+
+<div id="chart"
+     dojoType="hyperic.widget.chart.Chart"
+     width="400" height="200"></div>
+
+</body>
+</html>

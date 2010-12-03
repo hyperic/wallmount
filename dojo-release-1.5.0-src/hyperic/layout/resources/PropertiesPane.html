@@ -1,0 +1,17 @@
+<div class="hypericPropertiesPane" id="${id}">
+    <div dojoAttachPoint="containerNode" >
+        <div id="${id}_sizeProperties" class="fieldSet" style="display: none;" dojoAttachPoint="sizeProperties">
+            <fieldset>
+                <legend>Component size</legend>
+                <p>
+                    <label class="propertytext">Width:</label>
+                    <input style="float:left;" id="${id}_width" name="width" dojoAttachPoint="width" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Height:</label>
+                    <input style="float:left;" id="${id}_height" name="height" dojoAttachPoint="height" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+            </fieldset>                
+        </div>
+    </div>
+</div>

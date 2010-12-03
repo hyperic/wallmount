@@ -1,0 +1,230 @@
+<html>
+<head>
+
+<title>Availability text widget test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.AvailText");
+    dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.CheckBox");
+    dojo.require("dijit.form.Button");
+    dojo.require("dijit.ColorPalette");
+</script>
+
+<script type="text/javascript">
+
+    var c1;
+
+    var update = function() {
+        var s = dijit.byId("avail");
+        
+        var size = dijit.byId("size").get('value');
+        s.set('size', size);
+        
+            
+        if(dijit.byId("ok").get('checked'))
+            s.value = 1;
+        if(dijit.byId("warn").get('checked'))
+            s.value = 0.5;
+        if(dijit.byId("error").get('checked'))
+            s.value = 0;
+        if(dijit.byId("unknown").get('checked'))
+            s.value = 2;
+        if(dijit.byId("pause").get('checked'))
+            s.value = -0.01;
+        if(dijit.byId("off").get('checked'))
+            s.value = -0.02;
+
+        s.legends = dijit.byId("legends").get('checked');
+            
+        
+        s.reset();
+    };
+    
+    var start = function() {
+        var s = dijit.byId("avail");
+        s.eid = "1:10000";
+        
+        update();        
+    };
+
+    var l1,l3;
+
+    var legend1 = function() {
+        var s = dijit.byId("avail");
+        if(dijit.byId("legend1e").get('checked')) {
+            var data = {position:1};
+            data.value = dijit.byId("legend1v").get('value');
+            data.color = dijit.byId("legend1c").get('value') || "red";
+            if(l1) {
+                l1.position = data.position;
+                l1.value = data.value;
+                l1.color = data.color;
+            } else {
+                l1 = s.addLegend(data);
+            }
+        } else {
+            s.removeLegend(l1);
+            l1 = null;
+        }
+        update();
+    };
+
+    var legend3 = function() {
+        var s = dijit.byId("avail");
+        if(dijit.byId("legend3e").get('checked')) {
+            var data = {position:3};
+            data.value = dijit.byId("legend3v").get('value');
+            data.color = dijit.byId("legend3c").get('value') || "red";
+            if(l3) {
+                l3.position = data.position;
+                l3.value = data.value;
+                l3.color = data.color;
+            } else {
+                l3 = s.addLegend(data);
+            }
+        } else {
+            s.removeLegend(l3);
+            l3 = null;
+        }
+        update();
+    };
+
+    
+    dojo.addOnLoad(start);
+    
+</script>
+
+</head>
+<body class="claro">
+
+
+
+
+<p><span>status:</span>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="ok" onClick="update" checked="checked">
+<label for="ok">ok</label>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="warn" onClick="update">
+<label for="warn">warn</label>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="error" onClick="update">
+<label for="error">error</label>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="unknown" onClick="update">
+<label for="unknown">unknown</label>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="pause" onClick="update">
+<label for="pause">pause</label>
+<input dojoType="dijit.form.RadioButton" 
+       type="radio" name="status" id="off" onClick="update">
+<label for="off">off</label>
+</p>
+
+<p>
+<label for="legends">support legends</label>
+<input name="legends" id="legends" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="update">
+</p>
+
+<label for="width">size</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="64"
+                constraints="{max:625,min:32}"
+                name="size"
+                id="size">
+</br>
+
+<!-- legend 1-->
+<p>
+<div dojoType="dijit.form.DropDownButton" iconClass="noteIcon">
+  <span>Color</span>
+  <div dojoType="dijit.ColorPalette"
+       id="legend1c"
+       style="display: none"
+       palette="3x4"
+       onChange="legend1"></div>
+</div>
+<label for="legend1e">legend1</label>
+<input name="legend1e"
+       id="legend1e"
+       type="checkbox"
+       value="false"
+       dojoType="dijit.form.CheckBox"
+       onClick="legend1">
+<label for="legend1v">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+       onChange="legend1"
+       intermediateChanges="true"
+       value="1"
+       constraints="{max:200000,min:0}"
+       name="legend1v"
+       id="legend1v">
+</p>
+<!-- legend 1-->
+
+<!-- legend 3-->
+<p>
+<div dojoType="dijit.form.DropDownButton" iconClass="noteIcon">
+  <span>Color</span>
+  <div dojoType="dijit.ColorPalette"
+       id="legend3c"
+       style="display: none"
+       palette="3x4"
+       onChange="legend3"></div>
+</div>
+<label for="legend3e">legend3</label>
+<input name="legend3e"
+       id="legend3e"
+       type="checkbox"
+       value="false"
+       dojoType="dijit.form.CheckBox"
+       onClick="legend3">
+<label for="legend3v">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+       onChange="legend3"
+       intermediateChanges="true"
+       value="1"
+       constraints="{max:200000,min:0}"
+       name="legend3v"
+       id="legend3v">
+</p>
+<!-- legend 3-->
+
+                
+
+<div>&nbsp;</div>
+
+<div id="avail" 
+     dojoType="hyperic.widget.AvailText" 
+     value=1
+     width="64" 
+     height="64"
+     autoStart="true"></div>
+
+</body>
+</html>

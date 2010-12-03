@@ -1,0 +1,160 @@
+<html>
+<head>
+
+<title>Spinner widget test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+	djConfig = {
+		parseOnLoad: true,
+		isDebug: true
+	};
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.Spinner");
+    dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.CheckBox");
+</script>
+
+<script type="text/javascript">
+    var val;
+    var updatearrows = function() {
+        var s = dijit.byId("spinner");
+        var size = dijit.byId("size").get('value');
+        s.width = size;
+        s.height = size;
+        s.numOfArrows = dijit.byId("numOfArrows").get('value');
+        s.arrowWidth = dijit.byId("arrowWidth").get('value');
+        s.arrowGap = dijit.byId("arrowGap").get('value');
+        s.arrowHeadLength = dijit.byId("arrowHeadLength").get('value');
+        s.rotationTime = dijit.byId("rotationTime").get('value');
+        
+        val = dijit.byId("value").get('value');
+        s.value = val;
+        
+        if(val != s.value) {
+            s.resetValue();        
+        } else {
+            s.reset();
+        }
+    }
+    var animate = function() {
+        var s = dijit.byId("spinner");
+        var cb = dijit.byId("animate");
+        var status = cb.get('checked');
+        s.animate(status);    
+    }
+</script>
+
+</head>
+<body class="claro">
+
+
+
+
+
+<label for="size">size</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="200"
+                constraints="{max:500,min:10}"
+                name="size"
+                id="size">
+</br>
+<label for="numOfArrows">numOfArrows</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="3"
+                constraints="{max:10,min:1}"
+                name="numOfArrows"
+                id="numOfArrows">
+</br>
+<label for="arrowWidth">arrowWidth</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="25"
+                constraints="{max:50,min:5}"
+                name="arrowWidth"
+                id="arrowWidth">
+
+</br>
+<label for="arrowGap">arrowGap</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="20"
+                constraints="{max:100,min:1}"
+                name="arrowGap"
+                id="arrowGap">
+
+</br>
+<label for="arrowHeadLength">arrowHeadLength</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="20"
+                constraints="{max:100,min:1}"
+                name="arrowHeadLength"
+                id="arrowHeadLength">
+
+</br>
+<label for="rotationTime">rotationTime</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="1000"
+                smallDelta="300"
+                constraints="{max:10000,min:100}"
+                name="rotationTime"
+                id="rotationTime">
+
+</br>
+<label for="value">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updatearrows"
+                intermediateChanges="true"
+                value="20"
+                constraints="{max:10000,min:-1}"
+                name="value"
+                id="value">
+
+</br>
+<label for="animate">animate</label>
+<input name="animate" id="animate" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="animate">
+
+
+                
+
+<div>&nbsp;</div>
+
+<div id="spinner" 
+     dojoType="hyperic.widget.Spinner" 
+     title="Spinner" 
+     value="20" 
+     width="200" 
+     height="200"
+     numOfArrows="3"
+     arrowWidth="25"
+     ranges="[{low: 30, high: 50, color: 'yellow'},{low: 49, high: 80, color: 'red'}]" 
+     autoStart="true"></div>
+
+</body>
+</html>

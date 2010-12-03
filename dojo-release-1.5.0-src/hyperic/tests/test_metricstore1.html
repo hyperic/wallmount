@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Testing metric store</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+</style>
+<script type="text/javascript" src="../../dojo/dojo.js" djConfig="isDebug: true"></script>
+<script type="text/javascript">
+dojo.require("hyperic.data.MetricStore");
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Textarea");
+
+var store = new hyperic.data.MetricStore(
+    {url: "/dojo-release-1.5.0-src/hyperic/tests/metrics/",
+     idToBaseUrl: true}
+);
+
+var i = 0;
+
+callback1 = function(arg){
+    console.log('callback1: ' + arg);
+    var con = dojo.byId("sub1");
+    var coni = con.innerHTML;
+    con.innerHTML = arg + "\n" + coni;
+};
+
+callback2 = function(arg){
+    console.log('callback2: ' + arg);
+    var con = dojo.byId("sub2");
+    var coni = con.innerHTML;
+    con.innerHTML = arg + "\n" + coni;
+};
+
+
+init = function(){
+    
+};
+
+var hdl1;
+
+sub1 = function(arg){
+    console.log('sub1');
+    if(arg) {
+        console.log('subscribe pub1');
+        hdl1 = store.subscribe("10000", this, "callback1");
+    } else {
+        console.log('unsubscribe pub1');
+        store.unsubscribe(hdl1);
+    }
+};
+
+var hdl2;
+
+sub2 = function(arg){
+    if(arg) {
+        console.log('subscribe pub2');
+        hdl2 = store.subscribe("10001", this, "callback2");
+    } else {
+        console.log('unsubscribe pub2');
+        store.unsubscribe(hdl2);
+    }
+};
+
+pub1 = function(){
+    console.log('pub1');
+    store.publish("foo", [i]);
+    var con = dojo.byId("console");
+    var coni = con.innerHTML;
+    con.innerHTML = i + "\n" + coni;
+    i++;
+};
+
+updateStore = function(){
+    store.updateStore();
+};
+
+Sync = function(arg){
+    store.sync(arg);
+};
+
+
+
+dojo.addOnLoad(init);
+
+</script>
+</head>
+<body>
+
+<button id="button" onclick="updateStore();">updateStore</button>
+<button id="button" onclick="Sync(true);">start sync</button>
+<button id="button" onclick="Sync(false);">stop sync</button></br></br>
+<label for="console">console</label></br>
+<textarea id="console" rows=5></textarea ></br>
+<button id="button" onclick="pub1();">publish test</button></br>
+
+<label for="sub1">sub1</label></br>
+<textarea id="sub1" rows=5></textarea ></br>
+<button id="button" onclick="sub1(false);">unsubscribe sub1</button>
+<button id="button" onclick="sub1(true);">subscribe sub1</button></br>
+
+<label for="sub2">sub2</label></br>
+<textarea id="sub2" rows=5></textarea ></br>
+<button id="button" onclick="sub2(false);">unsubscribe sub2</button>
+<button id="button" onclick="sub2(true);">subscribe sub2</button></br>
+
+</body>
+</html>

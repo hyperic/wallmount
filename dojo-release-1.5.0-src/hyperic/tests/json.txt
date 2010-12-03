@@ -1,0 +1,59 @@
+platforms - list all platforms. just refs to individual platforms
+
+r-X:XXXXX - (r, 1=platform, 2=server, 3=service, 4=application, 5=group)
+m-X:XXXXX - metrics under resource
+
+----
+globally list platforms
+list underlying resources (platform service, server, service)
+list underlying metrics
+
+list prototypes
+
+need to list specific resources under a resource
+X:XXXXX.X:XXXXX
+
+
+3.1-10303 services under 1-10303 (refers to platform)
+
+m10594 refers to metric 
+
+3-10109.1-10303 <cpu prototype id>.<platform id>
+-----------
+
+Platforms
+  + bear.intranet.hyperic.net                               r-1-10303
+    + Platform Services                                     3.1-10303
+      + CPU                                                 3-10109.1-10303
+        + bear Linux CPU 1 (2490Mhz Intel Xeon)             r-3-26978
+          Availability                                      m11311
+          Cpu Idle                                          m11313
+        + bear Linux CPU 1 (2491Mhz Intel Xeon)             r-3-26968
+          Availability
+          Cpu Idle
+      + Java - Multiprocess                                 r-3-11434
+        Availability                                        m10889
+        Cpu Usage                                           m10896
+    + Servers                                               2.1-10303
+      + bear Apache 2.0.52                                  2-10504
+        Availability                                        m11702
+        Bytes Served                                        m11694
+      Availability                                          m10594
+      Free Memory                                           m10522
+      
+      
+Groups
+  + Agents                                                  5-10204
+    + bear HQ Agent 4.0.2-EE                                2-10417
+  
+Applications
+  + 3 tier                                                  4-11718
+
+Resource Types
+  + Platforms
+    + Solaris                                               p-1-10104
+  + Platform Services
+    + CPU                                                   p-3-10109
+  + Servers
+    + Net 1.1                                               p-2-10126
+      + Net 1.1 Application                                 p-3-10153

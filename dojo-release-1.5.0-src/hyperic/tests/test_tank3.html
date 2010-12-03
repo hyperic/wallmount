@@ -1,0 +1,174 @@
+<html>
+<head>
+
+<title>Hyperic Tank Test 3</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript">
+    var update = function() {
+        var s = dijit.byId("tank");
+        s.width = dijit.byId("width").getValue();
+        s.height = dijit.byId("height").getValue();
+        s.value = dijit.byId("value").getValue();
+        s.max = dijit.byId("max").getValue();
+        s.min = dijit.byId("min").getValue();
+        
+        var l1x = dijit.byId("l1x").get('value');
+        var l1y = dijit.byId("l1y").get('value');
+        var l1z = dijit.byId("l1z").get('value');
+        var l2x = dijit.byId("l2x").get('value');
+        var l2y = dijit.byId("l2y").get('value');
+        var l2z = dijit.byId("l2z").get('value');
+        
+         var lights = {
+            lights: [
+                {direction: {x: l1x, y: l1y, z: l1z}, color: "white"},
+                {direction: {x: l2x, y: l2y, z: l2z}, color: "#a4a4a4"}
+            ],
+            ambient: {color: "white", intensity: 2},
+            specular: "white"
+        };
+        
+        s.lights = lights;
+        
+        
+        s.reset();
+    }
+</script>
+
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.Tank");
+    dojo.require("dijit.form.NumberSpinner");
+</script>
+
+</head>
+<body class="claro">
+
+<label for="width">width</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="100"
+                constraints="{max:1200,min:10}"
+                name="width"
+                id="width">
+</br>
+<label for="width">height</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="200"
+                constraints="{max:1200,min:10}"
+                name="height"
+                id="height">
+</br>
+<label for="value">value</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="50"
+                constraints="{max:10000,min:-100}"
+                name="value"
+                id="value">
+
+</br>
+<label for="min">min</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="0"
+                constraints="{max:10000,min:-1}"
+                name="min"
+                id="min">
+
+</br>
+<label for="max">max</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="100"
+                constraints="{max:10000,min:-1}"
+                name="max"
+                id="max">
+
+</br>
+
+<label for="light1">light1</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="-5"
+                constraints="{max:30,min:-30}"
+                name="l1x"
+                id="l1x">
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="0"
+                constraints="{max:30,min:-30}"
+                name="l1y"
+                id="l1y">
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="-20"
+                constraints="{max:30,min:-30}"
+                name="l1z"
+                id="l1z">
+
+</br>
+<label for="light2">light2</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="30"
+                constraints="{max:30,min:-30}"
+                name="l2x"
+                id="l2x">
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="-10"
+                constraints="{max:30,min:-30}"
+                name="l2y"
+                id="l2y">
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="-2"
+                constraints="{max:30,min:-30}"
+                name="l2z"
+                id="l2z">
+</br>
+
+
+<div id="tank" style="float: left; padding: 10px;"
+     dojoType="hyperic.widget.Tank"
+     value="50" min="0" max="100"
+     title="Reminder" width="100" height="200" autoStart="true"></div>
+
+
+</body>
+</html>

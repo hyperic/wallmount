@@ -1,0 +1,56 @@
+<html>
+
+  <head>
+    <title>Wallmount Player Test 2 - using layout2 with animation</title>
+    <style type="text/css">
+      @import "../../dijit/themes/claro/claro.css";
+      @import "../../dojo/resources/dojo.css";
+      @import "../../dojox/layout/resources/ExpandoPane.css";
+      @import "../../dojox/layout/resources/ResizeHandle.css"; 
+      @import "../../dojox/layout/resources/FloatingPane.css";
+      @import "../data/resources/hypericicons.css";
+      @import "player.css";
+    </style>
+  
+    <script type="text/javascript"
+            src="../../dojo/dojo.js"
+            djConfig="parseOnLoad: true, isDebug: true"></script>
+          
+    <script type="text/javascript">
+      dojo.require("hyperic.wallmount.base");
+      dojo.require("hyperic.wallmount.Player");
+//      dojo.require("hyperic.data.MetricStore");
+      dojo.require("hyperic.tests.MetricStore");
+      
+      function init(){
+        hyperic.wallmount.base.metricStore = new hyperic.tests.MetricStore(
+            {url: "/dojo-release-1.5.0-src/hyperic/tests/mstore/",
+             idToBaseUrl: true}
+        );
+        
+        hyperic.wallmount.base.metricStore.sync(true);
+        
+        var url = "layouts/layout2";
+        hyperic.wallmount.Player.loadLayout(url, true);
+//        hyperic.wallmount.Player.loadLayout(url, true);
+        console.log("send anim event");
+        dojo.publish("/hyperic/anim/start", [this]);
+      }
+
+      
+      
+      dojo.addOnLoad(init);
+      
+
+    </script>
+        
+  </head>
+
+  
+  <body class="claro">
+  
+    <div id="wallmountpane"></div>
+  
+  </body>
+
+</html>

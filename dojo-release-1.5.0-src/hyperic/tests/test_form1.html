@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>dojox.form.Manager (test #1)</title>
+    <style type="text/css">
+        @import "../../dojo/resources/dojo.css";
+        @import "../../dijit/themes/dijit.css";
+        @import "../../dijit/themes/tundra/tundra.css";
+        @import "../../dijit/tests/css/dijitTests.css";
+
+        fieldset        { border: 1px solid; margin: 1em; padding: 1em; }
+        legend          { font-weight: bolder; font-size: larger; }
+
+        #result         { background-color: white; }
+        #result th      { font-weight: bolder; }
+        #result .hilite { background-color: #fd8; }
+
+        .makeYellow     { background-color: #ffa; }
+    </style>
+    <script type="text/javascript" src="../../dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/Mixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/FormMixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/ValueMixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/EnableMixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/DisplayMixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/manager/ClassMixin.js"></script>
+    <script type="text/javascript" src="../../dojox/form/Manager.js"></script>
+    
+    <script type="text/javascript" src="../../dijit/Menu.js"></script>
+    
+    <script type="text/javascript">
+        dojo.require("dojox.form.Manager");
+
+        dojo.require("dijit.dijit");            // optimize: load dijit layer
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.form.CheckBox");    // includes dijit.form.RadioButton
+        dojo.require("dijit.form.TextBox");
+        dojo.require("dijit.form.ComboBox");
+        dojo.require("dijit.form.SimpleTextarea");
+        dojo.require("dijit.form.Select");
+        dojo.require("dijit.form.VerticalSlider");
+        dojo.require("dijit.form.HorizontalSlider");
+
+
+        dojo.require("dojo.parser");
+
+        dojo.addOnLoad(function(){
+        
+        var myform = dojo.byId("myform");
+        var fm = new dojox.form.Manager({}, myform);
+        var node = dojo.create("div", null, myform);
+        
+        var theSlider = new dijit.form.HorizontalSlider({
+                        value:1400,
+                        name:"programaticSlider",
+                        slideDuration:0,
+                        style:"height:165px",
+                        minimum:1000,
+                        maximum:3000,
+                        discreteValues:11,
+                        intermediateChanges:"true",
+                        showButtons:"true"
+                    },node);
+        
+        
+        
+        });
+    </script>
+</head>
+
+<body class="tundra">
+
+    <div id="myform">
+    </div>
+
+</body>
+</html>
