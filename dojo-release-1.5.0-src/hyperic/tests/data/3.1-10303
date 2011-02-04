@@ -1,4 +1,0 @@
-{ id: '3.1-10303', name: 'Platform Services', children: [
-  { $ref: '3-10109.1-10303', name: 'CPU', children: true}
-]
-}

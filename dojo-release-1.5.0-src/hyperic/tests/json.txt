@@ -20,6 +20,26 @@ m10594 refers to metric
 
 3-10109.1-10303 <cpu prototype id>.<platform id>
 -----------
+/platform                                               # all platforms
+/platform/10000                                         # specific platform
+/platform/10000/service                                 # services under platform (group with types)
+/platform/10000/service/10109                           # specific service
+/platform/10000/service/proto                           # list of available service prototypes
+/platform/10000/service/proto/12345                     # list of services for specific proto
+/platform/10000/server
+/server/10000
+/service/10000
+/protos
+/proto/platforms
+/proto/platform/10000
+/proto/servers
+/proto/services
+
+/platform/10000/metrics
+/metric/10594
+
+/plat
+-----------
 
 Platforms
   + bear.intranet.hyperic.net                               r-1-10303

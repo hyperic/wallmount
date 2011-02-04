@@ -1,0 +1,4 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dservice/proto', name: 'Platform Services', children: [
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dservice/dproto/10109', name: 'CPU', children: true}
+]
+}

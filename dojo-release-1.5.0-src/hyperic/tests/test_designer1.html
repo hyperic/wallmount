@@ -107,15 +107,17 @@
                
             <div dojoType="dojox.data.JsonRestStore" 
                  jsId="metricStore" 
-                 target="./data/" 
+                 target="/dojo-release-1.5.0-src/hyperic/tests/data/platform"
+                 allowNoTrailingSlash="true" 
                  labelAttribute="name"></div>
                
             <div dojoType="dijit.layout.ContentPane"
                  title="Metrics">
                    
-              <div dojoType="hyperic.data.ForestStoreModel" 
+              <div dojoType="dijit.tree.ForestStoreModel" 
                    jsId="metricModel"
                    store="metricStore"
+                   query="{foo:'jee'}"
                    deferItemLoadingUntilExpand="true"
                    childrenAttrs="children"></div>
               <div dojoType="hyperic.data.ResourceTree"

@@ -1,0 +1,4 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/server', name: 'Servers', children: [
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dserver/dproto/10115', name: 'Apache 2.2', children: true}
+]
+}

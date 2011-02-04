@@ -1,5 +1,0 @@
-{ id: 'r-3-26968', name: 'bear Linux CPU 1 (2490Mhz Intel Xeon)', children: [
-  { id: 'm11311', name: 'Availability', units:'percentage'},
-  { id: 'm11313', name: 'Cpu Idle', units:'percentage'}
-]
-}

@@ -1,0 +1,5 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dserver/36978', name: 'bear apache 2.0.52', children: [
+  { id: 'm11321', name: 'Availability', units:'percentage'},
+  { id: 'm11323', name: 'Cpu Idle', units:'percentage'}
+]
+}

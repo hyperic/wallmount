@@ -1,5 +1,0 @@
-{ id: '3-10109.1-10303', name: 'CPU', children: [
-  { $ref: 'r-3-26978', name: 'bear Linux CPU 1 (2490Mhz Intel Xeon)', children: true},
-  { id: '3-26968', name: 'bear Linux CPU 1 (2491Mhz Intel Xeon)'}
-]
-}
