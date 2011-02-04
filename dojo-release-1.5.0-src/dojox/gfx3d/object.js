@@ -325,7 +325,7 @@ dojo.declare("dojox.gfx3d.Orbit", dojox.gfx3d.Object, {
 		// X is 2b, c, f
 		var X = dojox.gfx3d.matrix.multiplyPoint(dojox.gfx3d.matrix.invert(A),B[0], B[1], B[2]);
 		var theta = Math.atan2(X.x, 1 - X.y) / 2;
-		theta= 0;
+//		theta= 0;
 
 		// rotate the marks back to the canonical form
 		var probes = dojo.map(marks, function(item){
@@ -756,6 +756,7 @@ dojo.declare("dojox.gfx3d.Cylinder", dojox.gfx3d.Object, {
 		// X is 2b, c, f
 		var X = dojox.gfx3d.matrix.multiplyPoint(dojox.gfx3d.matrix.invert(A), B[0], B[1], B[2]);
 		var theta = Math.atan2(X.x, 1 - X.y) / 2;
+		theta= 0;
 
 		// rotate the marks back to the canonical form
 		var probes = dojo.map(marks, function(item){
