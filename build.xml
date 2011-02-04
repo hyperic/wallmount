@@ -29,7 +29,16 @@
 			</fileset>
 		</zip>
 	</target>
-	
+
+    <target name="dist-hqu" depends="clean,assemble-wallmount">    
+        <mkdir dir="${dist.dir}"/>
+        <zip file="${dist.dir}/hqu_wallmount-2.0.zip">
+            <fileset dir="${assemble.dir}">
+                <include name="wallmount/**"/>
+            </fileset>
+        </zip>
+    </target>
+
     <target name="build-dojo">
     	<java fork="true" dir="${dojobuild.dir}"
     		  classname="org.mozilla.javascript.tools.shell.Main">
