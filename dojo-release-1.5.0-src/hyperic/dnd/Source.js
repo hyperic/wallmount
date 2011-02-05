@@ -52,6 +52,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         
         var node = dojo.create("div");
         node.id = dojo.dnd.getUniqueId();
+        
+        if(item === "DropMe") {
+        	node.innerHTML = "Drop </br>Something"
+        	return {node: node, data: item, type: ["text"]};
+        }
+        
         var w;
         if(item.type){
             if(item.type === "label")

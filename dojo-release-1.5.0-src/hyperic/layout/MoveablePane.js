@@ -18,10 +18,24 @@ dojo.declare("hyperic.layout.MoveablePane",
     },
     
     close: function(){
-    	
+    	console.log("close on MoveablePane");
+        this.hide(dojo.hitch(this,function(){
+            this.destroyRecursive();
+        })); 
     },
     
     hide: function(/* Function? */ callback){
-    	
+        // summary: Close, but do not destroy this FloatingPane
+        dojo.fadeOut({
+            node:this.domNode,
+            duration:400,
+            onEnd: dojo.hitch(this,function() { 
+                this.domNode.style.display = "none";
+                this.domNode.style.visibility = "hidden"; 
+                if(callback){
+                    callback();
+                }
+            })
+        }).play();
     }
 });

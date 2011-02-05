@@ -1,4 +1,9 @@
 <div class="hypericMoveablePane" id="${id}">
+
+    <div tabindex="0" class="hypericMoveablePaneTitle">
+        <span dojoAttachEvent="onclick: close" class="hypericMoveableCloseIcon"></span>
+    </div>
+
     <div dojoAttachPoint="canvas" class="hypericMoveablePaneCanvas">
         <div dojoAttachPoint="containerNode" class="${contentClass}">
         </div>

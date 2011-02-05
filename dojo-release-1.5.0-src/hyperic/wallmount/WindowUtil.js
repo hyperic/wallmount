@@ -16,7 +16,7 @@ hyperic.wallmount.WindowUtil.NewSingleItemFloater = function() {
     new dojo.dnd.Moveable(node);
 };
 
-hyperic.wallmount.WindowUtil.NewSingleItemFloater2 = function() {
+hyperic.wallmount.WindowUtil.NewSingleItemFloater2 = function(/*Object*/registry) {
     // summary:
     //     This function create a new special floater which is
     //     meant to contain only one item.
@@ -24,9 +24,16 @@ hyperic.wallmount.WindowUtil.NewSingleItemFloater2 = function() {
     var c = dojo.create("div", null, node);
     
     var c1 = new hyperic.dnd.SingleSource(c, {accept: ['treeNode','text']});
+    c1.setRegistry(registry);
     dojo.addClass(c,"container");
+    
+    c1.insertNodes(false, ["DropMe"]);
+
+    var style = "position: absolute; " + 
+        "top: 100px;" +
+        "left: 100px;";   
         
-    var tmp = new hyperic.layout.MoveablePane({},node);
+    var tmp = new hyperic.layout.MoveablePane({style:style},node);
     return c1;
 };
 

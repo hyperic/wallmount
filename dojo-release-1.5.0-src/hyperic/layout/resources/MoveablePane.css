@@ -1,0 +1,19 @@
+.hypericMoveablePaneTitle {
+    background: #cccccc;
+    background:#fafafa repeat-x bottom left;
+//    border:1px solid #bfbfbf;
+//    padding:4px 4px 2px 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.hypericMoveableCloseIcon {
+    background:url('../../../dijit/themes/tundra/images/tabClose.png') no-repeat center center; 
+    width:16px;
+    height:16px; 
+    overflow:hidden;
+    float:right;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
