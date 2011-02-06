@@ -6,11 +6,13 @@ dojo.require("dijit.Menu");
 dojo.require("dijit.MenuItem");
 dojo.require("dojox.gfx3d");
 dojo.require("hyperic.data.SizeProperty");
+dojo.require("hyperic.data.TitleProperty");
 
 dojo.declare("hyperic.widget.base._WallMountItem",
     [ dijit._Widget,
       dijit._Templated,
-      hyperic.data.SizeProperty ],{
+      hyperic.data.SizeProperty,
+      hyperic.data.TitleProperty ],{
     // summary:
     //      xxx
     //
@@ -81,26 +83,36 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     },
     
     setTitle: function(t) {
-    	this.wallMountItemTop.innerHTML = t;
-    	dojo.style(this.wallMountItemTop, {
-    		display: "block",
-    		textAlign: "center"
-    	});
-//        this.wallMountItemLeft.innerHTML = t;
-//        dojo.style(this.wallMountItemLeft, {
-//            display: "block",
-//            textAlign: "center"
-//        });
-//        this.wallMountItemRight.innerHTML = t;
-//        dojo.style(this.wallMountItemRight, {
-//            display: "block",
-//            textAlign: "center"
-//        });
-//        this.wallMountItemBottom.innerHTML = t;
-//        dojo.style(this.wallMountItemBottom, {
-//            display: "block",
-//            textAlign: "center"
-//        });
+    	this.titleText.value = t;
+
+        dojo.style(this.wallMountItemTop, {display: "none"});
+        this.wallMountItemTop.innerHTML = "";
+        dojo.style(this.wallMountItemBottom, {display: "none"});
+        this.wallMountItemBottom.innerHTML = "";
+        dojo.style(this.wallMountItemLeft, {display: "none"});
+        this.wallMountItemLeft.innerHTML = "";
+        dojo.style(this.wallMountItemRight, {display: "none"});
+        this.wallMountItemRight.innerHTML = "";
+        
+        var div;
+        if(this.titlePosition.value === "top") {        	
+            div = this.wallMountItemTop;
+        } else if(this.titlePosition.value === "bottom") {
+            div = this.wallMountItemBottom;
+        } else if(this.titlePosition.value === "right") {
+            div = this.wallMountItemRight;
+        } else if(this.titlePosition.value === "left") {        	
+            div = this.wallMountItemLeft;
+        }
+
+        if(t && t.length > 0) {
+            div.innerHTML = this.titleText.value;
+            dojo.style(div, {
+                display: "block",
+                textAlign: "center"
+            });        	
+        }
+                
     },
     
     _onClick: function(event){

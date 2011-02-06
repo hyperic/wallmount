@@ -2,16 +2,30 @@ dojo.provide("hyperic.data.ArrowProperty");
 
 dojo.declare("hyperic.data.ArrowProperty",null,{
 
-    numOfItems: 4,
+    // arrowCount: Object
+    //
+    // value: how many arrows component is using
+    // min: min constraint for value
+    // max: max constraint for value
 
-    minNumOfItems: 1,
+    // arrowWidth: Object
+    //
+    // value: arrow width
+    // min: min constraint for value
+    // max: max constraint for value
 
-    maxNumOfItems: 6,
+    constructor: function(/*Object*/args){
+        this.arrowCount = {value:3, min: 2, max: 6};
+        this.arrowWidth = {value:25, min: 15, max: 30};
+    },
     
-    itemWidth: 10,
+    getArrowCount: function(){
+    	return this.arrowCount.value;
+    },
+    
 
-    minItemWidth: 5,
-
-    maxItemWidth: 40
-
+    getArrowWidth: function(){
+        return this.arrowWidth.value;
+    }
+    
 });

@@ -4,13 +4,15 @@ dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
+dojo.require("hyperic.data.ArrowProperty");
 
 // TODO: linear vs. logarithmic speed
 // TODO: counterclockwise
 
 dojo.declare("hyperic.widget.Spinner",
     [ hyperic.widget.base._WallMountItem,
-      hyperic.widget.base._Animatable ],{
+      hyperic.widget.base._Animatable,
+      hyperic.data.ArrowProperty ],{
     // summary:
     //      Spinner widget to show visual representation of the metric value.
     //
@@ -21,7 +23,7 @@ dojo.declare("hyperic.widget.Spinner",
     // animation:
     //      
     
-    arrowWidth: 30,
+//    arrowWidth: 30,
     
     // speed: Number
     // from scale 0-100, how fast we're spinning
@@ -47,7 +49,7 @@ dojo.declare("hyperic.widget.Spinner",
     
     // numOfArrows: Number
     // how many rotating arrows we have
-    numOfArrows: 5,
+    //numOfArrows: 5,
     
     // arrowGap: Number
     // gap between arrows
@@ -104,11 +106,11 @@ dojo.declare("hyperic.widget.Spinner",
         //      matrix without re-creating the whole dom tree.
     	
         var rotation = 0;
-        var arrowAreaAngle = 360 / this.numOfArrows;
+        var arrowAreaAngle = 360 / this.getArrowCount();
         this._arrows = [];
         var points = this._createArrowPoints();
         
-        for(var i = 0;i < this.numOfArrows; i++) {
+        for(var i = 0;i < this.getArrowCount(); i++) {
         	
             // If path is created without any initial points, webkit is
             // throwing error "Error problem parsing d=".
@@ -147,19 +149,19 @@ dojo.declare("hyperic.widget.Spinner",
         // determined by arrowGap variable. If arrowGap is 0,
         // arrows are attached to each others. (head is touching
         // other arrows tail)
-        var arrowAreaAngle = 360 / this.numOfArrows;
+        var arrowAreaAngle = 360 / this.getArrowCount();
         
         // radius(outer circle) is usually component half of the component width
         var _r = this.width / 2;
         var _h = this.height / 2;
         
         // possible circle lengths (inner, middle, outer) reservations
-        var _radI = _r - this.arrowWidth;
-        var _radM = _r - (this.arrowWidth / 2);
+        var _radI = _r - this.getArrowWidth();
+        var _radM = _r - (this.getArrowWidth() / 2);
         var _radO = _r;
-        var _totArrowLengthI = 2*Math.PI*_radI/this.numOfArrows;
-        var _totArrowLengthM = 2*Math.PI*_radM/this.numOfArrows;
-        var _totArrowLengthO = 2*Math.PI*_radO/this.numOfArrows;
+        var _totArrowLengthI = 2*Math.PI*_radI/this.getArrowCount();
+        var _totArrowLengthM = 2*Math.PI*_radM/this.getArrowCount();
+        var _totArrowLengthO = 2*Math.PI*_radO/this.getArrowCount();
         
         var headAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.arrowGap);
         var headRootAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.arrowGap - this.arrowHeadLength);
@@ -178,7 +180,7 @@ dojo.declare("hyperic.widget.Spinner",
         // 6. outer arc
         
         var points = [
-            {x:this.width-this.arrowWidth, y:_h},
+            {x:this.width-this.getArrowWidth(), y:_h},
             {x:this.width},
             {
             	rx: _r,
@@ -203,7 +205,7 @@ dojo.declare("hyperic.widget.Spinner",
                 x_axis_rotation: 0,
                 large_arc_flag: false,
                 sweep_flag: true,
-                x: this.width-this.arrowWidth,
+                x: this.width-this.getArrowWidth(),
                 y: _h
             }
         ];
@@ -221,7 +223,7 @@ dojo.declare("hyperic.widget.Spinner",
         //      somebody needs to re-calculate the degree which is usually
         //      done from the play function.
     	var rotation = this._degree;
-    	var arrowAreaAngle = 360 / this.numOfArrows;
+    	var arrowAreaAngle = 360 / this.getArrowCount();
     	for(var i = 0; i < this._arrows.length; i++) {
     		this._arrows[i].setTransform([dojox.gfx.matrix.rotategAt(-rotation, this.width/2, this.height/2)]);
     		rotation += arrowAreaAngle; 		
@@ -272,7 +274,7 @@ dojo.declare("hyperic.widget.Spinner",
     	// summary:
     	//     draws formatted metric value between spinning arrows
     	
-    	var _radI = this.width / 2 - this.arrowWidth;
+    	var _radI = this.width / 2 - this.getArrowWidth();
     	
     	var fV = hyperic.unit.UnitsConvert.convert(this.value, "none");
     	

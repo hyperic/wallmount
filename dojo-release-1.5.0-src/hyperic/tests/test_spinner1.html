@@ -38,7 +38,8 @@
         var size = dijit.byId("size").get('value');
         s.width = size;
         s.height = size;
-        s.numOfArrows = dijit.byId("numOfArrows").get('value');
+//        s.numOfArrows = dijit.byId("numOfArrows").get('value');
+        s.arrowCount.value = dijit.byId("numOfArrows").get('value');
         s.arrowWidth = dijit.byId("arrowWidth").get('value');
         s.arrowGap = dijit.byId("arrowGap").get('value');
         s.arrowHeadLength = dijit.byId("arrowHeadLength").get('value');
@@ -147,12 +148,9 @@
 
 <div id="spinner" 
      dojoType="hyperic.widget.Spinner" 
-     title="Spinner" 
      value="20" 
      width="200" 
      height="200"
-     numOfArrows="3"
-     arrowWidth="25"
      ranges="[{low: 30, high: 50, color: 'yellow'},{low: 49, high: 80, color: 'red'}]" 
      autoStart="true"></div>
 

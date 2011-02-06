@@ -63,7 +63,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.type === "label")
                 w = new hyperic.widget.label.Label({width:item.width, height:item.height});
             else if(item.type === "spinner")
-                w = new hyperic.widget.Spinner({width:item.size, height:item.size, color: item.color, numOfArrows:item.numOfArrows, arrowWidth:item.arrowWidth, arrowHeadLength:10});
+//                w = new hyperic.widget.Spinner({width:item.size, height:item.size, color: item.color, numOfArrows:item.numOfArrows, arrowWidth:item.arrowWidth, arrowHeadLength:10});
+                w = new hyperic.widget.Spinner({width:item.size, height:item.size, color: item.color, arrowCount:{value:item.numOfArrows},arrowWidth:{value: item.arrowWidth}, arrowHeadLength:10});
             else if(item.type === "harrowpipe")
                 w = new hyperic.widget.HorizontalArrowPipe({width:item.width, height:item.height, arrowColor: item.arrowColor, numOfArrows:item.numOfArrows, reverse:item.reverse});
             else if(item.type === "varrowpipe")

@@ -5,9 +5,13 @@ dojo.require("dijit._Templated");
 
 dojo.require("dojox.form.Manager");
 dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.Select");
 dojo.require("dijit.form.NumberSpinner");
 
 dojo.require("hyperic.data.SizeProperty");
+dojo.require("hyperic.data.ArrowProperty");
+dojo.require("hyperic.data.TitleProperty");
+
 dojo.require("hyperic.widget.label.Label");
 dojo.require("dijit.form.TextBox");
 
@@ -74,14 +78,28 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
         
         // first hide all, we'll show needed components later
+        this.hide(["arrowProperties"]);
         this.hide(["sizeProperties"]);
+        this.hide(["titleProperties"]);
         
         if(arg.isInstanceOf) {
+            if(arg.isInstanceOf(hyperic.data.TitleProperty)) {
+                this.titleProperty();
+            }
+            
         	if(arg.isInstanceOf(hyperic.data.SizeProperty)) {
         		this.sizeProperty();
         	} else {
                 this.hide(["sizeProperties"]);
         	}
+
+            if(arg.isInstanceOf(hyperic.data.ArrowProperty)) {
+                this.arrowProperty();
+            } else {
+                this.hide(["arrowProperties"]);
+            }
+
+        	
         }
     },
     
@@ -95,6 +113,16 @@ dojo.declare("hyperic.layout.PropertiesPane",
         console.log("foo:" + h + " / " + w + " / " + name + " / " + evt);
     	this._selected.height = h;
         this._selected.width = w;
+        
+        if(this._selected.isInstanceOf(hyperic.data.ArrowProperty)) {
+        	this._selected.arrowCount.value = this.elementValue("arrowcount");
+            this._selected.arrowWidth.value = this.elementValue("arrowwidth");
+        }
+        if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
+            this._selected.titlePosition.value = this.elementValue("titleposition");
+            this._selected.setTitle(this.elementValue("titletext"))
+        }
+        
         this._selected.reset();
     },
     
@@ -110,7 +138,33 @@ dojo.declare("hyperic.layout.PropertiesPane",
         h.constraints.min = this._selected.minheight;
         h.constraints.max = this._selected.maxheight;
         h.set('value', this._selected.height);
-    }   
+    },
+    
+    arrowProperty: function(){
+        this.show(["arrowProperties"]);
+
+        var arrowCount = dijit.byId(this.arrowcount);
+        arrowCount.constraints.min = this._selected.arrowCount.min;
+        arrowCount.constraints.max = this._selected.arrowCount.max;
+        arrowCount.set('value', this._selected.arrowCount.value);    	
+        
+        var arrowWidth = dijit.byId(this.arrowwidth);
+        arrowWidth.constraints.min = this._selected.arrowWidth.min;
+        arrowWidth.constraints.max = this._selected.arrowWidth.max;
+        arrowWidth.set('value', this._selected.arrowWidth.value);       
+    },
+    
+    titleProperty: function(){
+        this.show(["titleProperties"]);
+
+        var title = dijit.byId(this.titletext);
+        title.set('value', this._selected.titleText.value);
+        
+        var titleposition = dijit.byId(this.titleposition);
+        titleposition.set('value', this._selected.titlePosition.value);
+        
+    }
+    
     
 
 });

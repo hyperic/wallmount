@@ -1,8 +1,28 @@
 <div class="hypericPropertiesPane" id="${id}">
     <div dojoAttachPoint="containerNode" >
+    
+        <div id="${id}_titleProperties" class="fieldSet" style="display: none;" dojoAttachPoint="titleProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Title</div>
+                <p>
+                    <label class="propertytext">Text:</label>
+                    <input style="float:left;" id="${id}_title" name="titletext" dojoAttachPoint="titletext" class="textbox" dojoType="dijit.form.TextBox" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Position:</label>
+                    <select style="float:left;" id="${id}_titleposition" name="titleposition" dojoAttachPoint="titleposition" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
+                        <option value="top">Top</option>
+                        <option value="bottom">Bottom</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                </p>
+            </fieldset>                
+        </div>
+    
         <div id="${id}_sizeProperties" class="fieldSet" style="display: none;" dojoAttachPoint="sizeProperties">
             <fieldset>
-                <legend>Component size</legend>
+                <div class="hypericPropertiesHeader">Component size</div>
                 <p>
                     <label class="propertytext">Width:</label>
                     <input style="float:left;" id="${id}_width" name="width" dojoAttachPoint="width" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
@@ -13,5 +33,20 @@
                 </p>
             </fieldset>                
         </div>
+        
+        <div id="${id}_arrowProperties" class="fieldSet" style="display: none;" dojoAttachPoint="arrowProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Arrow</div>
+                <p>
+                    <label class="propertytext">Count:</label>
+                    <input style="float:left;" id="${id}_arrowcount" name="arrowcount" dojoAttachPoint="arrowcount" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Width:</label>
+                    <input style="float:left;" id="${id}_arrowwidth" name="arrowwidth" dojoAttachPoint="arrowwidth" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+            </fieldset>                
+        </div>
+        
     </div>
 </div>

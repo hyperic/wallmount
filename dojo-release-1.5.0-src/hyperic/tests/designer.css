@@ -3,25 +3,25 @@
 }
 
 div.fieldset {
-    background-color: #ffffb0;
+    margin-bottom: 3px;
 }
 fieldSet {
     border: none;
     padding: 0;
 }
-legend {
+.hypericPropertiesHeader {
     background-color: #E6E6E7;
     background-image: url("images/commonHighlight.png");
     color: black;
-    width: 100%;
-    padding: 5px 0;
+    padding: 5px 9px;
+    border-top: 1px solid #B5BCC7;
     border-bottom: 1px solid #B5BCC7;
 }
 label.propertytext {
-    text-align: right;
+//    text-align: right;
     width: 80px;
     float: left;
-    font-weight: bold;
+//    font-weight: bold;
 }
 input.textbox {
     width: 300px;
@@ -29,7 +29,7 @@ input.textbox {
 }
 fieldset p {
     clear: both;
-    padding: 5px;
+    padding: 3px;
     margin-top: 0;
 }
 label span, .required {
@@ -53,11 +53,22 @@ label span, .required {
     float: left;
 }
 
-.container {
-//    padding: 1em 3em; 
+.singlecontainer {
     cursor: default;
     radius: 8pt;
     background: #fff;
+}
+
+.container {
+    padding: 1em 3em; 
+    cursor: default;
+    radius: 8pt;
+    background: #fff;
+}
+
+.dijitSelect {
+    border-collapse: collapse;
+    margin: 0;
 }
 
 html, body { height: 100%; width: 100%; padding: 0; border: 0; }

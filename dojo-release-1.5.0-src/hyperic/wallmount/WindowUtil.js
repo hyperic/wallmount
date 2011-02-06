@@ -25,7 +25,7 @@ hyperic.wallmount.WindowUtil.NewSingleItemFloater2 = function(/*Object*/registry
     
     var c1 = new hyperic.dnd.SingleSource(c, {accept: ['treeNode','text']});
     c1.setRegistry(registry);
-    dojo.addClass(c,"container");
+    dojo.addClass(c,"singlecontainer");
     
     c1.insertNodes(false, ["DropMe"]);
 
