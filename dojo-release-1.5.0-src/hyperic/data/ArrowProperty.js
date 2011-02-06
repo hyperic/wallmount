@@ -14,7 +14,7 @@ dojo.declare("hyperic.data.ArrowProperty",null,{
     // min: min constraint for value
     // max: max constraint for value
 
-    constructor: function(/*Object*/args){
+    constructor: function(){
         this.arrowCount = {value:3, min: 2, max: 6};
         this.arrowWidth = {value:25, min: 15, max: 30};
     },
