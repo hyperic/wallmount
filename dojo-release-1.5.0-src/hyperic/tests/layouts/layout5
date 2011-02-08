@@ -1,0 +1,608 @@
+{
+    name: 'layout5',
+    items: [
+        {
+            title: "Environment Availabilities",
+            x: 320,
+            y: 5,
+            w: 945,
+            h: 95,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.AvailIcon",
+                    eid: "1-10000",
+                    units: "none",
+                    width: 75,
+                    height: 75,
+                    title: "machine-1"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-2"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10002",
+                    width: 75,
+                    height: 75,
+                    title: "machine-3"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-4"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-5"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-6"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-7"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-8"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10001",
+                    width: 75,
+                    height: 75,
+                    title: "machine-9"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10004",
+                    width: 75,
+                    height: 75,
+                    title: "machine-10"
+                },
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10005",
+                    width: 75,
+                    height: 75,
+                    title: "machine-11"
+                }
+            ]},
+        {
+            title: "System Summary",
+            x: 10,
+            y: 5,
+            w: 260,
+            h: 95,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10200,
+                    title: "Total Deals"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Total Cashflow"
+                }
+            ]
+        },
+        {
+            title: "Cluster London",
+            x: 10,
+            y: 165,
+            w: 300,
+            h: 520,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10400,
+                    format: "Mb",
+                    title: "bandwidth"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 120,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10300,
+                    title: "lon-1"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10401,
+                    format: "Mb",
+                    title: "bandwidth"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 120,
+                    color: "gold",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10301,
+                    title: "lon-2"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10402,
+                    format: "Mb",
+                    title: "bandwidth"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 120,
+                    color: "red",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10302,
+                    title: "lon-3"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Total Users"
+                }
+            ]
+        },
+        {
+            title: "London Exchange Client",
+            x: 430,
+            y: 170,
+            w: 570,
+            h: 330,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.chart.Chart",
+                    width: 200,
+                    height: 120,
+                    metric: 10500,
+                    title: "chart1"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10400,
+                    title: "queue-1"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10401,
+                    title: "queue-2"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10402,
+                    title: "queue-3"
+                },
+                {
+                    type: "hyperic.widget.ProgressTube",
+                    width: 140,
+                    height: 50,
+                    metric: 10400,
+                    title: "queue-4"
+                },
+                {
+                    type: "hyperic.widget.chart.Chart",
+                    width: 200,
+                    height: 120,
+                    metric: 10501,                    
+                    title: "chart2"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 160,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 25,
+                    metric: 10300,
+                    title: "xx-4"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Total xx"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Total yy"
+                }
+            ]
+        },
+        {
+            title: "London Exchange APIs",
+            x: 1330,
+            y: 10,
+            w: 190,
+            h: 700,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.AvailText",
+                    eid: "1-10000",
+                    units: "none",
+                    size: 200,
+                    title: "api-1"
+                },
+                {
+                    type: "hyperic.widget.AvailText",
+                    eid: "1-10001",
+                    units: "none",
+                    size: 200,
+                    title: "api-2"
+                },
+                {
+                    type: "hyperic.widget.AvailText",
+                    eid: "1-10002",
+                    units: "none",
+                    size: 200,
+                    title: "api-3"
+                },
+                {
+                    type: "hyperic.widget.AvailText",
+                    eid: "1-10003",
+                    units: "none",
+                    size: 200,
+                    title: "api-4"
+                },
+                {
+                    type: "hyperic.widget.AvailText",
+                    units: "none",
+                    size: 200,
+                    title: "api-5"
+                }
+            ]
+        },
+        {
+            title: "Cluster NY",
+            x: 10,
+            y: 750,
+            w: 360,
+            h: 260,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10303,
+                    title: "ny-1"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10304,
+                    title: "ny-2"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10300,
+                    title: "ny-3"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10301,
+                    title: "ny-4"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10302,
+                    title: "Total Users"
+                }
+            ]
+        },
+        {
+            title: "Order Processing System",
+            x: 600,
+            y: 650,
+            w: 230,
+            h: 360,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.Tank",
+                    width: 115,
+                    format: "percent",
+                    height: 180,
+                    metric: 10351,
+                    title: "storage-1"
+                },
+                {
+                    type: "hyperic.widget.Tank",
+                    width: 115,
+                    format: "Gb",
+                    height: 180,
+                    metric: 10302,
+                    title: "storage-2"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 240,
+                    metric: 10001,
+                    title: "Total Orders"
+                }
+            ]
+        },
+        {
+            title: "NY FIX Client",
+            x: 1050,
+            y: 450,
+            w: 160,
+            h: 330,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Deals"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Orders"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10300,
+                    title: "fix-1"
+                }
+            ]
+        },
+        {
+            title: "Cluster Tokyo",
+            x: 1050,
+            y: 850,
+            w: 500,
+            h: 160,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10301,
+                    title: "tokyo-1"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10304,
+                    title: "tokyo-2"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    size: 110,
+                    color: "green",
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    metric: 10302,
+                    title: "tokyo-3"
+                },
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    size: 125,
+                    metric: 10001,
+                    title: "Total Users"
+                }
+            ]
+        },
+        {
+            x: 340,
+            y: 680,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 252,
+                    height: 50,
+                    numOfArrows: 2,
+                    metric: 10352
+                }
+            ]
+        },
+        {
+            x: 400,
+            y: 780,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 192,
+                    height: 50,
+                    numOfArrows: 2,
+                    metric: 10351
+                }
+            ]
+        },
+        {
+            x: 860,
+            y: 680,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 185,
+                    height: 50,
+                    numOfArrows: 2,
+                    metric: 10350
+                }
+            ]
+        },
+        {
+            x: 860,
+            y: 750,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 185,
+                    height: 50,
+                    arrowColor: "red",
+                    numOfArrows: 2,
+                    reverse: true,
+                    metric: 10304
+                }
+            ]
+        },
+        {
+            x: 860,
+            y: 900,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 185,
+                    height: 50,
+                    numOfArrows: 2,
+                    reverse: true,
+                    metric: 10303
+                }
+            ]
+        },
+        {
+            x: 640,
+            y: 554,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.VerticalArrowPipe",
+                    width: 50,
+                    height: 90,
+                    numOfArrows: 1,
+                    metric: 10300
+                }
+            ]
+        },
+        {
+            x: 740,
+            y: 554,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.VerticalArrowPipe",
+                    width: 50,
+                    height: 90,
+                    numOfArrows: 1,
+                    reverse: true,
+                    metric: 10300
+                }
+            ]
+        },
+        {
+            x: 1030,
+            y: 200,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 294,
+                    height: 50,
+                    numOfArrows: 3,
+                    metric: 10350
+                }
+            ]
+        },
+        {
+            x: 1030,
+            y: 260,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 294,
+                    height: 50,
+                    arrowColor: "gold",
+                    numOfArrows: 3,
+                    reverse: true,
+                    metric: 10351
+                }
+            ]
+        },
+        {
+            x: 1030,
+            y: 320,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 294,
+                    height: 50,
+                    numOfArrows: 3,
+                    reverse: true,
+                    metric: 10352
+                }
+            ]
+        },
+        {
+            x: 1030,
+            y: 380,
+            type: "single",
+            items: [
+                {
+                    type: "hyperic.widget.HorizontalArrowPipe",
+                    width: 294,
+                    height: 50,
+                    numOfArrows: 3,
+                    reverse: true,
+                    metric: 10300
+                }
+            ]
+        }
+    ]
+}

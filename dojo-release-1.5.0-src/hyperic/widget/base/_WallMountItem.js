@@ -300,7 +300,19 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         //      aspect ratio.
         this.width = size;
         this.height = size;	
-    }
+    },
+    
+    asJSON: function(){
+    	// summary:
+    	//     Returns json object representing this component.
+    	// 
+    	// description:
+    	//     Format of this json should be constructed so that it can be
+    	//     used to restore the status when layout is loaded.
+    	//     When subclasses are reimplementing this method, parameters from
+    	//     parent classes should be handled respectively. 
+    	return {width:this.width, height: this.height, type: this.declaredClass};
+    }    
     
     
 
