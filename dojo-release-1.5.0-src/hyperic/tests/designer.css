@@ -71,6 +71,13 @@ label span, .required {
     margin: 0;
 }
 
+#hypericSelectLayoutGrid { 
+    border: 1px solid gray;
+    width: auto;
+    height: 200px;
+}
+
+
 html, body { height: 100%; width: 100%; padding: 0; border: 0; }
 #main { height: 100%; width: 100%; border: 0; }
 #header { margin: 0px; }

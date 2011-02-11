@@ -5,6 +5,8 @@
     <style type="text/css">
       @import "../../dijit/themes/claro/claro.css";
       @import "../../dojo/resources/dojo.css";
+      @import "../../dojox/grid/resources/Grid.css";
+      @import "../../dojox/grid/resources/tundraGrid.css";
       @import "../../dojox/layout/resources/ExpandoPane.css";
       @import "../../dojox/layout/resources/ResizeHandle.css"; 
       @import "../../dojox/layout/resources/FloatingPane.css";
@@ -51,7 +53,7 @@
           <div dojoType="dijit.Menu" id="fileMenu">
             <div dojoType="dijit.MenuItem"
                  id="fileMenuOpen" 
-                 onClick="logStrayGlobals();">Open...</div>
+                 onClick="hyperic.wallmount.LayoutUtil.selectLayoutDialog();">Open...</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSave"
                  onClick="hyperic.wallmount.LayoutUtil.getLayoutAsJSON();">Save</div>

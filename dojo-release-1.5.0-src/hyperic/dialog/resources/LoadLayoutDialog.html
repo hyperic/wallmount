@@ -1,0 +1,15 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+    <div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+    <span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+    <span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel" title="${buttonCancel}">
+        <span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span>
+    </span>
+    </div>
+    <div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+        <div dojoAttachPoint="gridNode"></div>
+        <div class="dijitDialogPaneActionBar">
+            <button dojoType="dijit.form.Button" type="button" id="llCancelDialogButton">Cancel</button>
+            <button dojoType="dijit.form.Button" type="submit" disabled="true" id="llOkDialogButton">OK</button>
+        </div>
+    </div>
+</div>

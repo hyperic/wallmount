@@ -1,0 +1,67 @@
+<html>
+<head>
+
+<title>Layout Dialog test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+    @import "../../dojox/grid/resources/Grid.css";
+    @import "../../dojox/grid/resources/tundraGrid.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+    
+    #hypericSelectLayoutGrid { 
+        border: 1px solid gray;
+        width: auto;
+        height: 200px;
+    }
+    
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+<script type="text/javascript">
+    dojo.require("dijit.form.Button");
+    dojo.require("hyperic.dialog.LoadLayoutDialog");
+
+    var secondDlg;
+    dojo.addOnLoad(function() {
+        // create the dialog:
+        secondDlg = new hyperic.dialog.LoadLayoutDialog({
+            title: "Select Layout",
+            layoutsUrl: "/dojo-release-1.5.0-src/hyperic/tests/layouts/layouts",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });
+    });
+    function showDialogTwo() {
+        // set the content of the dialog:
+        //secondDlg.set("content", "Hey, I wasn't there before, I was added at " + new Date() + "!");
+        secondDlg.show();
+    }
+</script>
+
+</head>
+<body class="claro">
+
+<button id="buttonTwo" dojoType="dijit.form.Button" onClick="showDialogTwo();" type="button">
+    Show me!
+</button>
+
+</body>
+</html>

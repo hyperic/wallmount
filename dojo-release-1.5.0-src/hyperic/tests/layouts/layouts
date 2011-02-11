@@ -1,6 +1,11 @@
 {
-    layouts: [
-        "test1",
-        "test2"
+    identifier: 'name',
+    label: 'name',
+    items: [
+        {name:'test1'},
+        {name:'test2'},
+        {name:'test3'},
+        {name:'test4'},
+        {name:'test5'}
     ]
 }

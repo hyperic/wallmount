@@ -1,5 +1,20 @@
 dojo.provide("hyperic.wallmount.LayoutUtil");
 
+dojo.require("hyperic.dialog.LoadLayoutDialog");
+
+hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
+	console.log("selectLayoutDialog");
+	if(!hyperic.wallmount.LayoutUtil.layoutDlg) {
+        hyperic.wallmount.LayoutUtil.layoutDlg = new hyperic.dialog.LoadLayoutDialog({
+            title: "Select Layout",
+            layoutsUrl: "/dojo-release-1.5.0-src/hyperic/tests/layouts/layouts",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });		
+	}
+    hyperic.wallmount.LayoutUtil.layoutDlg.show();	
+};
+
 hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
 	// summary:
 	//     Builds a json representation of current layout in designer.
