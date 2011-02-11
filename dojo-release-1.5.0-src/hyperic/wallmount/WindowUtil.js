@@ -58,14 +58,14 @@ hyperic.wallmount.WindowUtil.newItemFloater = function(args) {
     
 };
 
-hyperic.wallmount.WindowUtil.newEmptyWindow = function(/*Object*/registry) {
+hyperic.wallmount.WindowUtil.newEmptyWindow = function() {
     // summary:
     //      Just a wrapper function to pass no content
     //      resulting empty window.
-	hyperic.wallmount.WindowUtil.newWindow({},registry);
+	hyperic.wallmount.WindowUtil.newWindow({});
 };
 
-hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/args, /*Object*/registry) {
+hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/args) {
     // summary:
 	
     var w = (args && args.w) ? args.w : 300;
@@ -84,7 +84,7 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/args, /*Object*/regi
     var c = dojo.create("div", null, node);
     var source = new hyperic.dnd.Source(c, {accept: ['treeNode','text']});
     
-    source.setRegistry(registry);
+    source.setRegistry(hyperic.wallmount.Registry.registry());
     
     dojo.addClass(c,"container");
         

@@ -45,6 +45,7 @@ dojo.declare("hyperic.dialog.LoadLayoutDialog",
     	var selection = this._grid.selection.getSelected();
     	var lName = selection[0].name;
     	console.log("l name:" + lName);
+    	dojo.publish("/hyperic/layout/new", [lName]);
     },
     
     _rowClick: function() {

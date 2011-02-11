@@ -67,3 +67,12 @@ dojo.declare("hyperic.wallmount.Registry",null,{
     }
 
 });
+
+hyperic.wallmount.Registry._registry = null;
+
+hyperic.wallmount.Registry.registry = function() {
+	if(!hyperic.wallmount.Registry._registry) {
+		hyperic.wallmount.Registry._registry = new hyperic.wallmount.Registry();
+	}
+	return hyperic.wallmount.Registry._registry;
+};

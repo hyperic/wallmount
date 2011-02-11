@@ -24,22 +24,29 @@
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.Designer");
       dojo.require("hyperic.wallmount.Registry");
-//      function init(){
-//      }    
-//      dojo.addOnLoad(init);      
+      
+      function init(){
+          dojo.subscribe("/hyperic/layout/new", function(data){
+              console.log("i got", data);
+              var url = "/dojo-release-1.5.0-src/hyperic/tests/layouts/" + data[0];
+              hyperic.wallmount.Designer.loadLayout(url);
+          });
+      }    
+      dojo.addOnLoad(init);      
     </script>
     
   </head>
 
   <body class="claro">
-  
+
+<!--  
     <div dojoType="hyperic.wallmount.Registry"
          id="registry"
-         jsId="registry"
+         jsId="hyperic.wallmount.Registry._registry"
          plugins="[
              {obj: 'hyperic.widget.Spinner', attach: '*'}
          ]"></div>
-    
+-->
     <div id="main"
          dojoType="dijit.layout.BorderContainer"
          liveSplitters="true"
@@ -47,6 +54,7 @@
       <div id="header"
            dojoType="dijit.MenuBar"
            region="top">
+           
         <div dojoType="dijit.PopupMenuBarItem"
              id="file">
           <span>File</span>
@@ -67,7 +75,7 @@
           <div dojoType="dijit.Menu" id="windowMenu">
             <div dojoType="dijit.MenuItem"
                  id="newWindow"
-                 onClick="hyperic.wallmount.WindowUtil.newEmptyWindow(registry);">New Window</div>
+                 onClick="hyperic.wallmount.WindowUtil.newEmptyWindow();">New Window</div>
             <div dojoType="dijit.MenuItem"
                  id="newWindow2"
                  onClick="hyperic.wallmount.WindowUtil.NewSingleItemFloater();">New Window2</div>
@@ -84,7 +92,9 @@
             <div dojoType="dijit.MenuItem"
                  id="settingsTest">Test this configuration</div>
           </div>
-        </div>
+        </div>        
+        <div class="dijitmenuitem dijitinline">|</div>
+        <div id="layoutinfo" class="dijitmenuitem dijitinline">Layout Name:[]</div>
       </div>
             
       <div dojoType="dojox.layout.ExpandoPane" 
@@ -196,6 +206,14 @@
         </div>
         
       </div>
+
+<!--
+      <div dojoType="dijit.layout.ContentPane"
+           region="center"
+           splitter="false">
+         <div id="layoutinfo" class="hypericLayoutInfo">Layout Name:[]</div>
+      </div>
+-->               
       
       <div dojoType="dijit.layout.ContentPane"
            region="center"
