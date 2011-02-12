@@ -40,13 +40,15 @@
   <body class="claro">
 
 <!--  
+-->
     <div dojoType="hyperic.wallmount.Registry"
          id="registry"
          jsId="hyperic.wallmount.Registry._registry"
          plugins="[
-             {obj: 'hyperic.widget.Spinner', attach: '*'}
+             {plugin: 'hyperic.widget.Spinner', defaults:[{type:'proto', filter:'proto', include:'Apache httpd'}], properties:{width:120,height:120}},
+             {plugin: 'hyperic.widget.AvailText', defaults:[{type:'metric', filter:'name', include:'availability'}], properties:{width:100,height:59}},
+             {plugin: 'hyperic.widget.AvailIcon', defaults:[{type:'resourcetype', filter:'eid', include:'*'}], properties:{width:80,height:80}}
          ]"></div>
--->
     <div id="main"
          dojoType="dijit.layout.BorderContainer"
          liveSplitters="true"

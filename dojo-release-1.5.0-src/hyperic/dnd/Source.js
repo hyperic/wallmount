@@ -95,29 +95,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);
-//            if(item.type === "label")
-//                w = new hyperic.widget.label.Label({width:item.width, height:item.height});
-//            else if(item.type === "spinner")
-//                w = new hyperic.widget.Spinner({width:item.size, height:item.size, color: item.color, arrowCount:{value:item.numOfArrows},arrowWidth:{value: item.arrowWidth}, arrowHeadLength:10});
-//            else if(item.type === "harrowpipe")
-//                w = new hyperic.widget.HorizontalArrowPipe({width:item.width, height:item.height, arrowColor: item.arrowColor, numOfArrows:item.numOfArrows, reverse:item.reverse});
-//            else if(item.type === "varrowpipe")
-//                w = new hyperic.widget.VerticalArrowPipe({width:item.width, height:item.height, numOfArrows:item.numOfArrows, reverse:item.reverse});
-//            else if(item.type === "tank")
-//                w = new hyperic.widget.Tank({width:item.width, height:item.height, value:10, min:0, max:100, format:item.format});
-//            else if(item.type === "chart")
-//                w = new hyperic.widget.chart.Chart({width:item.width, height:item.height});
-//            else if(item.type === "availability")
-//                w = new hyperic.widget.AvailIcon({width:item.width, height:item.height});
-//            else if(item.type === "availtext")
-//                w = new hyperic.widget.AvailText({size:item.size});
-//            else if(item.type === "ellipselabel")
-//                w = new hyperic.widget.EllipseLabel({size:item.size});
-//            else if(item.type === "progresstube")
-//                w = new hyperic.widget.ProgressTube({width:item.width, height:item.height, format:item.format});
         } else {
-            var clazz = dojo.getObject(this.registry.getDefaultPlugin());
-            w = new clazz();
+        	var _pluginName = this.registry.getPluginName(item.item);
+        	var props = this.registry.getPluginProperties(_pluginName);
+        	dojo.require(_pluginName);
+            var clazz = dojo.getObject(_pluginName);
+            w = new clazz(props);
         }
         
         if(s) {
