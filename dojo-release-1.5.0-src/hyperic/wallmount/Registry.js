@@ -84,7 +84,7 @@ dojo.declare("hyperic.wallmount.Registry",null,{
     	if(item.mid) {
     		dojo.some(this.plugins,function(plugin){
     			if(plugin.defaults && dojo.some(plugin.defaults,function(def){
-    				return (def.type == 'metric' && def.filter == 'name' && def.include == item.name.toLowerCase());
+    				return (def.type == 'metric' && def.filter == 'name' && def.include.toLowerCase() == item.name.toLowerCase());
     			})) {
     				foundPlugin = plugin.plugin;
     				return true;
