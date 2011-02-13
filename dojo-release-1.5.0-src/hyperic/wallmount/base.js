@@ -37,5 +37,6 @@ dojo.require("dijit.Calendar");
 dojo.require("dojox.form.Manager");
 dojo.require("dijit.form.Button");
 dojo.require("dijit.form.NumberSpinner");
+dojo.require("hyperic.wallmount.Registry");
 dojo.require("dojo.parser");
 

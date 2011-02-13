@@ -69,6 +69,7 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
 	layout['items'] = windowNodeList;
 	var str = dojo.toJson(layout);
 	console.log("Logging layout json");
-    console.log(str);	
+    console.log(str);
+    return str;
 };
 

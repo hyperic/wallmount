@@ -25,6 +25,11 @@ hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAn
 	
 };
 
+hyperic.wallmount.Player.useLayout = function(/*String*/json, /*Boolean*/ sendAnim) {
+    hyperic.wallmount.Player.createLayout(json);
+    if(sendAnim) dojo.publish("/hyperic/anim/start", [this]);	
+};
+
 hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
 	// summary:
 	//

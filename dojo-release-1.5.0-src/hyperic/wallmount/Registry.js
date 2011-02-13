@@ -72,7 +72,7 @@ dojo.declare("hyperic.wallmount.Registry",null,{
     plugins:null,
     
     constructor: function(/*Object*/options, /*DomNode*/node){
-        this.plugins = options.plugins || [];	
+        this.plugins = typeof options == "undefined" ? [] : (options.plugins || []);
     },
     
     getPluginName: function(/*Object*/item){

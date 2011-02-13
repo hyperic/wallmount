@@ -2,6 +2,7 @@ dojo.provide("hyperic.wallmount.WindowUtil");
 
 dojo.require("dojo.dnd.Moveable");
 dojo.require("hyperic.layout.FloatingPane");
+dojo.require("hyperic.util.LayoutTestWindow");
 
 hyperic.wallmount.WindowUtil.NewSingleItemFloater = function() {
 	// summary:
@@ -98,4 +99,9 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/args) {
     pane.startup();
     pane.bringToTop();
 	return source;
+};
+
+hyperic.wallmount.WindowUtil.newLayoutTestWindow = function() {
+	var testWin = new hyperic.util.LayoutTestWindow();
+	testWin.open();
 };

@@ -24,6 +24,7 @@
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.Designer");
       dojo.require("hyperic.wallmount.Registry");
+      dojo.require("hyperic.tests.TestUtil");
       
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
@@ -93,7 +94,8 @@
                  id="settingsDashboardSize"
                  onClick="hyperic.wallmount.LayoutUtil.dashboardSizeDialog();">Dashboard Size...</div>
             <div dojoType="dijit.MenuItem"
-                 id="settingsTest">Test this configuration</div>
+                 id="settingsTest"
+                 onClick="hyperic.tests.TestUtil.newLayoutTestWindow();">Test this configuration</div>
           </div>
         </div>        
         <div class="dijitmenuitem dijitinline">|</div>
