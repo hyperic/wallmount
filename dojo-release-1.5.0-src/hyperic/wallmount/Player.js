@@ -55,7 +55,7 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
             source.insertNodes(false, [{
             	type:witem.type,
             	title: witem.title,
-            	metric:witem.metric,
+            	mid:witem.mid,
             	eid:witem.eid,
             	size:witem.size,
             	format:witem.format,

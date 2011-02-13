@@ -160,7 +160,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     setMetric: function(m) {
         // summary:
     	this.subscribeId = m;
-    	this.store.subscribe("metric/0/" + m, this, "storeCallback");
+    	if(this.store) this.store.subscribe("metric/0/" + m, this, "storeCallback");
     },
     
     storeCallback: function(arg) {
@@ -310,8 +310,13 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	//     Format of this json should be constructed so that it can be
     	//     used to restore the status when layout is loaded.
     	//     When subclasses are reimplementing this method, parameters from
-    	//     parent classes should be handled respectively. 
-    	return {width:this.width, height: this.height, type: this.declaredClass};
+    	//     parent classes should be handled respectively.
+    	
+    	var jsonObj = {width:this.width, height: this.height, type: this.declaredClass};
+    	if(this.subscribeId) jsonObj['mid'] = this.subscribeId;
+    	if(this.titleText.value) jsonObj['title'] = this.titleText.value;
+    	return jsonObj;
+//    	return {width:this.width, height: this.height, type: this.declaredClass};
     }    
     
     

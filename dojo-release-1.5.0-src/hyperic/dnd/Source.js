@@ -44,10 +44,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w.startup();
     },
     
-    _nodeCreator:function(item){
+    _nodeCreator:function(item_in){
         // summary:
         //      Handles node creation when item is either dropped
         //      or created programmatically to container.
+        
+        var item = item_in.item || item_in;
         
         var s = hyperic.wallmount.base.metricStore;
         
@@ -96,7 +98,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);
         } else {
-        	var _pluginName = this.registry.getPluginName(item.item);
+        	var _pluginName = this.registry.getPluginName(item);
         	var props = this.registry.getPluginProperties(_pluginName);
         	dojo.require(_pluginName);
             var clazz = dojo.getObject(_pluginName);
@@ -107,16 +109,17 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         	w.setStore(s);
         }
         
-        if(item.metric){
-        	w.setMetric(item.metric);
+        if(item.mid){
+        	w.setMetric(item.mid);
         }
 
         if(item.eid){
             w.setEid(item.eid);
         }
 
-        if(item.title){
-            w.setTitle(item.title);
+        var title = item.name || item.title;
+        if(title && title.length > 0){
+            w.setTitle(title);
         }
         
         w.source = this;

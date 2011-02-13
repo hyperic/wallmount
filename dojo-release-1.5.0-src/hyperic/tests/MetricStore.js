@@ -55,6 +55,10 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
     // starts 0
     // step 15Mb
     // units in Mb
+
+    // 10585: id from demo
+    // oscillate between 5 - 10
+    // start from 10
     
     // 1-10000
     // switch between 0 and 1
@@ -111,6 +115,9 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
 
     c10402: 0,
     d10402: 15,
+
+    c10585: 10,
+    d10585: -1,
 	
 	c110000:1,
     c110001:1,
@@ -167,6 +174,8 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                     dd = this.get10401();
                 } else if(data[i].id === '10402'){
                     dd = this.get10402();
+                } else if(data[i].id === '10585'){
+                    dd = this.get10585();
                 } else {
                     dd = data[i].last * rand;				
     			}
@@ -377,7 +386,17 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
         }
         this.c10402 += this.d10402;
         return val;
-    }
+    },
 	
+    get10585: function(){
+        var val = this.c10585;
+        if(this.c10585 > 9) {
+            this.d10585 = -1;
+        } else if(this.c10585 < 6) {
+            this.d10585 = 1;            
+        }
+        this.c10585 += this.d10585;
+        return val;
+    }
 	
 });

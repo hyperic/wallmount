@@ -17,7 +17,7 @@
                 },
                 {
                     type: "hyperic.widget.Spinner",
-                    metric: 10300,
+                    mid: 10300,
                     units: "none",
                     size: 120,
                     numOfArrows: 3,
