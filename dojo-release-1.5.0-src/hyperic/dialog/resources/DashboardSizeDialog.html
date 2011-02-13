@@ -1,0 +1,33 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+    <div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+    <span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+    <span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel" title="${buttonCancel}">
+        <span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span>
+    </span>
+    </div>
+    <div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+        
+        
+        <input type="radio" name="ds" id="ds1" value="900x700" dojoType="dijit.form.RadioButton"/>
+        <label for="ds1">900x700</label><br>
+        <input type="radio" name="ds" id="ds2" value="1280x1024" dojoType="dijit.form.RadioButton"/>
+        <label for="ds2">1280x1024</label><br>
+        <input type="radio" name="ds" id="dsc" value="custom" dojoType="dijit.form.RadioButton"/>
+        <label for="dsc">Custom</label><br>
+        <fieldset>
+            <p>
+                <label class="propertytext">Height:</label>
+                <input style="float:left;" id="ds_height" name="ds_height" dojoAttachPoint="ds_height" class="textbox" dojoType="dijit.form.NumberSpinner"></input>
+            </p>
+            <p>
+                 <label class="propertytext">Width:</label>
+                 <input style="float:left;" id="ds_width" name="ds_width" dojoAttachPoint="ds_width" class="textbox" dojoType="dijit.form.NumberSpinner"></input>
+            </p>
+        </fieldset>                
+        
+        <div class="dijitDialogPaneActionBar">
+            <button dojoType="dijit.form.Button" type="button" id="dsCancelDialogButton">Cancel</button>
+            <button dojoType="dijit.form.Button" type="submit" id="dsOkDialogButton">OK</button>
+        </div>
+    </div>
+</div>

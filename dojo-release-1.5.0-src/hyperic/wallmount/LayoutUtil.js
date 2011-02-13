@@ -1,6 +1,7 @@
 dojo.provide("hyperic.wallmount.LayoutUtil");
 
 dojo.require("hyperic.dialog.LoadLayoutDialog");
+dojo.require("hyperic.dialog.DashboardSizeDialog");
 
 hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
 	console.log("selectLayoutDialog");
@@ -13,6 +14,17 @@ hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
         });		
 	}
     hyperic.wallmount.LayoutUtil.layoutDlg.show();	
+};
+
+hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
+    if(!hyperic.wallmount.LayoutUtil.dashboardSizeDlg) {
+        hyperic.wallmount.LayoutUtil.dashboardSizeDlg = new hyperic.dialog.DashboardSizeDialog({
+            title: "Change Dashboard Size",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });     
+    }
+    hyperic.wallmount.LayoutUtil.dashboardSizeDlg.show();  
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {

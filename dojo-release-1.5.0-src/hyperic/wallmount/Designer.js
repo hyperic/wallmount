@@ -2,6 +2,7 @@ dojo.provide("hyperic.wallmount.Designer");
 
 dojo.require("hyperic.wallmount.WindowUtil");
 dojo.require("hyperic.wallmount.LayoutUtil");
+dojo.require("dijit.form.RadioButton");
 dojo.require("dojo.parser");
 
 hyperic.wallmount.Designer.loadLayout = function(/*String*/url) {
