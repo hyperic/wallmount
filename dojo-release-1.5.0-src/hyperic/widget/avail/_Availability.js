@@ -94,7 +94,7 @@ dojo.declare("hyperic.widget.avail._Availability",
     setEid: function(m) {
         // summary:
         this.eid = m;
-        this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
+        if(this.store) this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
     },
 
     storeAvailCallback: function(arg) {
@@ -110,12 +110,11 @@ dojo.declare("hyperic.widget.avail._Availability",
         if(this.eid){
             if(this.proto)
                return "t";
-        	if(this.eid.indexOf("1-") === 0)
-        	   return "r";
-            if(this.eid.indexOf("5-") === 0)
+            if(this.eid.indexOf("5:") === 0)
                return "g";
-            if(this.eid.indexOf("4-") === 0)
+            if(this.eid.indexOf("4:") === 0)
                return "a";
+            else return "r"; // if here either plat, server or service
         } else {
         	return "t"; // XXX: for testing
         }
