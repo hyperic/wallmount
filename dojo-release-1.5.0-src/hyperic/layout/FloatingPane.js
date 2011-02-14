@@ -4,6 +4,7 @@ dojo.require("dojo.window");
 
 dojo.require("dijit._Templated"); 
 dojo.require("dijit._Widget"); 
+dojo.require("dijit.InlineEditBox"); 
 dojo.require("dojo.dnd.Moveable");
 
 dojo.require("dojox.layout.ContentPane");
@@ -98,6 +99,9 @@ dojo.declare("hyperic.layout.FloatingPane",
 		if(this._started){ return; }
 		
 		this.inherited(arguments);
+		
+		var inlineEdit = new dijit.InlineEditBox({width: "auto"}, this.titleNode);
+        this.connect(inlineEdit,"onChange","_titleEdited");
 
 		if(this.resizable){
 			if(dojo.isIE){
@@ -120,6 +124,13 @@ dojo.declare("hyperic.layout.FloatingPane",
 		this.resize(dojo.coords(this.domNode));
 		
 		this._started = true;
+	},
+	
+	_titleEdited: function(text) {
+		// receive event when user edits the title.
+		// directly set the variable so that it can be read from
+		// dijit object.
+		this.title = text;
 	},
 
 	setTitle: function(/* String */ title){

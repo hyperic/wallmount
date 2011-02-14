@@ -48,6 +48,7 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
         windowSettings['y'] = wn.offsetTop;
         windowSettings['x'] = wn.offsetLeft;
         windowSettings['type'] = "multi";
+        windowSettings['title'] = dijit.byId(wn.id).title;
         
         var items = []
         
