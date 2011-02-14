@@ -80,6 +80,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         // first hide all, we'll show needed components later
         this.hide(["arrowProperties"]);
         this.hide(["sizeProperties"]);
+        this.hide(["sizePropertiesSize"]);
         this.hide(["titleProperties"]);
         
         if(arg.isInstanceOf) {
@@ -91,6 +92,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         		this.sizeProperty();
         	} else {
                 this.hide(["sizeProperties"]);
+                this.hide(["sizePropertiesSize"]);
         	}
 
             if(arg.isInstanceOf(hyperic.data.ArrowProperty)) {
@@ -108,11 +110,18 @@ dojo.declare("hyperic.layout.PropertiesPane",
     },
 
     handleValues: function(name,evt){
-    	var h = this.elementValue("height");
-        var w = this.elementValue("width");
-        console.log("foo:" + h + " / " + w + " / " + name + " / " + evt);
-    	this._selected.height = h;
-        this._selected.width = w;
+    	
+    	if(this._selected.preserveRatio) {
+            var s = this.elementValue("size");
+            this._selected._setSizeAttr(s);
+    	} else {
+            var h = this.elementValue("height");
+            var w = this.elementValue("width");
+            console.log("foo:" + h + " / " + w + " / " + name + " / " + evt);
+            this._selected.height = h;
+            this._selected.width = w;           
+    		
+    	}
         
         if(this._selected.isInstanceOf(hyperic.data.ArrowProperty)) {
         	this._selected.arrowCount.value = this.elementValue("arrowcount");
@@ -128,16 +137,23 @@ dojo.declare("hyperic.layout.PropertiesPane",
     
     sizeProperty: function(){
     	
-        this.show(["sizeProperties"]);
-
-    	var w = dijit.byId(this.width);
-    	w.constraints.min = this._selected.minwidth;
-        w.constraints.max = this._selected.maxwidth;
-        w.set('value', this._selected.width);
-        var h = dijit.byId(this.height);
-        h.constraints.min = this._selected.minheight;
-        h.constraints.max = this._selected.maxheight;
-        h.set('value', this._selected.height);
+    	if(this._selected.preserveRatio) {
+            this.show(["sizePropertiesSize"]);
+            var s = dijit.byId(this.size);
+            s.constraints.min = this._selected.minheight;
+            s.constraints.max = this._selected.maxheight;
+    		s.set('value', this._selected.aspectSize);
+    	} else {
+            this.show(["sizeProperties"]);
+            var w = dijit.byId(this.width);
+            w.constraints.min = this._selected.minwidth;
+            w.constraints.max = this._selected.maxwidth;
+            w.set('value', this._selected.width);
+            var h = dijit.byId(this.height);
+            h.constraints.min = this._selected.minheight;
+            h.constraints.max = this._selected.maxheight;
+            h.set('value', this._selected.height);    		
+    	}
     },
     
     arrowProperty: function(){

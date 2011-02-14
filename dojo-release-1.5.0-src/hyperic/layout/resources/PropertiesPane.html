@@ -33,6 +33,16 @@
                 </p>
             </fieldset>                
         </div>
+
+        <div id="${id}_sizePropertiesSize" class="fieldSet" style="display: none;" dojoAttachPoint="sizePropertiesSize">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Component size</div>
+                <p>
+                    <label class="propertytext">Size:</label>
+                    <input style="float:left;" id="${id}_size" name="size" dojoAttachPoint="size" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+            </fieldset>                
+        </div>
         
         <div id="${id}_arrowProperties" class="fieldSet" style="display: none;" dojoAttachPoint="arrowProperties">
             <fieldset>

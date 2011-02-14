@@ -70,6 +70,10 @@ dojo.declare("hyperic.widget.Spinner",
     _arrows: null, // handles to arrows
     _text:null, // handle to text
 
+    constructor: function(){
+        this.preserveRatio = true;
+    },
+
     startup: function(){
         this.plays = 0; // for testing fops
         this.playstime = 0; // for testing fops

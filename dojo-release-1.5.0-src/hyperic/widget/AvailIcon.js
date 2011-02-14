@@ -26,7 +26,7 @@ dojo.declare("hyperic.widget.AvailIcon",
     
     constructor: function(){
     	this.legends = true;
-    	
+    	this.preserveRatio = true;
     },
 
     startup: function(){

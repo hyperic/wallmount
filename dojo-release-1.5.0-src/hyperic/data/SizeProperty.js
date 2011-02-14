@@ -10,9 +10,6 @@ dojo.declare("hyperic.data.SizeProperty",null,{
     // the height of the component
     height: 20,
     
-    // XXX: weird, this is called
-//    size: 100,
-
     // minwidth: Number
     minwidth: 20,
     
@@ -25,9 +22,19 @@ dojo.declare("hyperic.data.SizeProperty",null,{
     // maxheight: Number
     maxheight: 300,
     
+    // preserveRatio: Boolean
+    // defines whether component should keep its aspect ratio.
+    // this also changes component size properties between size <> width,height
+    preserveRatio: false,
+    
+    // aspectSize: Number
+    // holder for size if preserving aspect ratio.
+    aspectSize: 100,
+    
     _setSizeAttr: function(size){
         this.width = size;
         this.height = size;
+        this.aspectSize = size;
     }
     
 

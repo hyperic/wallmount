@@ -15,7 +15,7 @@ dojo.declare("hyperic.widget.AvailText",
 
     constructor: function(){
         this.legends = true;
-        
+        this.preserveRatio = true;
     },
 
     startup: function(){
@@ -72,6 +72,7 @@ dojo.declare("hyperic.widget.AvailText",
         var ratio = 446 / 759;
         this.width = size;
         this.height = ratio * size;
+        this.aspectSize = size;
     },
     
     legendsInsets: function() {
