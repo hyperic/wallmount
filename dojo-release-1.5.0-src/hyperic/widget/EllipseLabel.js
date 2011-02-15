@@ -8,7 +8,9 @@ dojo.declare("hyperic.widget.EllipseLabel",[hyperic.widget.label._Label],{
     //      base path to resources, images, etc
     baseImgUrl: dojo.baseUrl + "../hyperic/widget/label/resources/",
     
-    _size:0,
+    constructor: function(){
+        this.preserveRatio = true;
+    },
 
     startup: function(){                
         this.inherited(arguments);
@@ -30,7 +32,7 @@ dojo.declare("hyperic.widget.EllipseLabel",[hyperic.widget.label._Label],{
     },
         
     _setSizeAttr: function(size){
-    	this._size = size;
+    	this.aspectSize = size;
         var ratio = 446 / 759;
         this.width = size;
         this.height = ratio * size;

@@ -7,7 +7,7 @@ dojo.require("hyperic.util.FontUtil");
 dojo.declare("hyperic.widget.Tank",
     [hyperic.widget.base._WallMountItem],{
 
-    value: 40,
+//    value: 40,
     min: 0,
     max: 100,
     fillcolor: "red",
@@ -32,8 +32,8 @@ dojo.declare("hyperic.widget.Tank",
     	this.draw();
     },
     
-    postCreate: function(){
-    },
+//    postCreate: function(){
+//    },
     
     
     draw: function(){

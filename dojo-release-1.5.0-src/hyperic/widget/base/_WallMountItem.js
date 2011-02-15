@@ -115,6 +115,10 @@ dojo.declare("hyperic.widget.base._WallMountItem",
                 
     },
     
+    getTitle: function(){
+    	return this.titleText.value;
+    },
+    
     _onClick: function(event){
     	console.log("mouse:"+event);
     },
@@ -317,8 +321,18 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	if(this.titleText.value) jsonObj['title'] = this.titleText.value;
     	return jsonObj;
 //    	return {width:this.width, height: this.height, type: this.declaredClass};
-    }    
+    }, 
     
-    
+    asParams: function(){
+    	// summary:
+    	//     Returns component parameters as object.
+    	var paramObj = {};
+    	if(this.preserveRatio) {
+    		paramObj['size'] = this.aspectSize;
+    	} else {
+            paramObj['width'] = this.width;    		
+            paramObj['height'] = this.height;         
+    	}
+    }
 
 });

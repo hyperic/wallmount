@@ -30,14 +30,21 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     replaceWidget:function(item, widget){
     	// summary:
     	//     xxx
+    	var obj = dijit.byId(item);
+    	var _title = obj.getTitle();    	
+    	
         var parent = dojo.byId(item).parentNode;
     	dojo._destroyElement(dojo.byId(item));
     	
         dojo.require(widget);
         var clazz = dojo.getObject(widget);
-        var w = new clazz();
+        var props = this.registry.getPluginProperties(widget);
+        var w = new clazz(props);
         // telling widget who owns it. this way widget itself
         // is able to ask its replacement or removal.
+        
+        w.setTitle(_title);
+        
         w.source = this;
         w._buildContextMenu();
         w.placeAt(parent);
