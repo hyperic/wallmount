@@ -51,12 +51,18 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w.startup();
     },
     
-    _nodeCreator:function(item_in){
+    _nodeCreator:function(item_in,hint){
         // summary:
         //      Handles node creation when item is either dropped
         //      or created programmatically to container.
         
-        var item = item_in.item || item_in;
+        // TODO: redesign this creator when all needed functionalities are in place
+        
+        var _item = item_in.item || item_in;
+
+        // need to create a copy. otherwise added wmwidget is saved to
+        // object which is passed forward. (makes a wrong reference later)        
+        var item = dojo.mixin({}, _item);
         
         var s = hyperic.wallmount.base.metricStore;
         
@@ -106,10 +112,19 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             w = new clazz(args);
         } else {
         	var _pluginName = this.registry.getPluginName(item);
-        	var props = this.registry.getPluginProperties(_pluginName);
         	dojo.require(_pluginName);
             var clazz = dojo.getObject(_pluginName);
-            w = new clazz(props);
+            
+            // check if passed item contains reference to widget.
+            // this means we're moving something and we should
+            // copy the settings instead defaults from registry.
+            var props;
+            if(item.wmwidget) {
+            	props = item.wmwidget.asParams(); 
+            } else {
+                props = this.registry.getPluginProperties(_pluginName);            
+            }
+            w = new clazz(props);                           
         }
         
         if(s) {
@@ -124,7 +139,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             w.setEid(item.eid);
         }
 
-        var title = item.name || item.title;
+        // TODO: this title stuff is too complex like this, redesign...
+        var title = w.getTitle() || item.name || item.title;
         if(title && title.length > 0){
             w.setTitle(title);
         }
@@ -133,6 +149,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w._buildContextMenu();
         w.placeAt(node);
         w.startup();
+        // testing if we can store widget to data
+        // it may be passed through dnd operations!!!
+        item['wmwidget'] = w;
         return {node: node, data: item, type: ["text"]};
     }
 

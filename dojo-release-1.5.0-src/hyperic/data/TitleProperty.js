@@ -13,7 +13,10 @@ dojo.declare("hyperic.data.TitleProperty",null,{
     constructor: function(){
         this.titleText = {value:""};
         this.titlePosition = {value:"top", list:["top","bottom","left","right"]};
-    }
+    },
 
+    _setTitleAttr: function(title){
+        this.setTitle(title);
+    }
     
 });

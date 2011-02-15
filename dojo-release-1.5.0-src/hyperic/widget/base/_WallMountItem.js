@@ -333,6 +333,8 @@ dojo.declare("hyperic.widget.base._WallMountItem",
             paramObj['width'] = this.width;    		
             paramObj['height'] = this.height;         
     	}
+    	paramObj['title'] = this.getTitle();
+    	return paramObj;
     }
 
 });
