@@ -18,7 +18,7 @@ dojo.declare("hyperic.layout.MoveablePane",
     },
     
     close: function(){
-    	console.log("close on MoveablePane");
+        dojo.publish("globalEvents", ["closing MoveablePane"]);
         this.hide(dojo.hitch(this,function(){
             this.destroyRecursive();
         })); 
