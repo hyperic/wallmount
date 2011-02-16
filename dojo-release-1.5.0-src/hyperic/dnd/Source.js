@@ -57,6 +57,15 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         //      or created programmatically to container.
         
         // TODO: redesign this creator when all needed functionalities are in place
+
+        var node = dojo.create("div");
+        node.id = dojo.dnd.getUniqueId();
+        
+        // hard code empty floater initial content
+        if(item_in === "DropMe") {
+            node.innerHTML = "Drop </br>Something"
+            return {node: node, data: item, type: ["text"]};
+        }
         
         var _item = item_in.item || item_in;
 
@@ -66,13 +75,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         
         var s = hyperic.wallmount.base.metricStore;
         
-        var node = dojo.create("div");
-        node.id = dojo.dnd.getUniqueId();
         
-        if(item === "DropMe") {
-        	node.innerHTML = "Drop </br>Something"
-        	return {node: node, data: item, type: ["text"]};
-        }
         
         var w;
         if(item.type){
