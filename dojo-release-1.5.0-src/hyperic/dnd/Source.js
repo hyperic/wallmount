@@ -91,17 +91,20 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
                     args['height'] = item.height;
                 }        		
         	}
-            if(item.numOfArrows) {
-                args['numOfArrows'] = item.numOfArrows;               
+            if(item.arrowCount) {
+                args['arrowCount'] = item.arrowCount;               
             }
             if(item.reverse) {
                 args['reverse'] = item.reverse;               
             }   	
-            if(item.arrowCount) {
-                args['arrowCount'] = {value:item.numOfArrows};               
+            if(item.arrowGap) {
+                args['arrowGap'] = item.arrowGap;               
             }       
             if(item.arrowWidth) {
-                args['arrowWidth'] = {value: item.arrowWidth};               
+                args['arrowWidth'] = item.arrowWidth;               
+            }       
+            if(item.arrowHeadLength) {
+                args['arrowHeadLength'] = item.arrowHeadLength;               
             }       
             if(item.color) {
                 args['color'] = item.color;               

@@ -22,9 +22,7 @@ dojo.declare("hyperic.widget.Spinner",
     //      area which is reserved for numerical output.
     // animation:
     //      
-    
-//    arrowWidth: 30,
-    
+        
     // speed: Number
     // from scale 0-100, how fast we're spinning
     speed: 0,
@@ -46,19 +44,7 @@ dojo.declare("hyperic.widget.Spinner",
     // if speed is set to maximum, how long in millis
     // should one rotation take
     rotationTime: 1800,
-    
-    // numOfArrows: Number
-    // how many rotating arrows we have
-    //numOfArrows: 5,
-    
-    // arrowGap: Number
-    // gap between arrows
-    arrowGap: 25,
-    
-    // arrowHeadLength: Number
-    // length of the arrow head
-    arrowHeadLength: 15,
-    
+        
     // counterclockwise: Boolean
     // arrows are spinning counterclockwise if true,
     // clockwise if false.
@@ -167,8 +153,8 @@ dojo.declare("hyperic.widget.Spinner",
         var _totArrowLengthM = 2*Math.PI*_radM/this.getArrowCount();
         var _totArrowLengthO = 2*Math.PI*_radO/this.getArrowCount();
         
-        var headAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.arrowGap);
-        var headRootAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.arrowGap - this.arrowHeadLength);
+        var headAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.getArrowGap());
+        var headRootAngle = arrowAreaAngle - this.arcDegreeByL(_radM, _totArrowLengthM - this.getArrowGap() - this.getArrowHeadLength());
         
         // arrow length is measured from middle of the arrow substracting
         // gap from total possible arrow length.
@@ -326,8 +312,18 @@ dojo.declare("hyperic.widget.Spinner",
             this._degree = this._degree % 360;
         this._shiftArrows();
         this._lastTimeStamp = _now;
-    }
+    },
 
+    asParams: function(){
+        // summary:
+        //     Returns component parameters as object.
+        var paramObj = this.inherited(arguments);
+        paramObj['arrowCount'] = this.getArrowCount();
+        paramObj['arrowWidth'] = this.getArrowWidth();
+        paramObj['arrowGap'] = this.getArrowGap();
+        paramObj['arrowHeadLength'] = this.getArrowHeadLength();
+        return paramObj;
+    }
 
 
 });

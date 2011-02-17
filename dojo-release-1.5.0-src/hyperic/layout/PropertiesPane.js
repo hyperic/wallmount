@@ -124,8 +124,10 @@ dojo.declare("hyperic.layout.PropertiesPane",
     	}
         
         if(this._selected.isInstanceOf(hyperic.data.ArrowProperty)) {
-        	this._selected.arrowCount.value = this.elementValue("arrowcount");
-            this._selected.arrowWidth.value = this.elementValue("arrowwidth");
+        	this._selected.arrowCountObj.value = this.elementValue("arrowcount");
+            this._selected.arrowWidthObj.value = this.elementValue("arrowwidth");
+            this._selected.arrowGapObj.value = this.elementValue("arrowgap");
+            this._selected.arrowHeadLengthObj.value = this.elementValue("arrowheadlength");
         }
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
             this._selected.titlePosition.value = this.elementValue("titleposition");
@@ -160,14 +162,24 @@ dojo.declare("hyperic.layout.PropertiesPane",
         this.show(["arrowProperties"]);
 
         var arrowCount = dijit.byId(this.arrowcount);
-        arrowCount.constraints.min = this._selected.arrowCount.min;
-        arrowCount.constraints.max = this._selected.arrowCount.max;
-        arrowCount.set('value', this._selected.arrowCount.value);    	
+        arrowCount.constraints.min = this._selected.arrowCountObj.min;
+        arrowCount.constraints.max = this._selected.arrowCountObj.max;
+        arrowCount.set('value', this._selected.arrowCountObj.value);    	
         
         var arrowWidth = dijit.byId(this.arrowwidth);
-        arrowWidth.constraints.min = this._selected.arrowWidth.min;
-        arrowWidth.constraints.max = this._selected.arrowWidth.max;
-        arrowWidth.set('value', this._selected.arrowWidth.value);       
+        arrowWidth.constraints.min = this._selected.arrowWidthObj.min;
+        arrowWidth.constraints.max = this._selected.arrowWidthObj.max;
+        arrowWidth.set('value', this._selected.arrowWidthObj.value);       
+
+        var arrowGap = dijit.byId(this.arrowgap);
+        arrowGap.constraints.min = this._selected.arrowGapObj.min;
+        arrowGap.constraints.max = this._selected.arrowGapObj.max;
+        arrowGap.set('value', this._selected.arrowGapObj.value);       
+
+        var arrowHeadLength = dijit.byId(this.arrowheadlength);
+        arrowHeadLength.constraints.min = this._selected.arrowHeadLengthObj.min;
+        arrowHeadLength.constraints.max = this._selected.arrowHeadLengthObj.max;
+        arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);       
     },
     
     titleProperty: function(){

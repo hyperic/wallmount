@@ -120,7 +120,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 120,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10300,
                     title: "lon-1"
@@ -137,7 +137,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 120,
                     color: "gold",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10301,
                     title: "lon-2"
@@ -154,7 +154,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 120,
                     color: "red",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10302,
                     title: "lon-3"
@@ -221,7 +221,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 160,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 25,
                     mid: 10300,
                     title: "xx-4"
@@ -296,7 +296,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10303,
                     title: "ny-1"
@@ -305,7 +305,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10304,
                     title: "ny-2"
@@ -314,7 +314,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10300,
                     title: "ny-3"
@@ -323,7 +323,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10301,
                     title: "ny-4"
@@ -362,7 +362,7 @@
                 },
                 {
                     type: "hyperic.widget.EllipseLabel",
-                    size: 240,
+                    size: 235,
                     mid: 10001,
                     title: "Total Orders"
                 }
@@ -392,7 +392,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10300,
                     title: "fix-1"
@@ -411,7 +411,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10301,
                     title: "tokyo-1"
@@ -420,7 +420,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10304,
                     title: "tokyo-2"
@@ -429,7 +429,7 @@
                     type: "hyperic.widget.Spinner",
                     size: 110,
                     color: "green",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     arrowWidth: 18,
                     mid: 10302,
                     title: "tokyo-3"
@@ -451,7 +451,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 252,
                     height: 50,
-                    numOfArrows: 2,
+                    arrowCount: 2,
                     mid: 10352
                 }
             ]
@@ -465,7 +465,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 192,
                     height: 50,
-                    numOfArrows: 2,
+                    arrowCount: 2,
                     mid: 10351
                 }
             ]
@@ -479,7 +479,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 185,
                     height: 50,
-                    numOfArrows: 2,
+                    arrowCount: 2,
                     mid: 10350
                 }
             ]
@@ -494,7 +494,7 @@
                     width: 185,
                     height: 50,
                     arrowColor: "red",
-                    numOfArrows: 2,
+                    arrowCount: 2,
                     reverse: true,
                     mid: 10304
                 }
@@ -509,7 +509,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 185,
                     height: 50,
-                    numOfArrows: 2,
+                    arrowCount: 2,
                     reverse: true,
                     mid: 10303
                 }
@@ -524,7 +524,7 @@
                     type: "hyperic.widget.VerticalArrowPipe",
                     width: 50,
                     height: 90,
-                    numOfArrows: 1,
+                    arrowCount: 1,
                     mid: 10300
                 }
             ]
@@ -538,7 +538,7 @@
                     type: "hyperic.widget.VerticalArrowPipe",
                     width: 50,
                     height: 90,
-                    numOfArrows: 1,
+                    arrowCount: 1,
                     reverse: true,
                     mid: 10300
                 }
@@ -553,7 +553,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 294,
                     height: 50,
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     mid: 10350
                 }
             ]
@@ -568,7 +568,7 @@
                     width: 294,
                     height: 50,
                     arrowColor: "gold",
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     reverse: true,
                     mid: 10351
                 }
@@ -583,7 +583,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 294,
                     height: 50,
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     reverse: true,
                     mid: 10352
                 }
@@ -598,7 +598,7 @@
                     type: "hyperic.widget.HorizontalArrowPipe",
                     width: 294,
                     height: 50,
-                    numOfArrows: 3,
+                    arrowCount: 3,
                     reverse: true,
                     mid: 10300
                 }
