@@ -65,6 +65,24 @@
                 </p>
             </fieldset>                
         </div>
+
+        <div id="${id}_arrowPipeProperties" class="fieldSet" style="display: none;" dojoAttachPoint="arrowPipeProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Arrow</div>
+                <p>
+                    <label class="propertytext">Count:</label>
+                    <input style="float:left;" id="${id}_arrowpipecount" name="arrowpipecount" dojoAttachPoint="arrowpipecount" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Gap:</label>
+                    <input style="float:left;" id="${id}_arrowpipegap" name="arrowpipegap" dojoAttachPoint="arrowpipegap" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Head:</label>
+                    <input style="float:left;" id="${id}_arrowpipeheadlength" name="arrowpipeheadlength" dojoAttachPoint="arrowpipeheadlength" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+            </fieldset>                
+        </div>
         
     </div>
 </div>

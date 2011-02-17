@@ -10,6 +10,7 @@ dojo.require("dijit.form.NumberSpinner");
 
 dojo.require("hyperic.data.SizeProperty");
 dojo.require("hyperic.data.ArrowProperty");
+dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.TitleProperty");
 
 dojo.require("hyperic.widget.label.Label");
@@ -101,6 +102,11 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this.hide(["arrowProperties"]);
             }
 
+            if(arg.isInstanceOf(hyperic.data.ArrowPipeProperty)) {
+                this.arrowPipeProperty();
+            } else {
+                this.hide(["arrowPipeProperties"]);
+            }
         	
         }
     },
@@ -128,6 +134,11 @@ dojo.declare("hyperic.layout.PropertiesPane",
             this._selected.arrowWidthObj.value = this.elementValue("arrowwidth");
             this._selected.arrowGapObj.value = this.elementValue("arrowgap");
             this._selected.arrowHeadLengthObj.value = this.elementValue("arrowheadlength");
+        }
+        if(this._selected.isInstanceOf(hyperic.data.ArrowPipeProperty)) {
+            this._selected.arrowCountObj.value = this.elementValue("arrowpipecount");
+            this._selected.arrowGapObj.value = this.elementValue("arrowpipegap");
+            this._selected.arrowHeadLengthObj.value = this.elementValue("arrowpipeheadlength");
         }
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
             this._selected.titlePosition.value = this.elementValue("titleposition");
@@ -177,6 +188,25 @@ dojo.declare("hyperic.layout.PropertiesPane",
         arrowGap.set('value', this._selected.arrowGapObj.value);       
 
         var arrowHeadLength = dijit.byId(this.arrowheadlength);
+        arrowHeadLength.constraints.min = this._selected.arrowHeadLengthObj.min;
+        arrowHeadLength.constraints.max = this._selected.arrowHeadLengthObj.max;
+        arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);       
+    },
+
+    arrowPipeProperty: function(){
+        this.show(["arrowPipeProperties"]);
+
+        var arrowCount = dijit.byId(this.arrowpipecount);
+        arrowCount.constraints.min = this._selected.arrowCountObj.min;
+        arrowCount.constraints.max = this._selected.arrowCountObj.max;
+        arrowCount.set('value', this._selected.arrowCountObj.value);        
+        
+        var arrowGap = dijit.byId(this.arrowpipegap);
+        arrowGap.constraints.min = this._selected.arrowGapObj.min;
+        arrowGap.constraints.max = this._selected.arrowGapObj.max;
+        arrowGap.set('value', this._selected.arrowGapObj.value);       
+
+        var arrowHeadLength = dijit.byId(this.arrowpipeheadlength);
         arrowHeadLength.constraints.min = this._selected.arrowHeadLengthObj.min;
         arrowHeadLength.constraints.max = this._selected.arrowHeadLengthObj.max;
         arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);       

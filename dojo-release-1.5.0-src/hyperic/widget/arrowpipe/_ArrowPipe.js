@@ -2,13 +2,13 @@ dojo.provide("hyperic.widget.arrowpipe._ArrowPipe");
 
 dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.widget.base._Animatable");
-dojo.require("hyperic.data.ArrowProperty");
+dojo.require("hyperic.data.ArrowPipeProperty");
 
 
 dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     [ hyperic.widget.base._WallMountItem,
       hyperic.widget.base._Animatable,
-      hyperic.data.ArrowProperty ],{
+      hyperic.data.ArrowPipeProperty ],{
     // summary:
     //      xxx
     //
