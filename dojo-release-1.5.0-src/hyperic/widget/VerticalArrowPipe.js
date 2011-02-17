@@ -8,7 +8,7 @@ dojo.declare("hyperic.widget.VerticalArrowPipe",
     [ hyperic.widget.arrowpipe._ArrowPipe ],{
 
     _arrowTotalLength: function(){
-        return this.height / this.numOfArrows;
+        return this.height / this.getArrowCount();
     },
 
     _arrowWidth: function(){
@@ -41,7 +41,7 @@ dojo.declare("hyperic.widget.VerticalArrowPipe",
         var rLength = this._arrowTotalLength();
         var points = this._createArrowPoints();
         var _s = 0 - rLength;
-        for(var i = 0; i <= this.numOfArrows; i++) {
+        for(var i = 0; i <= this.getArrowCount(); i++) {
             var arrow = this.surface.createPolyline(points);
 //                arrow.setFill("blue");
                 arrow.setFill(dojo.mixin({

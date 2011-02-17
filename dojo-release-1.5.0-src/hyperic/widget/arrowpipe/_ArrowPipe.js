@@ -2,11 +2,13 @@ dojo.provide("hyperic.widget.arrowpipe._ArrowPipe");
 
 dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.widget.base._Animatable");
+dojo.require("hyperic.data.ArrowProperty");
 
 
 dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     [ hyperic.widget.base._WallMountItem,
-      hyperic.widget.base._Animatable ],{
+      hyperic.widget.base._Animatable,
+      hyperic.data.ArrowProperty ],{
     // summary:
     //      xxx
     //
@@ -33,21 +35,7 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     //      if speed is set to maximum, how long in millis
     //      should shifting arrows 1000 pixels take
     rotationTime: 2500,
-    
-    // numOfArrows: Number
-    numOfArrows: 3,
-    
-    // arrowGap: Number
-    arrowGap: 25,
-    
-    // arrowHeadLength: Number
-    arrowHeadLength: 15,
-    
-    // horizontal: Boolean
-    //      Whether pipe is layout horizontally or vertically.
-    //      true - horizontal, false - vertical.
-//    horizontal: true,
-  
+      
     // arrowColor:
     //      xxx
     arrowColor: null,
@@ -119,8 +107,8 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         var rLength = this._arrowTotalLength();
         var _w = this.rLength;
         var _h = this._arrowWidth();
-        var headLength = rLength - this.arrowGap;
-        var headRootLength = headLength - this.arrowHeadLength;     
+        var headLength = rLength - this.getArrowGap();
+        var headRootLength = headLength - this.getArrowHeadLength();     
 
         var points = [
             {x:_x, y:_y},
@@ -173,6 +161,17 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     
     _drawAxis: function(height){
        	//this._valueDirty = false;
-    }
+    },
     
+    asParams: function(){
+        // summary:
+        //     Returns component parameters as object.
+        var paramObj = this.inherited(arguments);
+        paramObj['arrowCount'] = this.getArrowCount();
+        paramObj['arrowWidth'] = this.getArrowWidth();
+        paramObj['arrowGap'] = this.getArrowGap();
+        paramObj['arrowHeadLength'] = this.getArrowHeadLength();
+        return paramObj;
+    }
+        
 });
