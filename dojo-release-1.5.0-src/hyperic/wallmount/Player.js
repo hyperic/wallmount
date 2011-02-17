@@ -61,8 +61,10 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
             	format:witem.format,
                 width:witem.width,
                 height:witem.height,
-                numOfArrows: witem.numOfArrows,
+                arrowCount: witem.arrowCount,
                 arrowWidth: witem.arrowWidth,
+                arrowGap: witem.arrowGap,
+                arrowHeadLength: witem.arrowHeadLength,
                 reverse: witem.reverse,
                 color: witem.color,
                 arrowColor: witem.arrowColor
