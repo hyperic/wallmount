@@ -80,6 +80,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         
         // first hide all, we'll show needed components later
         this.hide(["arrowProperties"]);
+        this.hide(["arrowPipeProperties"]);
         this.hide(["sizeProperties"]);
         this.hide(["sizePropertiesSize"]);
         this.hide(["titleProperties"]);
