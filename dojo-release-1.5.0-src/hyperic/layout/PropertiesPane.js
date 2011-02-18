@@ -245,6 +245,8 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
     labelProperty: function(){
         this.show(["labelProperties"]);
+        var picker = dijit.byId(this.labelcolor);
+        picker.value = this._selected.getLabelColor();
         dojo.style(this.labelcolorbutton.containerNode, "color", this._selected.getLabelColor());
         dojo.style(this.labelcolorbutton.containerNode, "backgroundColor", this._selected.getLabelColor());
     }
