@@ -7,6 +7,8 @@ dojo.require("dijit.MenuItem");
 dojo.require("dojox.gfx3d");
 dojo.require("hyperic.data.SizeProperty");
 dojo.require("hyperic.data.TitleProperty");
+dojo.requireLocalization("hyperic", "widget");
+dojo.require("dojo.i18n");
 
 dojo.declare("hyperic.widget.base._WallMountItem",
     [ dijit._Widget,
@@ -192,6 +194,8 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	var pMenuItem = new dijit.MenuItem({label:"Delete"});
     	pMenu.addChild(pMenuItem);
     	dojo.connect(pMenuItem, "onClick", dojo.hitch(this, "_removeMe"));
+    	
+    	var i18nWidgetNames = dojo.i18n.getLocalization("hyperic", "widget");
 
         // check if we have registry, if not
         // dont try to build menu for widgets
@@ -200,7 +204,9 @@ dojo.declare("hyperic.widget.base._WallMountItem",
             var me = this;
             dojo.forEach(plugins,
                 function(entry) {
-                    var menuItem = new dijit.MenuItem({label:entry});
+                	// i18n widget name, fall back to full object name
+                    var locWidName = i18nWidgetNames[entry] || entry;
+                    var menuItem = new dijit.MenuItem({label:locWidName});
                     pMenu.addChild(menuItem);
                     dojo.connect(menuItem, "onClick", dojo.hitch(me, "_switch", entry));                
                 }
