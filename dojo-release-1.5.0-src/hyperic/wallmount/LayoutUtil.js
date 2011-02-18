@@ -66,6 +66,35 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
         windowNodeList.push(windowSettings);
 	}
 	
+	var floaterQuery = 'div[id^="hyperic_layout_MoveablePane"]'  
+    var floaterNodes = dojo.query(floaterQuery);
+    for(var i = 0; i < floaterNodes.length; i++){
+        var wn = floaterNodes[i];
+        var entriesList = []; 
+        var windowSettings = {}; 
+        windowSettings['w'] = wn.offsetWidth;
+        windowSettings['h'] = wn.offsetHeight;
+        windowSettings['y'] = wn.offsetTop;
+        windowSettings['x'] = wn.offsetLeft;
+        windowSettings['type'] = "single";
+        windowSettings['title'] = dijit.byId(wn.id).title;
+        
+        var items = []
+        
+        // this should find only child of dnd item.
+        // this child is supposed to be wallmount component
+        var wallmountItemInWindowQuery = 'div#' + wn.id + ' div.dojoDndItem >';
+        var dnds = dojo.query(wallmountItemInWindowQuery);
+        for(var j = 0; j < dnds.length; j++){
+            var wmObj = dijit.byId(dnds[j].id);
+            items.push(wmObj.asJSON());
+        }
+        
+        windowSettings['items'] = items;
+        windowNodeList.push(windowSettings);    	
+    }
+	
+	
 	layout['name'] = "fake name"
 	layout['items'] = windowNodeList;
 	var str = dojo.toJson(layout);
