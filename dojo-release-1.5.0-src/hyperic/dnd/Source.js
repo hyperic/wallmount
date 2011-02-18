@@ -112,6 +112,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.format) {
                 args['format'] = item.format;               
             }       
+            if(item.labelColor) {
+                args['labelColor'] = item.labelColor;               
+            }       
         	
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);

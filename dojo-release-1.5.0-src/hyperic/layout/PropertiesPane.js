@@ -62,6 +62,10 @@ dojo.declare("hyperic.layout.PropertiesPane",
         // subscribe to topic and receive events when something
         // is selected.
         dojo.subscribe("globalEvents", dojo.hitch(this, "_onMessage"));
+        
+        // ColorPalette doesn't play nice with manager observer,
+        // so connect event here.
+        dojo.connect(this.labelcolor,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -79,6 +83,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
         
         // first hide all, we'll show needed components later
+        this.hide(["labelProperties"]);
         this.hide(["arrowProperties"]);
         this.hide(["arrowPipeProperties"]);
         this.hide(["sizeProperties"]);
@@ -108,6 +113,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
             } else {
                 this.hide(["arrowPipeProperties"]);
             }
+
+            if(arg.isInstanceOf(hyperic.data.LabelProperty)) {
+                this.labelProperty();
+            } else {
+                this.hide(["labelProperties"]);
+            }
         	
         }
     },
@@ -124,7 +135,6 @@ dojo.declare("hyperic.layout.PropertiesPane",
     	} else {
             var h = this.elementValue("height");
             var w = this.elementValue("width");
-            console.log("foo:" + h + " / " + w + " / " + name + " / " + evt);
             this._selected.height = h;
             this._selected.width = w;           
     		
@@ -144,6 +154,15 @@ dojo.declare("hyperic.layout.PropertiesPane",
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
             this._selected.titlePosition.value = this.elementValue("titleposition");
             this._selected.setTitle(this.elementValue("titletext"))
+        }
+
+        if(this._selected.isInstanceOf(hyperic.data.LabelProperty)) {
+            var picker = dijit.byId(this.labelcolor);
+            if(picker.value) {
+                dojo.style(this.labelcolorbutton.containerNode, "color", picker.value);
+                dojo.style(this.labelcolorbutton.containerNode, "backgroundColor", picker.value);
+                this._selected.labelColor = picker.value;            	
+            }
         }
         
         this._selected.reset();
@@ -222,6 +241,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
         var titleposition = dijit.byId(this.titleposition);
         titleposition.set('value', this._selected.titlePosition.value);
         
+    },
+
+    labelProperty: function(){
+        this.show(["labelProperties"]);
+        dojo.style(this.labelcolorbutton.containerNode, "color", this._selected.getLabelColor());
+        dojo.style(this.labelcolorbutton.containerNode, "backgroundColor", this._selected.getLabelColor());
     }
     
     

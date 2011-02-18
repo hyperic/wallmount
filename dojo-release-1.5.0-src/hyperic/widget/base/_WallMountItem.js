@@ -316,13 +316,11 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	//     When subclasses are reimplementing this method, parameters from
     	//     parent classes should be handled respectively.
     	
-//    	var jsonObj = {width:this.width, height: this.height, type: this.declaredClass};
         var jsonObj = this.asParams();
         jsonObj['type'] = this.declaredClass;
     	if(this.subscribeId) jsonObj['mid'] = this.subscribeId;
     	if(this.titleText.value) jsonObj['title'] = this.titleText.value;
     	return jsonObj;
-//    	return {width:this.width, height: this.height, type: this.declaredClass};
     }, 
     
     asParams: function(){

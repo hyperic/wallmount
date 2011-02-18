@@ -90,12 +90,14 @@
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
                     mid: 10200,
+                    labelColor: "#e6e6fa",
                     title: "Total Deals"
                 },
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
                     mid: 10001,
+                    labelColor: "#e6e6fa",
                     title: "Total Cashflow"
                 }
             ]
@@ -163,6 +165,7 @@
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
                     mid: 10001,
+                    labelColor: "#e6e6fa",
                     title: "Total Users"
                 }
             ]
@@ -230,11 +233,13 @@
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
                     mid: 10001,
+                    labelColor: "#e6e6fa",
                     title: "Total xx"
                 },
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
+                    labelColor: "#e6e6fa",
                     mid: 10001,
                     title: "Total yy"
                 }
@@ -331,6 +336,7 @@
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
+                    labelColor: "#e6e6fa",
                     mid: 10302,
                     title: "Total Users"
                 }
@@ -363,6 +369,7 @@
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 235,
+                    labelColor: "#e6e6fa",
                     mid: 10001,
                     title: "Total Orders"
                 }
@@ -379,12 +386,14 @@
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
+                    labelColor: "#e6e6fa",
                     mid: 10001,
                     title: "Deals"
                 },
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
+                    labelColor: "#e6e6fa",
                     mid: 10001,
                     title: "Orders"
                 },
@@ -437,6 +446,7 @@
                 {
                     type: "hyperic.widget.EllipseLabel",
                     size: 125,
+                    labelColor: "#e6e6fa",
                     mid: 10001,
                     title: "Total Users"
                 }
