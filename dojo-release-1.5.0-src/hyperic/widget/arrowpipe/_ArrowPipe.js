@@ -168,7 +168,6 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         //     Returns component parameters as object.
         var paramObj = this.inherited(arguments);
         paramObj['arrowCount'] = this.getArrowCount();
-        paramObj['arrowWidth'] = this.getArrowWidth();
         paramObj['arrowGap'] = this.getArrowGap();
         paramObj['arrowHeadLength'] = this.getArrowHeadLength();
         return paramObj;
