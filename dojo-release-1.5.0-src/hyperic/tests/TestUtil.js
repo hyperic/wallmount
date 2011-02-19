@@ -6,8 +6,9 @@ hyperic.tests.TestUtil.newLayoutTestWindow = function() {
 	
 	var templateString = dojo.cache("hyperic.tests","TestLayoutContent.html");
 
-    var layout = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();	
+    var layoutObj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();	
+	var layout = dojo.toJson(layoutObj);
 	
-    var testWin = new hyperic.util.LayoutTestWindow({content:templateString, layoutJson:layout});
+    var testWin = new hyperic.util.LayoutTestWindow({content:templateString, layoutJson:layout, w:layoutObj.w, h:layoutObj.h});
     testWin.open();
 };

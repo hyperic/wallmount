@@ -27,7 +27,7 @@ hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
     hyperic.wallmount.LayoutUtil.dashboardSizeDlg.show();  
 };
 
-hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
+hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	// summary:
 	//     Builds a json representation of current layout in designer.
 	
@@ -109,9 +109,15 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
     layout['h'] = lH;
 	
 	layout['items'] = windowNodeList;
-	var str = dojo.toJson(layout);
-	console.log("Logging layout json");
-    console.log(str);
-    return str;
+//	var str = dojo.toJson(layout);
+//	console.log("Logging layout json");
+//    console.log(str);
+    return layout;
+};
+
+hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
+	var obj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();
+	console.log(dojo.toJson(obj));
+	return dojo.toJson(obj);
 };
 

@@ -53,13 +53,15 @@ hyperic.wallmount.WindowUtil.newEmptyWindow = function() {
 	hyperic.wallmount.WindowUtil.newWindow({});
 };
 
-hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/args) {
+hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
     // summary:
+    
+    var args = params || {};
 	
-    var w = (args && args.w) ? args.w : 300;
-    var h = (args && args.h) ? args.h : 400;
-    var x = (args && args.x) ? args.x : 10;
-    var y = (args && args.y) ? args.y : 10;
+    var w = (typeof args.w != 'undefined') ? args.w : 300;
+    var h = (typeof args.h != 'undefined') ? args.h : 400;
+    var x = (typeof args.x != 'undefined') ? args.x : 10;
+    var y = (typeof args.y != 'undefined') ? args.y : 10;
     var title = (args && args.title) ? args.title : "New Window";
    	
    	var style = "position: absolute; " + 

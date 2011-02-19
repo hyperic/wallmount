@@ -65,4 +65,5 @@ html, body { height: 100%; width: 100%; padding: 0; border: 0; }
 #header { margin: 0px; }
 #leftAccordion { width: 25%; }
 #bottomTabs { height: 40%; }
-#wallmountpane { width: 1280px; height: 1024px; border:0px solid;}
+//#wallmountpane { width: 1280px; height: 1024px; border:0px solid;}
+#wallmountpane { border:0px solid;}
