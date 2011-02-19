@@ -59,7 +59,21 @@ label span, .required {
     background: #fff;
 }
 
+.dojoDndItem {
+    float: left;
+}
+
+/* for next two styles, give padding if it doesn't have childs.
+ * This allocates space for empty container to receive dnd items,
+ * but doesn't exist if childs are present. If childs are already there
+ * we don't need that extra space.
+ */ 
 .container {
+    cursor: default;
+    radius: 8pt;
+    background: #fff;
+}
+.container:empty {
     padding: 1em 3em; 
     cursor: default;
     radius: 8pt;

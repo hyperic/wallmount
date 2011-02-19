@@ -4,20 +4,7 @@ dojo.require("dojo.dnd.Moveable");
 dojo.require("hyperic.layout.FloatingPane");
 dojo.require("hyperic.util.LayoutTestWindow");
 
-hyperic.wallmount.WindowUtil.NewSingleItemFloater = function() {
-	// summary:
-	//     This function create a new special floater which is
-	//     meant to contain only one item.
-	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
-	//dojo.addClass(node,"moveable");
-	var c = dojo.create("div", null, node);
-	var c1 = new hyperic.dnd.Source(c, {accept: ['treeNode','text']});
-	dojo.addClass(c,"moveable");
-	c1.insertNodes(false, ["[empty]"]);
-    new dojo.dnd.Moveable(node);
-};
-
-hyperic.wallmount.WindowUtil.NewSingleItemFloater2 = function() {
+hyperic.wallmount.WindowUtil.newSingleItemFloater = function() {
     // summary:
     //     This function create a new special floater which is
     //     meant to contain only one item.
@@ -50,7 +37,7 @@ hyperic.wallmount.WindowUtil.newItemFloater = function(args) {
     var c = dojo.create("div", null, node);
     
     var source = new hyperic.dnd.SingleSource(c, {accept: ['treeNode','text']});
-    dojo.addClass(c,"container");
+    dojo.addClass(c,"singlecontainer");
         
     var tmp = new hyperic.layout.MoveablePane({
     	style: style
