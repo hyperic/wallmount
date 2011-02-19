@@ -31,7 +31,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     	// summary:
     	//     xxx
     	var obj = dijit.byId(item);
-    	var _title = obj.getTitle();    	
+    	var _title = obj.getTitle();
+    	var _eid = obj.eid;	
+        var _subscribeId = obj.subscribeId; 
     	
         var parent = dojo.byId(item).parentNode;
     	dojo._destroyElement(dojo.byId(item));
@@ -44,6 +46,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         // is able to ask its replacement or removal.
         
         w.setTitle(_title);
+        w.subscribeId = _subscribeId;
+        w.eid = _eid;
         
         w.source = this;
         w._buildContextMenu();

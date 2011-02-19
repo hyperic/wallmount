@@ -200,7 +200,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         // check if we have registry, if not
         // dont try to build menu for widgets
         if(this.source && this.source.registry) {
-            var plugins = this.source.registry.getAttachedPlugins();
+            var plugins = this.source.registry.getAttachedPlugins(this);
             var me = this;
             dojo.forEach(plugins,
                 function(entry) {

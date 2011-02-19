@@ -135,13 +135,25 @@ dojo.declare("hyperic.wallmount.Registry",null,{
         return "hyperic.widget.label.Label";
     },
 
-    getAttachedPlugins: function(){
-    // for now just return array of all plugin names
-    	var plugs = [];
-    	for(var i = 0; i<this.plugins.length; i++) {
-            plugs.push(this.plugins[i].plugin); 		
-    	}
-    	return plugs;
+    getAttachedPlugins: function(item){
+    
+        var foundPlugins = [];
+        
+        dojo.forEach(this.plugins,function(plugin){
+        	if(plugin.attach && dojo.some(plugin.attach,function(att){
+        		if(item.eid && att.type=="resourcetype") {
+        			return true;
+        		} else if(item.subscribeId!=null && att.type=="metric") {
+        			return true;
+        		} else {
+        			return false;
+        		}
+        	})) { 
+        	   foundPlugins.push(plugin.plugin);	
+        	}
+        });
+        
+        return foundPlugins;
     },
 
     getPluginProperties: function(/*String*/pluginName){
