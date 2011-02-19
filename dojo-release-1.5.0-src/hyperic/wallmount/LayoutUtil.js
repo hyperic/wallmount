@@ -94,8 +94,20 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
         windowNodeList.push(windowSettings);    	
     }
 	
+	// get layout name
+    var wallmountPane = dojo.byId('layoutinfo');
+    var layoutInfoContent = wallmountPane.innerHTML;
+    var start = layoutInfoContent.indexOf('[');
+    var end = layoutInfoContent.indexOf(']');
+	layout['name'] = layoutInfoContent.substring(start+1,end);
+
+    // get layout size
+    var wallmountPane = dojo.byId('wallmountpane');
+    var lW = dojo.style(wallmountPane,'width');
+    var lH = dojo.style(wallmountPane,'height');
+    layout['w'] = lW;
+    layout['h'] = lH;
 	
-	layout['name'] = "fake name"
 	layout['items'] = windowNodeList;
 	var str = dojo.toJson(layout);
 	console.log("Logging layout json");

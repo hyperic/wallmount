@@ -35,6 +35,11 @@ hyperic.wallmount.Designer.createLayout = function(data) {
 
     var layoutInfo = dojo.byId("layoutinfo");
     layoutInfo.innerHTML = "Layout Name:[" + data.name + "]";
+    
+    var wallmountPane = dojo.byId('wallmountpane');
+    dojo.style(wallmountPane,'width',data.w);
+    dojo.style(wallmountPane,'height',data.h);
+    
 	
 	// create new items
     var items = data.items;
