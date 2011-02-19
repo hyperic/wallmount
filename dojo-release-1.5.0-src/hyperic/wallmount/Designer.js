@@ -79,7 +79,13 @@ hyperic.wallmount.Designer.createLayout = function(data) {
 
 hyperic.wallmount.Designer.closeAllWindows = function() {
     var windowQuery = 'div[id^="hyperic_layout_FloatingPane"]'
+    var floaterQuery = 'div[id^="hyperic_layout_MoveablePane"]'
     dojo.query(windowQuery).forEach(
+        function(item) {
+            dijit.byId(item.id).close();
+        }
+    );
+    dojo.query(floaterQuery).forEach(
         function(item) {
             dijit.byId(item.id).close();
         }
