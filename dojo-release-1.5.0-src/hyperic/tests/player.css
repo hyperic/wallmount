@@ -1,4 +1,9 @@
 .dijitContentPane {
+    padding: 0 !important;
+}
+
+/*
+.dijitContentPane {
     padding: 2px 2px 20px !important
 }
 
@@ -16,6 +21,7 @@
     font-size: 15px;
     font-weight: bold;
 }
+*/
 
 .dojoxResizeHandle {
     bottom: 0;
