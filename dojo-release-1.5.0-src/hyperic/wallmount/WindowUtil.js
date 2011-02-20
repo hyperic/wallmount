@@ -60,8 +60,8 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
 	
     var w = (typeof args.w != 'undefined') ? args.w : 300;
     var h = (typeof args.h != 'undefined') ? args.h : 400;
-    var x = (typeof args.x != 'undefined') ? args.x : 10;
-    var y = (typeof args.y != 'undefined') ? args.y : 10;
+    var x = ((typeof args.x != 'undefined') ? args.x : 10) + 1;
+    var y = ((typeof args.y != 'undefined') ? args.y : 10) + 1;
     var title = (args && args.title) ? args.title : "New Window";
    	
    	var style = "position: absolute; " + 

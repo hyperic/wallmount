@@ -42,9 +42,13 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	for(var i = 0; i < windowNodes.length; i++){
 		var wn = windowNodes[i];
 		var entriesList = []; 
-		var windowSettings = {}; 
-		windowSettings['w'] = wn.offsetWidth;
-        windowSettings['h'] = wn.offsetHeight;
+		var windowSettings = {};
+		// it seems that when we set width and height from json,
+		// actual offset is +6 for width and +4 for height.
+		// for now just substract it.
+		// TODO: check how to calculate offset accurately
+		windowSettings['w'] = wn.offsetWidth - 6;
+        windowSettings['h'] = wn.offsetHeight - 4;
         windowSettings['y'] = wn.offsetTop;
         windowSettings['x'] = wn.offsetLeft;
         windowSettings['type'] = "multi";

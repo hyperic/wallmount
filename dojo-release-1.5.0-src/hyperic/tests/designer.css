@@ -96,4 +96,4 @@ html, body { height: 100%; width: 100%; padding: 0; border: 0; }
 #header { margin: 0px; }
 #leftAccordion { width: 25%; }
 #bottomTabs { height: 40%; }
-#wallmountpane { width: 900px; height: 700px; border:3px solid;}
+#wallmountpane { width: 900px; height: 700px; border:1px solid;}
