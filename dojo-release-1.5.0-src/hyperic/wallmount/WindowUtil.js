@@ -91,6 +91,9 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
 };
 
 hyperic.wallmount.WindowUtil.newLayoutTestWindow = function() {
-	var testWin = new hyperic.util.LayoutTestWindow();
-	testWin.open();
+    var templateString = dojo.cache("hyperic.wallmount","TestLayoutContent.html");
+    var layoutObj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();  
+    var layout = dojo.toJson(layoutObj);
+    var testWin = new hyperic.util.LayoutTestWindow({content:templateString, layoutJson:layout, w:layoutObj.w, h:layoutObj.h});
+    testWin.open();
 };

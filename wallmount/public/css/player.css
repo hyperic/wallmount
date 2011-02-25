@@ -1,0 +1,75 @@
+.dijitContentPane {
+    padding: 0 !important;
+}
+
+/*
+.dijitContentPane {
+    padding: 2px 2px 20px !important
+}
+
+.dojoxFloatingPane {
+    -webkit-box-shadow: 0px 0px 0px #adadad;
+    -moz-border-radius: 30px 30px 30px 30px;
+    -webkit-border-radius: 30px 30px 30px 30px;
+    border: 4px solid #DEDEDE;
+}
+
+.dojoxFloatingPaneTitle {
+    padding: 4px 4px 2px 10px;
+    -moz-border-radius: 23px 23px 0 0;
+    -webkit-border-radius: 23px 23px 0 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+*/
+
+.dojoxResizeHandle {
+    bottom: 0;
+    right: 0;
+    background-image: none;
+}
+
+.dojoxFloatingCloseIcon {
+    display: none;
+}
+
+.dojoDndItem {
+    float: left;
+}
+      
+.propertytext {
+    width: 70px;
+    float: left;
+    clear: left;
+    margin: 2px;
+    text-align: right;
+}
+      
+.moveable {
+    -moz-border-radius: 8pt 8pt 8pt 8pt;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #CCCCCC;
+    cursor: move;
+    float: left;
+}
+
+.hypericMoveablePane {
+    -moz-border-radius: 8pt 8pt 8pt 8pt;
+    background: none repeat scroll 0 0 #FFFFFF;
+    cursor: move;
+    float: left;
+}
+
+.container {
+    cursor: default;
+    radius: 8pt;
+    background: #fff;
+}
+
+html, body { height: 100%; width: 100%; padding: 0; border: 0; }
+#main { height: 100%; width: 100%; border: 0; }
+#header { margin: 0px; }
+#leftAccordion { width: 25%; }
+#bottomTabs { height: 40%; }
+//#wallmountpane { width: 1280px; height: 1024px; border:0px solid;}
+#wallmountpane { border:0px solid;}

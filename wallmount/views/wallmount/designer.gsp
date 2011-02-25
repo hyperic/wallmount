@@ -95,7 +95,7 @@
                  onClick="hyperic.wallmount.LayoutUtil.dashboardSizeDialog();">Dashboard Size...</div>
             <div dojoType="dijit.MenuItem"
                  id="settingsTest"
-                 onClick="hyperic.tests.TestUtil.newLayoutTestWindow();">Test this configuration</div>
+                 onClick="hyperic.wallmount.WindowUtil.newLayoutTestWindow();">Test this configuration</div>
           </div>
         </div>        
         <div class="dijitmenuitem dijitinline">|</div>
