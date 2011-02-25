@@ -10,6 +10,7 @@
       @import "../public/js/dojox/layout/resources/ExpandoPane.css";
       @import "../public/js/dojox/layout/resources/ResizeHandle.css"; 
       @import "../public/js/dojox/layout/resources/FloatingPane.css";
+      @import "../public/js/hyperic/layout/resources/MoveablePane.css";
       @import "../public/js/hyperic/data/resources/hypericicons.css";
       @import "../public/css/designer.css";
     </style>
