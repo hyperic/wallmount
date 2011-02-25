@@ -30,11 +30,7 @@ hyperic.wallmount.Designer.loadLayout = function(/*String*/url) {
 
 hyperic.wallmount.Designer.createLayout = function(data) {
 	
-	// clear pane
-//	hyperic.wallmount.Designer.closeAllWindows();
-
-    var layoutInfo = dojo.byId("layoutinfo");
-    layoutInfo.innerHTML = "Layout Name:[" + data.name + "]";
+    hyperic.wallmount.LayoutUtil.setLayoutName(data.name);
     
     var wallmountPane = dojo.byId('wallmountpane');
     dojo.style(wallmountPane,'width',data.w);

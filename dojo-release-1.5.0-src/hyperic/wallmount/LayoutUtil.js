@@ -1,14 +1,47 @@
 dojo.provide("hyperic.wallmount.LayoutUtil");
 
 dojo.require("hyperic.dialog.LoadLayoutDialog");
+dojo.require("hyperic.dialog.SaveLayoutDialog");
 dojo.require("hyperic.dialog.DashboardSizeDialog");
+
+hyperic.wallmount.LayoutUtil.saveLayoutDialog = function() {
+    if(!hyperic.wallmount.LayoutUtil.saveLayoutDlg) {
+        hyperic.wallmount.LayoutUtil.saveLayoutDlg = new hyperic.dialog.SaveLayoutDialog({
+            title: "Save Layout",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });     
+    }
+    hyperic.wallmount.LayoutUtil.saveLayoutDlg.show();  
+};
+
+hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
+    hyperic.wallmount.LayoutUtil.setLayoutName(name);
+    var data = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();
+    var contentObject = {};
+    contentObject['layoutdata'] = data;
+    contentObject['layoutname'] = name;
+    dojo.xhrPost({
+        url: '/hqu/wallmount/wallmount/saveLayout.hqu',
+        handleAs: "json-comment-filtered",
+        timeout: 5000,
+        content: contentObject,
+        load: function(response, ioArgs) {
+            return response;
+        },
+        error: function(response, ioArgs) {
+            alert('error ' + response);
+            return response;
+        }
+    });
+};
 
 hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
 	console.log("selectLayoutDialog");
 	if(!hyperic.wallmount.LayoutUtil.layoutDlg) {
         hyperic.wallmount.LayoutUtil.layoutDlg = new hyperic.dialog.LoadLayoutDialog({
             title: "Select Layout",
-            layoutsUrl: "/dojo-release-1.5.0-src/hyperic/tests/layouts/layouts",
+            layoutsUrl: "/hqu/wallmount/wallmount/getLayouts.hqu",
             widgetsInTemplate: true,
             style: "width: 300px"
         });		
@@ -25,6 +58,11 @@ hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
         });     
     }
     hyperic.wallmount.LayoutUtil.dashboardSizeDlg.show();  
+};
+
+hyperic.wallmount.LayoutUtil.setLayoutName = function(name) {
+	var layoutInfo = dojo.byId("layoutinfo");
+    layoutInfo.innerHTML = "Layout Name:[" + name + "]";
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {

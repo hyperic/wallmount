@@ -28,7 +28,7 @@
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
               console.log("i got", data);
-              var url = "/dojo-release-1.5.0-src/hyperic/tests/layouts/" + data[0];
+              var url = "/hqu/wallmount/wallmount/getLayout.hqu?layout=" + data[0];
               hyperic.wallmount.Designer.loadLayout(url);
           });
       }    
@@ -72,7 +72,7 @@
                  onClick="hyperic.wallmount.LayoutUtil.getLayoutAsJSON();">Save</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSaveAs"
-                 onClick="logWidgets();">Save As...</div>
+                 onClick="hyperic.wallmount.LayoutUtil.saveLayoutDialog();">Save As...</div>
           </div>
         </div>
         <div dojoType="dijit.PopupMenuBarItem" id="window">

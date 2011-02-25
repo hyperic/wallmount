@@ -1,3 +1,4 @@
+import org.springframework.core.io.Resource
 import org.hyperic.hq.hqu.rendit.BaseController
 import org.hyperic.hq.context.Bootstrap
 import org.hyperic.hq.appdef.shared.PlatformManager
@@ -52,6 +53,34 @@ abstract class BaseWallmountController extends BaseController {
         appdefBoss
     }
 
+    /**
+     * Returns template directory for layouts
+     */
+    protected def getTemplateDir() {
+        Resource templateResource = Bootstrap.getResource("WEB-INF/wallmount2Templates");
+        if(!templateResource.exists()) {
+            def dir = templateResource.file
+            dir.mkdir()
+            return dir;
+        }
+        return templateResource.getFile();
+    }
+    
+    /**
+     * Returns list of stored template names.
+     */
+    protected def getTemplates() {
+        def res = []
+        for (f in templateDir.listFiles()) {
+            if (!f.name.endsWith('.json'))
+                continue
+            def fname = f.name[0..-6]
+            res << fname
+        }
+        log.debug("Found files: " + res)
+        res.sort()
+    }
+        
     protected sendError() {
         invokeArgs.response.sendError(404)
     }

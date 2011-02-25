@@ -1,37 +1,16 @@
-import org.hyperic.hq.hqu.rendit.BaseController
-import org.springframework.core.io.Resource
-import org.hyperic.hq.appdef.shared.ServerManager
-import org.hyperic.hq.appdef.shared.ServiceManager
-import org.hyperic.hq.appdef.shared.PlatformManager
-import org.hyperic.hq.authz.shared.ResourceManager
-import org.hyperic.hq.authz.shared.ResourceGroupManager
-import org.hyperic.hq.appdef.shared.AppdefEntityID
-import org.hyperic.hq.appdef.shared.AppdefEntityTypeID
-import org.hyperic.util.pager.PageControl
-import org.hyperic.hibernate.PageInfo
-import org.hyperic.hq.authz.server.session.ResourceSortField
-import org.hyperic.hq.galerts.server.session.GalertLogSortField
-import org.hyperic.hq.measurement.shared.MeasurementManager
-import org.hyperic.hq.events.AlertSeverity
-import org.hyperic.hq.events.server.session.AlertSortField
-import org.hyperic.hq.measurement.MeasurementConstants
-import org.hyperic.hq.appdef.shared.AppdefEntityConstants
 import org.json.JSONArray
 import org.json.JSONObject
-import org.hyperic.hq.context.Bootstrap
 
 /**
  * Base controller for this plugin.
  */
-class WallmountController 
-	extends BaseController
-{
-	
-	
+class WallmountController extends BaseWallmountController {
+		
 	/**
 	 * Constructor
 	 */
 	def WallmountController() {
+        setJSONMethods(['saveLayout'])
 	}
 	
 	/**
@@ -50,6 +29,55 @@ class WallmountController
     def player(params) {
         render(locals:[])
     }
+    
+    /**
+     * Returns layout names as format which is suitable
+     * for layout selection dialog.
+     */
+    def getLayouts(params) {
+        JSONObject obj = new JSONObject()
+        
+        obj.put('identifier', 'name')
+        obj.put('label', 'name')
+        JSONArray items = new JSONArray()
+        
+        templates.each{
+            items.put(new JSONObject().put('name', it))
+        }        
+        obj.put('items', items)
+           
+        render(inline:"${obj}", contentType:'text/json-comment-filtered')
+    }
+    
+    /**
+     * 
+     */
+    def getLayout(params) {
+        def layout = params.getOne("layout")
+        def layoutData = ""
+           
+        if (templates.contains(layout)) {
+            log.info("Trying to open template " + layout) 
+            new File(templateDir, "${layout}.json").withReader { r ->
+            log.debug("Reading template ${layout}")
+            layoutData = r.text
+            }
+        }
+        render(inline:"${layoutData}", contentType:'text/json-comment-filtered')
+    }
 
+    /**
+     * 
+     */
+    def saveLayout(params) {
+        def data = params.getOne("layoutdata")
+        def name = params.getOne("layoutname")
+       
+        def file = new File(templateDir, name + ".json")
+        log.debug("Saving template ${name}")
+        //file.write("/* ${data} */")
+        file.write("${data}")
+        [status: 'ok']
+    }
     
 }
