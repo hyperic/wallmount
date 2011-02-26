@@ -19,7 +19,7 @@ class WallmountController extends BaseWallmountController {
 	 * @param params Request parameters.
 	 */
 	def index(params) {
-		render(locals:[])
+		render(locals:[templates:templates])
 	}
 
     def designer(params) {
@@ -27,7 +27,13 @@ class WallmountController extends BaseWallmountController {
     }
 
     def player(params) {
-        render(locals:[])
+        def layout = params.getOne("layout")
+        def useLayout = null
+        templates.each{
+            if(layout == it)
+            useLayout = layout
+        }       
+        render(locals:[useLayout: useLayout])
     }
     
     /**

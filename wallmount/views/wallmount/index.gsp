@@ -26,10 +26,9 @@ table.layouts td {
 </style>
 <%
 
-def link(l,m,e) {
-	out.write('<a href="/hqu/wallmount/wallmount/dashboard.hqu?layout=')
+def link(l,e) {
+	out.write('<a href="/hqu/wallmount/wallmount/player.hqu?layout=')
 	out.write(l)
-	out.write('&cssmode=' + m)
 	out.write('">' + e + '</a>')	
 }
 
@@ -37,23 +36,20 @@ if(!templates) {
 	out.write("<div>No layouts found.</div>")
 } else {
 	
-	out.write('<div><table class="layouts"><tr><th>Layout</th><th>Normal View</th><th>Night View</th></tr>')
+	out.write('<div><table class="layouts"><tr><th>Layout</th><th>Link</th></tr>')
 	templates.each{
 		out.write('<tr>')
 		out.write('<td>')
 		out.write(it)
 		out.write('</td>')
 		out.write('<td>')
-		link(it,'day','Open')
-		out.write('</td>')
-		out.write('<td>')
-		link(it,'night', 'Open')
+		link(it,'Open')
 		out.write('</td>')
 		out.write('</tr>')
 	}
 	out.write('</table></div>')
 }
 
-out.write('<div><a href="/hqu/wallmount/wallmount/dashboard.hqu">Open empty layout.<a/></div>')
+out.write('<div><a href="/hqu/wallmount/wallmount/designer.hqu">Launch Designer<a/></div>')
 %>
 
