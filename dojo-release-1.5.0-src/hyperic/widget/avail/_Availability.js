@@ -294,6 +294,12 @@ dojo.declare("hyperic.widget.avail._Availability",
                 break;
             }
         }
+    },
+    
+    asParams: function(){
+    	var paramObj = this.inherited(arguments);
+    	paramObj['eid'] = this.eid;
+    	return paramObj;
     }
 
 });

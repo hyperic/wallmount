@@ -36,8 +36,13 @@ dojo.declare("hyperic.widget.AvailIcon",
 
     storeAvailCallback: function(arg) {
         // summary:
-        this._setAlertLegendValue(arg.alerts);
-        this._setEscalationLegendValue(arg.escalations);
+        //     Callback function to handle metric store updates.
+        
+        // forget values for legends if component doesn't support those
+        if(this.legends) {
+        	if(arg.alerts) this._setAlertLegendValue(arg.alerts);
+            if(arg.escalations) this._setEscalationLegendValue(arg.escalations);        	
+        }
         this.inherited(arguments);
     },
 

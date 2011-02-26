@@ -171,7 +171,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     
     storeCallback: function(arg) {
         // summary:
-        this.value = arg;
+        this.value = arg.last;
         this.resetValue();        	
     },
     

@@ -123,7 +123,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	var reqParams = {};
     	
     	if(request.id){    
-            reqParams.item = request.id;    		
+            reqParams.scope = request.id;    		
     	}
     	
         var getArgs = {
@@ -233,7 +233,8 @@ dojo.declare("hyperic.data.MetricStore", null, {
         // summary:
         
         for(var i = 0; i<data.length; i++) {
-            this.publish(data[i].id, [data[i].last]);        	
+        	//console.log("_processResult:" + request.scope + " " + data[i].id + " " + data[i].last)
+            this.publish(request.scope + data[i].id, [data[i]]);        	
         }
     	
     	

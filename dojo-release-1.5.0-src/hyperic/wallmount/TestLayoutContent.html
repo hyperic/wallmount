@@ -18,15 +18,15 @@
     <script type="text/javascript">
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.Player");
-      dojo.require("hyperic.tests.MetricStore");
+      dojo.require("hyperic.data.MetricStore");
       
       function init(){
-        //hyperic.wallmount.base.metricStore = new hyperic.tests.MetricStore(
-        //    {url: "/dojo-release-1.5.0-src/hyperic/tests/mstore/",
-        //     idToBaseUrl: true}
-        //);
+        hyperic.wallmount.base.metricStore = new hyperic.data.MetricStore(
+            {url: "/hqu/wallmount/metricstore/getMetrics.hqu",
+             idToBaseUrl: false}
+        );
         
-        //hyperic.wallmount.base.metricStore.sync(true);
+        hyperic.wallmount.base.metricStore.sync(true);
   
         var json = '${layoutJson}';
         hyperic.wallmount.Player.useLayout(dojo.fromJson(json),true);

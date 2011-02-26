@@ -6,6 +6,7 @@ import org.hyperic.hq.appdef.shared.ServerManager
 import org.hyperic.hq.appdef.shared.ServiceManager
 import org.hyperic.hq.authz.shared.ResourceManager
 import org.hyperic.hq.measurement.shared.MeasurementManager
+import org.hyperic.hq.measurement.shared.AvailabilityManager
 import org.hyperic.hq.bizapp.shared.AppdefBoss
 
 /**
@@ -22,6 +23,7 @@ abstract class BaseWallmountController extends BaseController {
     private MeasurementManager measurementManager
     private ResourceManager resourceManager
     private AppdefBoss appdefBoss
+    private AvailabilityManager availabilityManager
     
     def getPlatformManager() {
         if(platformManager == null) platformManager = Bootstrap.getBean(PlatformManager.class)
@@ -51,6 +53,11 @@ abstract class BaseWallmountController extends BaseController {
     def getAppdefBoss() {
         if(appdefBoss == null) appdefBoss = Bootstrap.getBean(AppdefBoss.class)
         appdefBoss
+    }
+
+    def getAvailabilityManager() {
+        if(availabilityManager == null) availabilityManager = Bootstrap.getBean(AvailabilityManager.class)
+        availabilityManager
     }
 
     /**
