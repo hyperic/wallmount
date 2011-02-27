@@ -47,7 +47,9 @@ dojo.declare("hyperic.widget.AvailText",
 
     storeAvailCallback: function(arg) {
         // summary:
-        this._setAlertLegendValue(arg.alerts);
+        if(this.legends) {
+            if(arg.alerts) this._setAlertLegendValue(arg.alerts);        	
+        }
         this.inherited(arguments);
     },
 
