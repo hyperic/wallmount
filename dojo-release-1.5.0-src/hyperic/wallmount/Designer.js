@@ -70,7 +70,8 @@ hyperic.wallmount.Designer.createLayout = function(data) {
                 arrowWidth: witem.arrowWidth,
                 reverse: witem.reverse,
                 color: witem.color,
-                arrowColor: witem.arrowColor
+                arrowColor: witem.arrowColor,
+                labelColor: witem.labelColor
                 }]);            
         }
         
