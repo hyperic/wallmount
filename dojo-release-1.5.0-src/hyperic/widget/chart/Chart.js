@@ -68,7 +68,7 @@ dojo.declare("hyperic.widget.chart.Chart",
     setMetric: function(m) {
         // summary:
         this.subscribeId = m;
-        this.store.subscribe("metric/60/" + m, this, "storeCallback");
+        if(this.store) this.store.subscribe("metric/60/" + m, this, "storeCallback");
     },
     
     _labelFunc: function(/*Number*/val){

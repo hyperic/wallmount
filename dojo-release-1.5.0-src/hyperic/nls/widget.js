@@ -7,5 +7,6 @@
     "hyperic.widget.Spinner": "Spinner",
     "hyperic.widget.AvailText": "Availability Text",
     "hyperic.widget.AvailIcon": "Availability Icon",
-    "hyperic.widget.label.Label": "Plain Label"
+    "hyperic.widget.label.Label": "Plain Label",
+    "hyperic.widget.chart.Chart": "Chart"
 })
