@@ -8,6 +8,7 @@ import org.hyperic.hq.authz.shared.ResourceManager
 import org.hyperic.hq.measurement.shared.MeasurementManager
 import org.hyperic.hq.measurement.shared.AvailabilityManager
 import org.hyperic.hq.bizapp.shared.AppdefBoss
+import org.hyperic.hq.auth.shared.SessionManager
 
 /**
  * Base class for all wallmount controllers.
@@ -90,6 +91,10 @@ abstract class BaseWallmountController extends BaseController {
         
     protected sendError() {
         invokeArgs.response.sendError(404)
+    }
+    
+    def getSessionId() {
+        SessionManager.instance.put(user)
     }
 
 

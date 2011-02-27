@@ -51,17 +51,44 @@ class ResourcetreeController extends BaseJSONController {
                 serviceprotos(paths[2] as int)
             }
         } else if(paths.size() == 6) {
-            if(paths[3] == 'server') {
+            if(paths[1] == 'platform' && paths[3] == 'server') {
                 serversByProtoAndPlatform(paths[5] as int, paths[2] as int)
-            } else if(paths[3] == 'service') {            
+            } else if(paths[1] == 'platform' && paths[3] == 'service') {            
                 servicesByProtoAndPlatform(paths[5] as int, paths[2] as int)
+            } else if (paths[1] == 'server' && paths[3] == 'service' && paths[4] == 'proto') {
+                servicesByProtoAndServer(paths[5] as int, paths[2] as int)
             }
         } else {
             render(inline:"{}", contentType:'text/json-comment-filtered')
         }
-        
     }
 
+    def servicesByProtoAndServer(proto,eid) {
+        JSONObject obj = new JSONObject()
+        
+        def prototypeName
+        
+        JSONArray children = new JSONArray()
+        def services = serviceManager.getServicesByServer(user, eid, proto, PageControl.PAGE_ALL)
+        services.each{
+            prototypeName = it.serviceType.name
+            JSONObject o = new JSONObject()
+            o.put('$ref', baseUrl + "/service/${it.id}")
+            o.put('name', it.name)
+            o.put('eid', it.entityId)
+            o.put('children', true)
+            children.put(o)
+        }
+        
+        obj.put('id', baseUrl + "/server/${eid}/service/proto/${proto}")
+        obj.put('name', prototypeName)
+        
+        obj.put('children', children)
+
+        renderJSONObj(obj)
+    }
+
+                
     /**
      * 
      */
@@ -142,6 +169,21 @@ class ResourcetreeController extends BaseJSONController {
             met.put("units", m.template.units)
             children.put(met)
         }
+        
+        // add refs to services types under server
+        def types = [:]
+        def services = serviceManager.getServicesByServer(user, eid, PageControl.PAGE_ALL)
+        services.each{
+            types[it.serviceType.id] = it.serviceType.name
+        }
+        
+        types.each{ key, value ->
+            JSONObject o = new JSONObject()
+            o.put('$ref', baseUrl + "/server/${eid}/service/proto/${key}")
+            o.put("name", value)
+            o.put("children", true)
+            children.put(o)
+        }
 
         def server = serverManager.getServerById(eid)
         
@@ -197,7 +239,6 @@ class ResourcetreeController extends BaseJSONController {
         
         JSONArray child = new JSONArray()
 
-        def sessionId = SessionManager.instance.put(user)
         def resources = appdefBoss.findPlatformServices(sessionId, eid, PageControl.PAGE_ALL)
         def types = [:]
         resources.each{
@@ -216,6 +257,7 @@ class ResourcetreeController extends BaseJSONController {
         renderJSONObj(obj)
     }
 
+    
     /**
      * 
      */
@@ -232,7 +274,6 @@ class ResourcetreeController extends BaseJSONController {
         
         JSONArray child = new JSONArray()
 
-        def sessionId = SessionManager.instance.put(user)
         def resources = appdefBoss.findServersByPlatform(sessionId, eid, PageControl.PAGE_ALL)
         def types = [:]
         resources.each{
