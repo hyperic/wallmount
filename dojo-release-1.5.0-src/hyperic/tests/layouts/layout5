@@ -12,7 +12,7 @@
                 {
                     type: "hyperic.widget.AvailIcon",
                     eid: "1-10000",
-                    units: "none",
+                    format: "none",
                     width: 75,
                     height: 75,
                     title: "machine-1"
@@ -256,34 +256,34 @@
                 {
                     type: "hyperic.widget.AvailText",
                     eid: "1-10000",
-                    units: "none",
+                    format: "none",
                     size: 200,
                     title: "api-1"
                 },
                 {
                     type: "hyperic.widget.AvailText",
                     eid: "1-10001",
-                    units: "none",
+                    format: "none",
                     size: 200,
                     title: "api-2"
                 },
                 {
                     type: "hyperic.widget.AvailText",
                     eid: "1-10002",
-                    units: "none",
+                    format: "none",
                     size: 200,
                     title: "api-3"
                 },
                 {
                     type: "hyperic.widget.AvailText",
                     eid: "1-10003",
-                    units: "none",
+                    format: "none",
                     size: 200,
                     title: "api-4"
                 },
                 {
                     type: "hyperic.widget.AvailText",
-                    units: "none",
+                    format: "none",
                     size: 200,
                     title: "api-5"
                 }

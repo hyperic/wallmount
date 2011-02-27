@@ -1,5 +1,5 @@
 { id: '/dojo-release-1.5.0-src/hyperic/tests/data/dservice/26979', name: 'bear Linux CPU 1 (2490Mhz Intel Xeon)', eid:'3:26968', children: [
-  { id: 'm11311', mid: '11311', name: 'Availability', units:'percentage'},
-  { id: 'm11313', mid: '11313', name: 'Cpu Idle', units:'percentage'}
+  { id: 'm11311', mid: '11311', name: 'Availability', format:'percentage'},
+  { id: 'm11313', mid: '11313', name: 'Cpu Idle', format:'percentage'}
 ]
 }

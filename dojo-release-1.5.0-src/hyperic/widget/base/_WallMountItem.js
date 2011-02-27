@@ -324,7 +324,10 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	
         var jsonObj = this.asParams();
         jsonObj['type'] = this.declaredClass;
-    	if(this.subscribeId) jsonObj['mid'] = this.subscribeId;
+    	if(this.subscribeId) {
+            jsonObj['mid'] = this.subscribeId;
+    		jsonObj['format'] = this.format;
+    	}    	
     	if(this.titleText.value) jsonObj['title'] = this.titleText.value;
     	return jsonObj;
     }, 

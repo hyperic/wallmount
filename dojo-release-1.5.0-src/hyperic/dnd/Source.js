@@ -34,6 +34,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     	var _title = obj.getTitle();
     	var _eid = obj.eid;	
         var _subscribeId = obj.subscribeId; 
+        var _format = obj.format; 
     	
         var parent = dojo.byId(item).parentNode;
     	dojo._destroyElement(dojo.byId(item));
@@ -48,6 +49,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w.setTitle(_title);
         w.subscribeId = _subscribeId;
         w.eid = _eid;
+        w.format = _format;
         
         w.source = this;
         w._buildContextMenu();
@@ -119,6 +121,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.labelColor) {
                 args['labelColor'] = item.labelColor;               
             }       
+            if(item.format) {
+                args['format'] = item.format;               
+            }       
         	
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);
@@ -146,6 +151,10 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         
         if(item.mid){
         	w.setMetric(item.mid);
+        }
+        
+        if(item.format){
+            w.format = item.format;
         }
 
         if(item.eid){

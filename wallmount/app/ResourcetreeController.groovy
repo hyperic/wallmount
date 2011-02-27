@@ -134,7 +134,7 @@ class ResourcetreeController extends BaseJSONController {
             met.put("id", baseUrl + "/service/${eid}/metric/" + m.id)
             met.put("mid", m.id)
             met.put("name", m.template.name)
-            met.put("units", m.template.units)
+            met.put("format", m.template.units)
             children.put(met)
         }
 
@@ -166,7 +166,7 @@ class ResourcetreeController extends BaseJSONController {
             met.put("id", baseUrl + "/server/${eid}/metric/" + m.id)
             met.put("mid", m.id)
             met.put("name", m.template.name)
-            met.put("units", m.template.units)
+            met.put("format", m.template.units)
             children.put(met)
         }
         
@@ -341,7 +341,7 @@ class ResourcetreeController extends BaseJSONController {
             met.put("id", baseUrl + "/platform/${eid}/metric/" + m.id)
             met.put("mid", m.id)
             met.put("name", m.template.name)
-            met.put("units", m.template.units)
+            met.put("format", m.template.units)
             child.put(met)
         }
 

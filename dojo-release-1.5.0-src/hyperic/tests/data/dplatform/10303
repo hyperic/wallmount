@@ -1,8 +1,8 @@
 { id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/10303', eid: '1:10303', proto: 'Win32', name: 'bear.intranet.hyperic.net', children: [
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dservice/proto', name: 'Platform Services', children: true},
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dserver/proto', name: 'Servers', children: true},
-  { id: 'm10594', mid: '10594', name:'Availability', units:'percentage' },
-  { id: 'm10522', mid: '10522', name:'Free Memory', units:'B' },
-  { id: 'm10585', mid: '10585', name:'Load Average 5 Minutes', units:'none' }
+  { id: 'm10594', mid: '10594', name:'Availability', format:'percentage' },
+  { id: 'm10522', mid: '10522', name:'Free Memory', format:'B' },
+  { id: 'm10585', mid: '10585', name:'Load Average 5 Minutes', format:'none' }
 ]
 }
