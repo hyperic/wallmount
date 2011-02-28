@@ -266,12 +266,13 @@ dojo.declare("hyperic.widget.Spinner",
     	
     	var _radI = this.width / 2 - this.getArrowWidth();
     	
-    	var fV = hyperic.unit.UnitsConvert.convert(this.value, "none");
+    	var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format);
     	
     	var fS = hyperic.util.FontUtil.findGoodSizeFontByCircle(fV, _radI);
-    	
+	
         if(this._text) {
-            this._text.setShape({text: fV}); 
+            this._text.setShape({text: fV, y:(this.height/2) + fS*0.35});
+            this._text.setFont({family:"Helvetica",weight:"bold",size:fS+'px'});
         } else {
             this._text = this.drawText(fV, this.width/2, (this.height/2) + fS*0.35 , "middle", this.color, {family:"Helvetica",weight:"bold",size:fS+'px'});
         }

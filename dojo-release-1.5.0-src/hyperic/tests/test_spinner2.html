@@ -40,21 +40,27 @@
         var size = dijit.byId("size").get('value');
         s.width = size;
         s.height = size;
-        s.numOfArrows = dijit.byId("numOfArrows").get('value');
-        s.arrowWidth = dijit.byId("arrowWidth").get('value');
-        s.arrowGap = dijit.byId("arrowGap").get('value');
-        s.arrowHeadLength = dijit.byId("arrowHeadLength").get('value');
+        s.arrowCountObj.value = dijit.byId("numOfArrows").get('value');
+        s.arrowWidthObj.value = dijit.byId("arrowWidth").get('value');
+        s.arrowGapObj.value = dijit.byId("arrowGap").get('value');
+        s.arrowHeadLengthObj.value = dijit.byId("arrowHeadLength").get('value');
         s.rotationTime = dijit.byId("rotationTime").get('value');
         
         val = dijit.byId("value").get('value');
         s.value = val;
         
-        if(val != s.value) {
-            s.resetValue();        
-        } else {
+//        if(val != s.value) {
+//            s.resetValue();        
+//        } else {
             s.reset();
-        }
+//        }
        
+    }
+    var updatevalue = function() {
+        var s = dijit.byId("spinner");
+        var val = dijit.byId("value").get('value');
+        s.value = val;
+        s.resetValue();            
     }
     var animate = function() {
         var s = dijit.byId("spinner");
@@ -70,8 +76,9 @@
             id: "spinner",
             width: 200,
             height: 200,
-            numOfArrows: 3,
+            arrowCount: 3,
             arrowWidth: 25,
+            format: "percent",
             ranges: [
                 {low: 30, high: 50, color: 'yellow'},
                 {low: 50, high: 100, color: 'red'}
@@ -154,7 +161,7 @@
 </br>
 <label for="value">value</label>
 <input dojoType="dijit.form.NumberSpinner"
-                onChange="updatearrows"
+                onChange="updatevalue"
                 intermediateChanges="true"
                 value="20"
                 constraints="{max:10000,min:1}"
