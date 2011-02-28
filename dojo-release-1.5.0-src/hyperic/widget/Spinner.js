@@ -5,6 +5,7 @@ dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.data.ArrowProperty");
+dojo.require("hyperic.data.RangeSpeedProperty");
 
 // TODO: linear vs. logarithmic speed
 // TODO: counterclockwise
@@ -12,7 +13,8 @@ dojo.require("hyperic.data.ArrowProperty");
 dojo.declare("hyperic.widget.Spinner",
     [ hyperic.widget.base._WallMountItem,
       hyperic.widget.base._Animatable,
-      hyperic.data.ArrowProperty ],{
+      hyperic.data.ArrowProperty,
+      hyperic.data.RangeSpeedProperty ],{
     // summary:
     //      Spinner widget to show visual representation of the metric value.
     //
@@ -29,11 +31,11 @@ dojo.declare("hyperic.widget.Spinner",
     
     // minValueForSpeed: Number
     // Minimum value to determine slowest spinner speed
-    minValueForSpeed: 0,
+    //minValueForSpeed: 0,
     
     // minValueForSpeed: Number
     // Maximum value to determine fastest spinner speed
-    maxValueForSpeed: 100,
+    //maxValueForSpeed: 100,
     
     // speedAcceleration: String, either 'linear' or 'logaritmic'
     // determine how spinner speed is determined from
@@ -43,7 +45,7 @@ dojo.declare("hyperic.widget.Spinner",
     // rotationTime: Number (milliseconds)
     // if speed is set to maximum, how long in millis
     // should one rotation take
-    rotationTime: 1800,
+    //rotationTime: 1800,
         
     // counterclockwise: Boolean
     // arrows are spinning counterclockwise if true,
@@ -285,13 +287,13 @@ dojo.declare("hyperic.widget.Spinner",
     	//basic baseline speed is calculated using scale settings,
     	//we should get value 0..1
         var _baseSpeed;
-        if(this.value >= this.maxValueForSpeed) {
+        if(this.value >= this.getMaxRange()) {
             _baseSpeed = 1;
-        } else if(this.value <= this.minValueForSpeed) {
+        } else if(this.value <= this.getMinRange()) {
             _baseSpeed = 0;
         } else {
-            var _scaleMinMax = this.maxValueForSpeed - this.minValueForSpeed;
-            _baseSpeed = (this.value - this.minValueForSpeed) / _scaleMinMax;
+            var _scaleMinMax = this.getMaxRange() - this.getMinRange();
+            _baseSpeed = (this.value - this.getMinRange()) / _scaleMinMax;
         }
     	
     	//rotationTime is telling how often we should do full rotation in max speed    	
@@ -304,7 +306,7 @@ dojo.declare("hyperic.widget.Spinner",
     		this.playstime = _now;
     	}
     	
-    	var _toRotateBase = 360 / (this.rotationTime / _diff);
+    	var _toRotateBase = 360 / (this.getSpeedTime() / _diff);
     	
     	var _toRotate = _toRotateBase * _baseSpeed;
     	
@@ -323,6 +325,9 @@ dojo.declare("hyperic.widget.Spinner",
         paramObj['arrowWidth'] = this.getArrowWidth();
         paramObj['arrowGap'] = this.getArrowGap();
         paramObj['arrowHeadLength'] = this.getArrowHeadLength();
+        paramObj['minRange'] = this.getMinRange();        
+        paramObj['maxRange'] = this.getMaxRange();        
+        paramObj['speedTime'] = this.getSpeedTime();        
         return paramObj;
     }
 

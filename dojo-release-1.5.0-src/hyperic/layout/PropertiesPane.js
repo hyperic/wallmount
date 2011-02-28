@@ -12,6 +12,7 @@ dojo.require("hyperic.data.SizeProperty");
 dojo.require("hyperic.data.ArrowProperty");
 dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.TitleProperty");
+dojo.require("hyperic.data.RangeSpeedProperty");
 
 dojo.require("hyperic.widget.label.Label");
 dojo.require("dijit.form.TextBox");
@@ -66,6 +67,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         // ColorPalette doesn't play nice with manager observer,
         // so connect event here.
         dojo.connect(this.labelcolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.spinnercolor,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -83,6 +85,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
         
         // first hide all, we'll show needed components later
+        this.hide(["rangeSpeedProperties"]);
         this.hide(["labelProperties"]);
         this.hide(["arrowProperties"]);
         this.hide(["arrowPipeProperties"]);
@@ -119,6 +122,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
             } else {
                 this.hide(["labelProperties"]);
             }
+
+            if(arg.isInstanceOf(hyperic.data.RangeSpeedProperty)) {
+                this.rangeSpeedProperty();
+            } else {
+                this.hide(["rangeSpeedProperties"]);
+            }
         	
         }
     },
@@ -145,6 +154,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
             this._selected.arrowWidthObj.value = this.elementValue("arrowwidth");
             this._selected.arrowGapObj.value = this.elementValue("arrowgap");
             this._selected.arrowHeadLengthObj.value = this.elementValue("arrowheadlength");
+            var picker = dijit.byId(this.spinnercolor);
+            if(picker.value) {
+                dojo.style(this.spinnercolorbutton.containerNode, "color", picker.value);
+                dojo.style(this.spinnercolorbutton.containerNode, "backgroundColor", picker.value);
+                this._selected.color = picker.value;               
+            }
         }
         if(this._selected.isInstanceOf(hyperic.data.ArrowPipeProperty)) {
             this._selected.arrowCountObj.value = this.elementValue("arrowpipecount");
@@ -163,6 +178,11 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 dojo.style(this.labelcolorbutton.containerNode, "backgroundColor", picker.value);
                 this._selected.labelColor = picker.value;            	
             }
+        }
+        if(this._selected.isInstanceOf(hyperic.data.RangeSpeedProperty)) {
+            this._selected.minRangeObj.value = this.elementValue("minrange");
+            this._selected.maxRangeObj.value = this.elementValue("maxrange");
+            this._selected.speedTimeObj.value = this.elementValue("speedtime");
         }
         
         this._selected.reset();
@@ -210,7 +230,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
         var arrowHeadLength = dijit.byId(this.arrowheadlength);
         arrowHeadLength.constraints.min = this._selected.arrowHeadLengthObj.min;
         arrowHeadLength.constraints.max = this._selected.arrowHeadLengthObj.max;
-        arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);       
+        arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);
+        
+        var picker = dijit.byId(this.spinnercolor);
+        picker.value = this._selected.getColor();
+        dojo.style(this.spinnercolorbutton.containerNode, "color", this._selected.getColor());
+        dojo.style(this.spinnercolorbutton.containerNode, "backgroundColor", this._selected.getColor());
     },
 
     arrowPipeProperty: function(){
@@ -249,8 +274,27 @@ dojo.declare("hyperic.layout.PropertiesPane",
         picker.value = this._selected.getLabelColor();
         dojo.style(this.labelcolorbutton.containerNode, "color", this._selected.getLabelColor());
         dojo.style(this.labelcolorbutton.containerNode, "backgroundColor", this._selected.getLabelColor());
-    }
+    },
     
+    rangeSpeedProperty: function(){
+        this.show(["rangeSpeedProperties"]);
+        
+        var minRange = dijit.byId(this.minrange);
+        minRange.constraints.min = this._selected.minRangeObj.min;
+        minRange.constraints.max = this._selected.minRangeObj.max;
+        minRange.set('value', this._selected.minRangeObj.value);        
+
+        var maxRange = dijit.byId(this.maxrange);
+        maxRange.constraints.min = this._selected.maxRangeObj.min;
+        maxRange.constraints.max = this._selected.maxRangeObj.max;
+        maxRange.set('value', this._selected.maxRangeObj.value);        
+        
+        var speedTime = dijit.byId(this.speedtime);
+        speedTime.constraints.min = this._selected.speedTimeObj.min;
+        speedTime.constraints.max = this._selected.speedTimeObj.max;
+        speedTime.set('value', this._selected.speedTimeObj.value);        
+
+    }
     
 
 });

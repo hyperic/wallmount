@@ -124,6 +124,15 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.format) {
                 args['format'] = item.format;               
             }       
+            if(item.minRange) {
+                args['minRange'] = item.minRange;               
+            }       
+            if(item.maxRange) {
+                args['maxRange'] = item.maxRange;               
+            }       
+            if(item.speedTime) {
+                args['speedTime'] = item.speedTime;               
+            }       
         	
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);

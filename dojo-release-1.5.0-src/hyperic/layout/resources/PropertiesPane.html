@@ -63,6 +63,13 @@
                     <label class="propertytext">Head:</label>
                     <input style="float:left;" id="${id}_arrowheadlength" name="arrowheadlength" dojoAttachPoint="arrowheadlength" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
                 </p>
+                <p>
+                    <label class="propertytext">Color:</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="spinnercolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_spinnercolor" name="spinnercolor" dojoAttachPoint="spinnercolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
             </fieldset>                
         </div>
 
@@ -94,6 +101,24 @@
                         <div id="${id}_labelcolor" name="labelcolor" dojoAttachPoint="labelcolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
                     </button>
                     
+                </p>
+            </fieldset>                
+        </div>
+
+        <div id="${id}_rangeSpeedProperties" class="fieldSet" style="display: none;" dojoAttachPoint="rangeSpeedProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Speed</div>
+                <p>
+                    <label class="propertytext">Min Range:</label>
+                    <input style="float:left;" id="${id}_minrange" name="minrange" dojoAttachPoint="minrange" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Max Range:</label>
+                    <input style="float:left;" id="${id}_maxrange" name="maxrange" dojoAttachPoint="maxrange" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Speed Time:</label>
+                    <input style="float:left;" id="${id}_speedtime" name="speedtime" dojoAttachPoint="speedtime" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
                 </p>
             </fieldset>                
         </div>

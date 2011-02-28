@@ -68,7 +68,10 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
                 reverse: witem.reverse,
                 color: witem.color,
                 arrowColor: witem.arrowColor,
-                labelColor: witem.labelColor
+                labelColor: witem.labelColor,
+                minRange: witem.minRange,
+                maxRange: witem.maxRange,
+                speedTime: witem.speedTime
             	}]);    		
     	}
         

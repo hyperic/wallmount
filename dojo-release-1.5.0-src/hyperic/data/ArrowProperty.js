@@ -63,6 +63,13 @@ dojo.declare("hyperic.data.ArrowProperty",null,{
     
     _setArrowHeadLengthAttr: function(length){
         this.arrowHeadLengthObj.value = length;
-    }
+    },
     
+    getColor: function(){
+        return this.color; 	
+    },
+    
+    _setColorAttr: function(color){
+        this.color = color;     
+    }
 });
