@@ -7,6 +7,10 @@ dojo.declare("hyperic.unit.NoFormatter",
     	
     formatNumber: function(/*Number*/rawValue, f){
     	return f(rawValue,{});
+    },
+
+    parseValue: function(/*String*/rawValue, f){
+        return f(rawValue,{});
     }
         
 });

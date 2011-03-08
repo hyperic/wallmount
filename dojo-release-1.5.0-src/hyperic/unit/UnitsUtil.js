@@ -41,3 +41,17 @@ hyperic.unit.UnitsUtil.FACT_WEEKS =
 hyperic.unit.UnitsUtil.FACT_YEARS = 
     hyperic.unit.UnitsUtil.FACT_DAYS * 365;
     
+hyperic.unit.UnitsUtil.findNonNumberIdx = function(txt) {
+    var validChars = "0123456789.";
+    var isNumber = true;
+    var idx = 0;
+    var c; 
+    for (; idx < txt.length; idx++) { 
+        c = txt.charAt(idx); 
+        if (validChars.indexOf(c) == -1) break; 
+    }
+    if(idx == txt.length) return -1;
+    return idx;
+};
+
+    

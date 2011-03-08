@@ -1,0 +1,106 @@
+<html>
+<head>
+
+<title>NumberSpinner Format Test</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.Spinner");
+    dojo.require("hyperic.form.UnitsNumberSpinner");
+    dojo.require("dijit.form.CheckBox");
+</script>
+
+<script type="text/javascript">
+
+    var val;
+
+    var updatearrows = function() {
+        var s = dijit.byId("spinner");
+        var size = dijit.byId("size").get('value');
+        s.width = size;
+        s.height = size;
+        s.arrowCountObj.value = dijit.byId("numOfArrows").get('value');
+        s.arrowWidthObj.value = dijit.byId("arrowWidth").get('value');
+        s.arrowGapObj.value = dijit.byId("arrowGap").get('value');
+        s.arrowHeadLengthObj.value = dijit.byId("arrowHeadLength").get('value');
+        s.rotationTime = dijit.byId("rotationTime").get('value');
+        
+       
+    }
+    var updatevalue = function() {
+    };
+    
+    function init() {
+    
+    };
+    
+    dojo.addOnLoad(init);
+    
+</script>
+
+</head>
+<body class="claro">
+
+<label for="valuenone">none</label>
+<input dojoType="hyperic.form.UnitsNumberSpinner"
+                onChange="updatevalue"
+                intermediateChanges="true"
+                value="20"
+                units="none"
+                name="value"
+                id="valuenone">
+</br></br>
+
+<label for="valuepercentage">percentage</label>
+<input dojoType="hyperic.form.UnitsNumberSpinner"
+                onChange="updatevalue"
+                intermediateChanges="true"
+                value="0.2"
+                units="percentage"
+                name="value"
+                id="valuepercentage">
+</br></br>
+
+<label for="valueB">Bytes B</label>
+<input dojoType="hyperic.form.UnitsNumberSpinner"
+                onChange="updatevalue"
+                intermediateChanges="true"
+                value="20"
+                units="B"
+                name="value"
+                id="valueB">
+</br></br>
+<label for="valueKB">Bytes KB</label>
+<input dojoType="hyperic.form.UnitsNumberSpinner"
+                onChange="updatevalue"
+                intermediateChanges="true"
+                value="20"
+                units="KB"
+                name="value"
+                id="valueKB">
+
+                
+
+</body>
+</html>

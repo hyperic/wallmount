@@ -16,11 +16,11 @@ dojo.declare("hyperic.unit.UnitNumber",
     scale: 0,
     
     constructor: function(args){
-    	dojo.mixin(this, args);
+        dojo.mixin(this, args);
     },
     
-    getBaseValue: function() {
-    	return hyperic.unit.UnitsFormat.getBaseValue(this.value, this.units, this.scale);
+    getBaseValue: function(formatted) {
+        return hyperic.unit.UnitsFormat.getBaseValue(this.value, this.units, this.scale, formatted);
     },
 
     getScaledValue: function(/*Integer*/targScale) {

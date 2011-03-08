@@ -5,35 +5,44 @@ dojo.require("hyperic.unit.UnitNumber");
 dojo.require("hyperic.unit.UnitsConstants");
 
 hyperic.unit.UnitsConvert.convert = function(/*Double*/val, /*String*/units, /*Object*/format, /*String*/locale) {
+    // summary:
+    //     xxx
 	
-	var unit, scale;
+    var un = hyperic.unit.UnitsConvert.getUnitNumber(val,units,format,locale);
+    return hyperic.unit.UnitsFormat.format(un, format, locale);
+};
+
+hyperic.unit.UnitsConvert.getUnitNumber = function(/*Double*/val, /*String*/units, /*Object*/format, /*String*/locale) {
+    // summary:
+    //     xxx
+    
+    var unit, scale;
 
     unit  = hyperic.unit.UnitsConvert.getUnitForUnit(units);
     scale = hyperic.unit.UnitsConvert.getScaleForUnit(units);
 
-    var un = new hyperic.unit.UnitNumber({value: val, units: unit, scale: scale});
-
-    return hyperic.unit.UnitsFormat.format(un, format, locale);    
-	
+    return new hyperic.unit.UnitNumber({value: val, units: unit, scale: scale});
 };
 
 
 hyperic.unit.UnitsConvert.getUnitForUnit = function(/*String*/unit){
-        var res; // integer
-
-        if((res = hyperic.unit.UnitsConvert.unitsToUnit[unit]) == null)
-            return hyperic.unit.UnitsConvert.unitsToUnit["none"];
-
-        return res;
+    // summary:
+    //     xxx
+    
+    var res; // integer
+    if((res = hyperic.unit.UnitsConvert.unitsToUnit[unit]) == null)
+        return hyperic.unit.UnitsConvert.unitsToUnit["none"];
+    return res;
 };
 
 hyperic.unit.UnitsConvert.getScaleForUnit = function(/*String*/unit){
-        var res; // integer
-
-        if((res = hyperic.unit.UnitsConvert.unitsToScale[unit]) == null)
-            return hyperic.unit.UnitsConvert.unitsToScale["none"];
-
-        return res;
+    // summary:
+    //     xxx
+    
+    var res; // integer
+    if((res = hyperic.unit.UnitsConvert.unitsToScale[unit]) == null)
+        return hyperic.unit.UnitsConvert.unitsToScale["none"];
+    return res;
 };
 
 // units to unit mapping table
