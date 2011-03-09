@@ -12,8 +12,8 @@ dojo.declare("hyperic.widget.label._Label",[
     drawMetric: function(){
         // summary:
         //     draws formatted metric value between spinning arrows
-        var fV = hyperic.unit.UnitsConvert.convert(this.value, "none");
         
+        var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format);        
         
         // ok, for now just take 10% off from the width and scale by rect
         // seem to get pretty good result
@@ -25,6 +25,7 @@ dojo.declare("hyperic.widget.label._Label",[
     asParams: function(){
         // summary:
         //     Returns component parameters as object.
+        
         var paramObj = this.inherited(arguments);
         paramObj['labelColor'] = this.getLabelColor();
         return paramObj;
