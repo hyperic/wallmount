@@ -13,6 +13,7 @@ dojo.require("hyperic.data.ArrowProperty");
 dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.TitleProperty");
 dojo.require("hyperic.data.RangeSpeedProperty");
+dojo.require("hyperic.data.RangesProperty");
 
 dojo.require("hyperic.widget.label.Label");
 dojo.require("dijit.form.TextBox");
@@ -68,6 +69,8 @@ dojo.declare("hyperic.layout.PropertiesPane",
         // so connect event here.
         dojo.connect(this.labelcolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.spinnercolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.alarmrangecolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.warnrangecolor,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -85,6 +88,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
         
         // first hide all, we'll show needed components later
+        this.hide(["rangesProperties"]);
         this.hide(["rangeSpeedProperties"]);
         this.hide(["labelProperties"]);
         this.hide(["arrowProperties"]);
@@ -127,6 +131,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this.rangeSpeedProperty();
             } else {
                 this.hide(["rangeSpeedProperties"]);
+            }
+            
+            if(arg.isInstanceOf(hyperic.data.RangesProperty)) {
+                this.rangesProperty();
+            } else {
+                this.hide(["rangesProperties"]);
             }
         	
         }
@@ -183,6 +193,36 @@ dojo.declare("hyperic.layout.PropertiesPane",
             this._selected.minRangeObj.value = this.elementValue("minrange");
             this._selected.maxRangeObj.value = this.elementValue("maxrange");
             this._selected.speedTimeObj.value = this.elementValue("speedtime");
+        }
+
+        if(this._selected.isInstanceOf(hyperic.data.RangesProperty)) {
+        	this._selected.removeRanges();
+        	
+        	//alarm
+            var alarmrange = this.elementValue("alarmrange");            
+            var alarmrangepicker = dijit.byId(this.alarmrangecolor);
+            if(alarmrangepicker.value){
+                dojo.style(this.alarmrangecolorbutton.containerNode, "color", alarmrangepicker.value);
+                dojo.style(this.alarmrangecolorbutton.containerNode, "backgroundColor", alarmrangepicker.value);                  
+            }
+            if(!isNaN(alarmrange)){
+                var alarmrangecomp = this.elementValue("alarmrangecomp");
+                this._selected.addRange({value:alarmrange, comparator:alarmrangecomp, color:alarmrangepicker.value});
+            	
+            }
+            //warn
+            var warnrange = this.elementValue("warnrange");            
+            var warnrangepicker = dijit.byId(this.warnrangecolor);
+            if(warnrangepicker.value){
+                dojo.style(this.warnrangecolorbutton.containerNode, "color", warnrangepicker.value);
+                dojo.style(this.warnrangecolorbutton.containerNode, "backgroundColor", warnrangepicker.value);                  
+            }
+            if(!isNaN(warnrange)){
+                var warnrangecomp = this.elementValue("warnrangecomp");
+                this._selected.addRange({value:warnrange, comparator:warnrangecomp, color:warnrangepicker.value});
+                
+            }
+            
         }
         
         this._selected.reset();
@@ -294,6 +334,61 @@ dojo.declare("hyperic.layout.PropertiesPane",
         speedTime.constraints.max = this._selected.speedTimeObj.max;
         speedTime.set('value', this._selected.speedTimeObj.value);        
 
+    },
+
+    rangesProperty: function(){
+        this.show(["rangesProperties"]);
+        
+        var ranges = this._selected.getRanges();
+
+        //alarm        
+        var aCom, aVal, aCol;
+        if(ranges && ranges[0]) {
+        	aCom = ranges[0].comparator;
+            aVal = ranges[0].value;
+            aCol = ranges[0].color;
+        } else {
+            aCom = "&gt;";
+            aVal = "";
+            aCol = "#ff0000";
+        }
+        
+        var alarmrangecomp = dijit.byId(this.alarmrangecomp);
+        alarmrangecomp.set('value', aCom);
+
+        var alarmrange = dijit.byId(this.alarmrange);
+        alarmrange.constraints.min = 0;
+        alarmrange.set('value', aVal);       
+
+        var alarmrangecolor = dijit.byId(this.alarmrangecolor);
+        alarmrangecolor.value = aCol;
+        dojo.style(this.alarmrangecolorbutton.containerNode, "color", aCol);
+        dojo.style(this.alarmrangecolorbutton.containerNode, "backgroundColor", aCol);
+
+        //warn
+        var wCom, wVal, wCol;
+        if(ranges && ranges[1]) {
+            wCom = ranges[1].comparator;
+            wVal = ranges[1].value;
+            wCol = ranges[1].color;
+        } else {
+            wCom = "&gt;";
+            wVal = "";
+            wCol = "#ffd700";
+        }
+        
+        var warnrangecomp = dijit.byId(this.warnrangecomp);
+        warnrangecomp.set('value', wCom);
+
+        var warnrange = dijit.byId(this.warnrange);
+        warnrange.constraints.min = 0;
+        warnrange.set('value', wVal);       
+
+        var warnrangecolor = dijit.byId(this.warnrangecolor);
+        warnrangecolor.value = wCol;
+        dojo.style(this.warnrangecolorbutton.containerNode, "color", wCol);
+        dojo.style(this.warnrangecolorbutton.containerNode, "backgroundColor", wCol);
+        
     }
     
 

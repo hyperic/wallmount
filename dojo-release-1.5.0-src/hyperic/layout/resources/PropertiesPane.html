@@ -122,6 +122,42 @@
                 </p>
             </fieldset>                
         </div>
+
+        <div id="${id}_rangesProperties" class="fieldSet" style="display: none;" dojoAttachPoint="rangesProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Ranges</div>
+                <p>
+                    <label class="propertytext">Alarm Range:</label>
+                    <select style="float:left; margin-right:4px;" id="${id}_alarmrangecomp" name="alarmrangecomp" dojoAttachPoint="alarmrangecomp" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
+                        <option value="&gt;">&gt;</option>
+                        <option value="&lt;">&lt;</option>
+                    </select>
+                    <input style="float:left;" id="${id}_alarmrange" name="alarmrange" dojoAttachPoint="alarmrange" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">&nbsp;</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="alarmrangecolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_alarmrangecolor" name="alarmrangecolor" dojoAttachPoint="alarmrangecolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
+                <p>
+                    <label class="propertytext">Warn Range:</label>
+                    <select style="float:left; margin-right:4px;" id="${id}_warnrangecomp" name="warnrangecomp" dojoAttachPoint="warnrangecomp" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
+                        <option value="&gt;">&gt;</option>
+                        <option value="&lt;">&lt;</option>
+                    </select>
+                    <input style="float:left;" id="${id}_warnrange" name="warnrange" dojoAttachPoint="warnrange" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">&nbsp;</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="warnrangecolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_warnrangecolor" name="warnrangecolor" dojoAttachPoint="warnrangecolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
+            </fieldset>                
+        </div>
         
     </div>
 </div>

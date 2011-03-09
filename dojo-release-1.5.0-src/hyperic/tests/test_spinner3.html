@@ -1,7 +1,7 @@
 <html>
 <head>
 
-<title>Spinner widget test - with programmatic ranges</title>
+<title>Spinner widget test - with initialized ranges</title>
 
 <style type="text/css">
     @import "../../dojo/resources/dojo.css";
@@ -94,13 +94,12 @@
             height: 200,
             arrowCount: 3,
             arrowWidth: 25,
+            ranges: [{value:35, comparator:"&lt;", color:"red"},
+                     {value:30, comparator:"&lt;", color:"blue"},
+                     {value:21, comparator:"&lt;", color:"purple"}],
             format: "percent",
         },spinner);
         
-        spinner.addRange({value:30, comparator:"&lt;", color:"red"});
-        spinner.addRange({value:21, comparator:"&lt;", color:"purple"});
-        spinner.addRange({value:11, comparator:"&gt;", color:"yellow"});
-
         spinner.startup();
     
     };

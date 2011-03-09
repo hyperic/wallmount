@@ -170,6 +170,10 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             w.setEid(item.eid);
         }
 
+        if(item.ranges){
+            w.addRanges(item.ranges);
+        }
+
         // TODO: this title stuff is too complex like this, redesign...
         var title = w.getTitle() || item.name || item.title;
         if(title && title.length > 0){

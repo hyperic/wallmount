@@ -62,8 +62,6 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     // internal data
     templateString: dojo.cache("hyperic.widget.base", "_WallMountItem.html"),
     _backgroundDefault: {color: 'green'},
-    _rangeData: null,
-    ranges: null,
     
     startup: function(){
     	
@@ -253,45 +251,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         t.setFont(font);
         return t;
     },
-    
-    isInRange: function(){
-    	if(this.ranges === null) return null;    	
-    	
-    	// TODO: tune range check
-    	for(var i=0; i<this.ranges.length; i++){
-    		if(this.ranges[i].low < this.value && this.ranges[i].high > this.value)
-    		    return this.ranges[i];
-    	}
-    	  
-       return null;    	
-    },
-    
-    // TODO: we want to dynamically modify ranges
-    addRange: function(/*Object*/range){
-        // summary:
-        //      This method is used to add a range to the wallmount component.
-        // description:
-        //      Creates a range used to determine special behaviour if
-        //      metric value spans through the different ranges. For example we
-        //      can setup component to change background or text color from
-        //      normal -> warning -> alert (aka green/yellow/red)
-        // range:
-        //      A range is either a hyperic.data.Range object, or a object
-        //      with similar parameters (low, high, color, etc.).
-        this.addRanges([range]);
-    },
-    
-    addRanges: function(/*Array*/ranges){
-        if(!this._rangeData){ 
-            this._rangeData = [];
-        }
-        var range;
-        for(var i=0; i<ranges.length; i++){
-        	range = ranges[i];
-            this._rangeData[this._rangeData.length] = range;
-        }   	
-    },
-    
+        
     getMinSize: function() {
         // summary:
         //      Returns minimum size which fits to both width

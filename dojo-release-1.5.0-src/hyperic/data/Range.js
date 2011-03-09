@@ -3,10 +3,10 @@ dojo.provide("hyperic.data.Range");
 
 dojo.declare("hyperic.data.Range", null,{
 
-    low: 0,
+    value: 0,
     
-    high: 0,
+    comparator: ">",
     
-    color: null
+    color: "#ff0000"
 
 });

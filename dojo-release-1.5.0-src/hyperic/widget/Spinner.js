@@ -6,6 +6,7 @@ dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.data.ArrowProperty");
 dojo.require("hyperic.data.RangeSpeedProperty");
+dojo.require("hyperic.data.RangesProperty");
 
 // TODO: linear vs. logarithmic speed
 // TODO: counterclockwise
@@ -14,7 +15,8 @@ dojo.declare("hyperic.widget.Spinner",
     [ hyperic.widget.base._WallMountItem,
       hyperic.widget.base._Animatable,
       hyperic.data.ArrowProperty,
-      hyperic.data.RangeSpeedProperty ],{
+      hyperic.data.RangeSpeedProperty,
+      hyperic.data.RangesProperty ],{
     // summary:
     //      Spinner widget to show visual representation of the metric value.
     //
@@ -57,6 +59,7 @@ dojo.declare("hyperic.widget.Spinner",
     _degree: 0, // current rotation angle
     _arrows: null, // handles to arrows
     _text:null, // handle to text
+    _rcolor:null, // caching color, either from main or from ranges
 
     constructor: function(){
         this.preserveRatio = true;
@@ -78,14 +81,25 @@ dojo.declare("hyperic.widget.Spinner",
     },
 
     resetValue: function(){
+        this._cacheColor();
         this.drawMetric();
+        this.setUpArrowColors();
     },
 
     draw: function(){
         this.surface.clear();
+        
+        this._cacheColor();
+        
         if(this._arrows === null)
             this._createArrows();
         this.drawMetric();
+    },
+    
+    _cacheColor: function(){
+        var range = this.getInRange(this.value);
+        this._rcolor = this.color;
+        if(range != null) this._rcolor = range.color;    	
     },
         
     _createArrows: function(){
@@ -118,7 +132,7 @@ dojo.declare("hyperic.widget.Spinner",
             path.arcTo(points[5].rx,points[5].ry,points[5].x_axis_rotation,points[5].large_arc_flag,points[5].sweep_flag,points[5].x,points[5].y);
             path.closePath();
 
-            path.setFill(this.color);
+            path.setFill(this._rcolor);
             
             path.setTransform([dojox.gfx.matrix.rotategAt(-rotation, this.width/2, this.height/2)]);
             
@@ -275,9 +289,20 @@ dojo.declare("hyperic.widget.Spinner",
         if(this._text) {
             this._text.setShape({text: fV, y:(this.height/2) + fS*0.35});
             this._text.setFont({family:"Helvetica",weight:"bold",size:fS+'px'});
+            this._text.setFill(this._rcolor);
         } else {
-            this._text = this.drawText(fV, this.width/2, (this.height/2) + fS*0.35 , "middle", this.color, {family:"Helvetica",weight:"bold",size:fS+'px'});
+            this._text = this.drawText(fV, this.width/2, (this.height/2) + fS*0.35 , "middle", this._rcolor, {family:"Helvetica",weight:"bold",size:fS+'px'});
         }
+    },
+    
+    setUpArrowColors: function(){
+        var range = this.getInRange(this.value);
+        var color = this.color;
+        if(range != null) color = range.color;
+
+        dojo.forEach(this._arrows, function(entry){
+        	entry.setFill(color);
+        });    	
     },
     
     _play: function(){
@@ -327,7 +352,8 @@ dojo.declare("hyperic.widget.Spinner",
         paramObj['arrowHeadLength'] = this.getArrowHeadLength();
         paramObj['minRange'] = this.getMinRange();        
         paramObj['maxRange'] = this.getMaxRange();        
-        paramObj['speedTime'] = this.getSpeedTime();        
+        paramObj['speedTime'] = this.getSpeedTime();
+        paramObj['ranges'] = this.asRangesParams();    
         return paramObj;
     }
 
