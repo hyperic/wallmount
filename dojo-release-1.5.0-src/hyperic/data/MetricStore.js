@@ -127,7 +127,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	}
     	
         var getArgs = {
-            url: this._getUrl(reqParams.item),
+            url: this._getUrl(reqParams.scope),
             preventCache: this.urlPreventCache,
             failOk: this.failOk,
             handleAs: "json-comment-optional",

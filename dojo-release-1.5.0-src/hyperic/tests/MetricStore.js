@@ -56,6 +56,10 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
     // step 15Mb
     // units in Mb
 
+    // 10522: id from demo
+    // oscillate between 10 - 35
+    // start from 10
+    
     // 10585: id from demo
     // oscillate between 5 - 10
     // start from 10
@@ -115,6 +119,9 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
 
     c10402: 0,
     d10402: 15,
+    
+    c10522: 10,
+    d10522: 1,
 
     c10585: 10,
     d10585: -1,
@@ -174,12 +181,14 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                     dd = this.get10401();
                 } else if(data[i].id === '10402'){
                     dd = this.get10402();
+                } else if(data[i].id === '10522'){
+                    dd = this.get10522();
                 } else if(data[i].id === '10585'){
                     dd = this.get10585();
                 } else {
                     dd = data[i].last * rand;				
     			}
-                this.publish(request.scope + data[i].id, [dd]);            
+                this.publish(request.scope + data[i].id, [{id:data[i].id, last:dd}]);            
             } else if(request.scope.indexOf("ravail") != -1){
             	if(data[i].id === '1-10000'){
                     dd = {
@@ -387,6 +396,17 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
         this.c10402 += this.d10402;
         return val;
     },
+
+    get10522: function(){
+        var val = this.c10522;
+        if(this.c10522 > 29) {
+            this.d10522 = -1;
+        } else if(this.c10522 < 11) {
+            this.d10522 = 1;            
+        }
+        this.c10522 += this.d10522;
+        return val;
+    },
 	
     get10585: function(){
         var val = this.c10585;
@@ -398,5 +418,6 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
         this.c10585 += this.d10585;
         return val;
     }
+
 	
 });
