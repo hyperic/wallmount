@@ -133,6 +133,18 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.speedTime) {
                 args['speedTime'] = item.speedTime;               
             }       
+            if(item.emptyColor) {
+                args['emptyColor'] = item.emptyColor;               
+            }       
+            if(item.fullColor) {
+                args['fullColor'] = item.fullColor;               
+            }       
+            if(item.lowRange) {
+                args['lowRange'] = item.lowRange;               
+            }       
+            if(item.highRange) {
+                args['highRange'] = item.highRange;               
+            }       
         	
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);

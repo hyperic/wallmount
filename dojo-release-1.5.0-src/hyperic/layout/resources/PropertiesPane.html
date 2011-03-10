@@ -123,6 +123,43 @@
             </fieldset>                
         </div>
 
+        <div id="${id}_rangeProperties" class="fieldSet" style="display: none;" dojoAttachPoint="rangeProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Range</div>
+                <p>
+                    <label class="propertytext">Low Range:</label>
+                    <input style="float:left;" id="${id}_lowrange" name="lowrange" dojoAttachPoint="lowrange" class="textbox" dojoType="hyperic.form.UnitsNumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">High Range:</label>
+                    <input style="float:left;" id="${id}_highrange" name="highrange" dojoAttachPoint="highrange" class="textbox" dojoType="hyperic.form.UnitsNumberSpinner" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+            </fieldset>                
+        </div>
+
+        <div id="${id}_emptyFullColorProperties" class="fieldSet" style="display: none;" dojoAttachPoint="emptyFullColorProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Empty Full Colors</div>
+                <p>
+                    <label class="propertytext">Empty Color:</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="emptycolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_emptycolor" name="emptycolor" dojoAttachPoint="emptycolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>
+                    
+                </p>
+                <p>
+                    <label class="propertytext">Full Color:</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="fullcolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_fullcolor" name="fullcolor" dojoAttachPoint="fullcolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>
+                    
+                </p>
+            </fieldset>                
+        </div>
+
+
         <div id="${id}_rangesProperties" class="fieldSet" style="display: none;" dojoAttachPoint="rangesProperties">
             <fieldset>
                 <div class="hypericPropertiesHeader">Ranges</div>

@@ -16,6 +16,8 @@ dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.TitleProperty");
 dojo.require("hyperic.data.RangeSpeedProperty");
 dojo.require("hyperic.data.RangesProperty");
+dojo.require("hyperic.data.RangeProperty");
+dojo.require("hyperic.data.EmptyFullColorProperty");
 
 dojo.require("hyperic.widget.label.Label");
 dojo.require("dijit.form.TextBox");
@@ -73,6 +75,8 @@ dojo.declare("hyperic.layout.PropertiesPane",
         dojo.connect(this.spinnercolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.alarmrangecolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.warnrangecolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.emptycolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.fullcolor,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -91,6 +95,8 @@ dojo.declare("hyperic.layout.PropertiesPane",
         
         // first hide all, we'll show needed components later
         this.hide(["rangesProperties"]);
+        this.hide(["emptyFullColorProperties"]);
+        this.hide(["rangeProperties"]);
         this.hide(["rangeSpeedProperties"]);
         this.hide(["labelProperties"]);
         this.hide(["arrowProperties"]);
@@ -139,6 +145,18 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this.rangesProperty();
             } else {
                 this.hide(["rangesProperties"]);
+            }
+
+            if(arg.isInstanceOf(hyperic.data.RangeProperty)) {
+                this.rangeProperty();
+            } else {
+                this.hide(["rangeProperties"]);
+            }
+
+            if(arg.isInstanceOf(hyperic.data.EmptyFullColorProperty)) {
+                this.emptyFullColorProperty();
+            } else {
+                this.hide(["emptyFullColorProperties"]);
             }
         	
         }
@@ -195,6 +213,24 @@ dojo.declare("hyperic.layout.PropertiesPane",
             this._selected.minRangeObj.value = this.elementValue("minrange");
             this._selected.maxRangeObj.value = this.elementValue("maxrange");
             this._selected.speedTimeObj.value = this.elementValue("speedtime");
+        }
+        if(this._selected.isInstanceOf(hyperic.data.RangeProperty)) {
+            this._selected.lowRangeObj.value = this.elementValue("lowrange");
+            this._selected.highRangeObj.value = this.elementValue("highrange");
+        }
+        if(this._selected.isInstanceOf(hyperic.data.EmptyFullColorProperty)) {
+            var emptypicker = dijit.byId(this.emptycolor);
+            if(emptypicker.value) {
+                dojo.style(this.emptycolorbutton.containerNode, "color", emptypicker.value);
+                dojo.style(this.emptycolorbutton.containerNode, "backgroundColor", emptypicker.value);
+                this._selected.emptyColor = emptypicker.value;               
+            }
+            var fullpicker = dijit.byId(this.fullcolor);
+            if(fullpicker.value) {
+                dojo.style(this.fullcolorbutton.containerNode, "color", fullpicker.value);
+                dojo.style(this.fullcolorbutton.containerNode, "backgroundColor", fullpicker.value);
+                this._selected.fullColor = fullpicker.value;               
+            }        	
         }
 
         if(this._selected.isInstanceOf(hyperic.data.RangesProperty)) {
@@ -339,6 +375,38 @@ dojo.declare("hyperic.layout.PropertiesPane",
         speedTime.constraints.max = this._selected.speedTimeObj.max;
         speedTime.set('value', this._selected.speedTimeObj.value);        
 
+    },
+
+    rangeProperty: function(){
+        this.show(["rangeProperties"]);
+        
+        
+        var lowRange = dijit.byId(this.lowrange);
+        lowRange.units = this._selected.format;
+        lowRange.constraints.min = this._selected.lowRangeObj.min;
+        lowRange.constraints.max = this._selected.lowRangeObj.max;
+        lowRange.set('value', this._selected.lowRangeObj.value);        
+
+        var highRange = dijit.byId(this.highrange);
+        highRange.units = this._selected.format;      
+        highRange.constraints.min = this._selected.highRangeObj.min;
+        highRange.constraints.max = this._selected.highRangeObj.max;
+        highRange.set('value', this._selected.highRangeObj.value);  
+
+    },
+    
+    emptyFullColorProperty: function(){
+        this.show(["emptyFullColorProperties"]);
+        
+        var emptypicker = dijit.byId(this.emptycolor);
+        emptypicker.value = this._selected.getEmptyColor();
+        dojo.style(this.emptycolorbutton.containerNode, "color", this._selected.getEmptyColor());
+        dojo.style(this.emptycolorbutton.containerNode, "backgroundColor", this._selected.getEmptyColor());
+        
+        var fullpicker = dijit.byId(this.fullcolor);
+        fullpicker.value = this._selected.getFullColor();
+        dojo.style(this.fullcolorbutton.containerNode, "color", this._selected.getFullColor());
+        dojo.style(this.fullcolorbutton.containerNode, "backgroundColor", this._selected.getFullColor());
     },
 
     rangesProperty: function(){
