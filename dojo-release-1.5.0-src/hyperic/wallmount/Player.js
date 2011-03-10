@@ -33,6 +33,12 @@ hyperic.wallmount.Player.useLayout = function(/*String*/json, /*Boolean*/ sendAn
 hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
 	// summary:
 	//
+	
+	// if size is not in layout, just make it big enough
+	var wallmountPane = dojo.byId('wallmountpane');
+    dojo.style(wallmountPane,'width',data.w||9999);
+    dojo.style(wallmountPane,'height',data.h||9999);
+	
     var items = data.items;
     for(var i=0; i<items.length; i++) {
     	var args = {
