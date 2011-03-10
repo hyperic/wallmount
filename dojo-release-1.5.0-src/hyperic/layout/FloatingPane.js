@@ -214,12 +214,11 @@ dojo.declare("hyperic.layout.FloatingPane",
 		} else {
 	       dim = dim || this._naturalState;		
 		}
-		this._currentState = dim;
-
-        // mods before this point
-
-//        dim = dim || this._naturalState;
-//        this._currentState = dim;
+        // XXX: for now, below code is causing window to place itself back
+        //      to original position if user hasn't resized window.
+        //      disabling this now, not sure why this is fixing the issue
+        
+		//this._currentState = dim;
 
 		// From the ResizeHandle we only get width and height information
 		var dns = this.domNode.style;
