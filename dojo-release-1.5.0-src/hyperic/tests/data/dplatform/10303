@@ -3,6 +3,8 @@
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dserver/proto', name: 'Servers', children: true},
   { id: 'm10594', mid: '10594', name:'Availability', format:'percentage' },
   { id: 'm10522', mid: '10522', name:'Free Memory', format:'B' },
+  { id: 'm10523', mid: '10523', name:'Free Memory2', format:'KB' },
+  { id: 'm10586', mid: '10586', name:'Idle Time', format:'percentage' },
   { id: 'm10585', mid: '10585', name:'Load Average 5 Minutes', format:'none' }
 ]
 }

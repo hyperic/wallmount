@@ -8,6 +8,8 @@ dojo.require("dijit.form.TextBox");
 dojo.require("dijit.form.Select");
 dojo.require("dijit.form.NumberSpinner");
 
+dojo.require("hyperic.form.UnitsNumberSpinner");
+
 dojo.require("hyperic.data.SizeProperty");
 dojo.require("hyperic.data.ArrowProperty");
 dojo.require("hyperic.data.ArrowPipeProperty");
@@ -319,15 +321,18 @@ dojo.declare("hyperic.layout.PropertiesPane",
     rangeSpeedProperty: function(){
         this.show(["rangeSpeedProperties"]);
         
+        
         var minRange = dijit.byId(this.minrange);
+        minRange.units = this._selected.format;
         minRange.constraints.min = this._selected.minRangeObj.min;
         minRange.constraints.max = this._selected.minRangeObj.max;
         minRange.set('value', this._selected.minRangeObj.value);        
 
         var maxRange = dijit.byId(this.maxrange);
+        maxRange.units = this._selected.format;      
         maxRange.constraints.min = this._selected.maxRangeObj.min;
         maxRange.constraints.max = this._selected.maxRangeObj.max;
-        maxRange.set('value', this._selected.maxRangeObj.value);        
+        maxRange.set('value', this._selected.maxRangeObj.value);  
         
         var speedTime = dijit.byId(this.speedtime);
         speedTime.constraints.min = this._selected.speedTimeObj.min;
@@ -357,6 +362,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         alarmrangecomp.set('value', aCom);
 
         var alarmrange = dijit.byId(this.alarmrange);
+        alarmrange.units = this._selected.format;
         alarmrange.constraints.min = 0;
         alarmrange.set('value', aVal);       
 
@@ -381,6 +387,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         warnrangecomp.set('value', wCom);
 
         var warnrange = dijit.byId(this.warnrange);
+        warnrange.units = this._selected.format;
         warnrange.constraints.min = 0;
         warnrange.set('value', wVal);       
 

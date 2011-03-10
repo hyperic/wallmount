@@ -43,7 +43,7 @@ dojo.declare("hyperic.form.UnitsNumberSpinner",
             roundedNumber = dojo.number.round(parsedValue);
         }
 
-        console.log("UnitsNumberSpinner.parse:"+value+" "+parsedValue);
+        //console.log("UnitsNumberSpinner.parse:"+value+" "+parsedValue);
         //console.log("roundedNumber:" + roundedNumber);
 
         return roundedNumber;
@@ -64,7 +64,7 @@ dojo.declare("hyperic.form.UnitsNumberSpinner",
         //
         // description:
         //     xxx
-        console.log("adjust:"+val+' '+delta);
+        //console.log("adjust:"+val+' '+delta);
 //        if(this.units === 'B') return val + 100*delta;
         if(this.units === 'percentage') return val + 0.01*delta;
         return this.inherited(arguments);
