@@ -63,6 +63,10 @@ label span, .required {
     float: left;
 }
 
+.dojoxFloatingPane {
+    -webkit-box-shadow: none;
+}
+
 /* for next two styles, give padding if it doesn't have childs.
  * This allocates space for empty container to receive dnd items,
  * but doesn't exist if childs are present. If childs are already there

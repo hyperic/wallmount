@@ -60,6 +60,10 @@
     float: left;
 }
 
+.dojoxFloatingPane {
+    -webkit-box-shadow: none;
+}
+
 .container {
     cursor: default;
     radius: 8pt;
