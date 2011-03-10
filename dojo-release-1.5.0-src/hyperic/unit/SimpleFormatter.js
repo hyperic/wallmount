@@ -21,7 +21,6 @@ dojo.declare("hyperic.unit.SimpleFormatter",
 
     parse: function(/*String*/val, unitType, /*String*/locale){
         // summary:
-        //console.log("parsing:" + val + " with type " + unitType);
         var parsedNumber = this.parseValue(val,this.getParser());
         return new hyperic.unit.UnitNumber({value: parsedNumber,
                                             units: hyperic.unit.UnitsConstants.UNIT_NONE,

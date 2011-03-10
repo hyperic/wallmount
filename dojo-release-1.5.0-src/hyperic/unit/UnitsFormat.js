@@ -2,12 +2,14 @@ dojo.provide("hyperic.unit.UnitsFormat");
 
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.unit.NoFormatter");
+dojo.require("hyperic.unit.DurationFormatter");
 dojo.require("hyperic.unit.CurrencyFormatter");
 dojo.require("hyperic.unit.BytesFormatter");
 dojo.require("hyperic.unit.BitRateFormatter");
 dojo.require("hyperic.unit.DateFormatter");
 dojo.require("hyperic.unit.PercentageFormatter");
 dojo.require("hyperic.unit.PercentFormatter");
+dojo.require("hyperic.unit.BytesToBitsFormatter");
 
 hyperic.unit.UnitsFormat.format = function(/*Object*/val, /*Object*/format, /*String*/locale) {
     // summary:
@@ -64,11 +66,11 @@ hyperic.unit.UnitsFormat.formatters = [
     new hyperic.unit.CurrencyFormatter(),
     new hyperic.unit.BytesFormatter(),
     new hyperic.unit.BitRateFormatter(),
-    new hyperic.unit.NoFormatter(),//new hyperic.unit.DurationFormatter(),
+    new hyperic.unit.DurationFormatter(),
     new hyperic.unit.DateFormatter(),
     new hyperic.unit.PercentageFormatter(),
     new hyperic.unit.PercentFormatter(),
     new hyperic.unit.NoFormatter(),//new hyperic.unit.ApproxDurationFormatter(),
-    new hyperic.unit.NoFormatter()//new hyperic.unit.BytesToBitsFormatter()
+    new hyperic.unit.BytesToBitsFormatter()
 ];
 

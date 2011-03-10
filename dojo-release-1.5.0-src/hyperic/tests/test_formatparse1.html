@@ -40,11 +40,11 @@ dojo.addOnLoad(function(){
 //        [50, 'cents'], //$0.50
 //        [234.1, 'cents'], //$3.34
         [123456789, 'B'],
-        [123456789, 'KB'],
-        [123456789, 'MB'],
-        [123456789, 'GB'],
-        [123456789, 'TB'],
-        [123456789, 'PB'],
+//        [123456789, 'KB'],
+//        [123456789, 'MB'],
+//        [123456789, 'GB'],
+//        [123456789, 'TB'],
+//        [123456789, 'PB'],
 //        [1000, 'Mb'],
 //        [1000, 'MB'],
 //        [3737373, 'epoch-millis'], // 01/01/70 01:02:17
@@ -61,6 +61,17 @@ dojo.addOnLoad(function(){
 //        [1.0, 'percent'],
 //        [56.7, 'percent'],
 //        [100.0, 'percent']
+        [123, 'ns'],
+        [123000000, 'ns'],
+        [123, 'mu'],
+        [123000000, 'mu'],
+        [123, 'ms'],
+        [123000000, 'ms'],
+        [123, 'jiffys'],
+        [123000000, 'jiffys'],
+        [123, 'sec'],
+        [123000000, 'sec'],
+        [999999999999, 'sec']
     ];
     
     var out = "<table cellspacing=5>";
@@ -85,6 +96,7 @@ dojo.addOnLoad(function(){
             out += con;
             out += "</td>";
             out += "<td>";
+            var un = hyperic.unit.UnitsFormat.parse(con, item[1]);
             out += hyperic.unit.UnitsFormat.parse(con, item[1]);
             out += "</td>";
             out += "</tr>";

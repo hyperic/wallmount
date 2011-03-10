@@ -35,3 +35,10 @@ hyperic.unit.UnitsConstants.SCALE_MICRO = 14;
 hyperic.unit.UnitsConstants.SCALE_NANO  = 15;
 
 hyperic.unit.UnitsConstants.SCALE_BIT   = 16;
+
+hyperic.unit.UnitsConstants.GRANULAR_YEARS  = 1;  // Time > 1 year
+hyperic.unit.UnitsConstants.GRANULAR_DAYS   = 2;  // 1 day < time < 1 year 
+hyperic.unit.UnitsConstants.GRANULAR_HOURS  = 3;  // 1 hour < time < 1 day
+hyperic.unit.UnitsConstants.GRANULAR_MINS   = 4;  // 1 min < time < 1 hour
+hyperic.unit.UnitsConstants.GRANULAR_SECS   = 5;  // 1 sec < time < 1 min
+hyperic.unit.UnitsConstants.GRANULAR_MILLIS = 6;  // 0 < time < 1 sec

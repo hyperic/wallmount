@@ -15,14 +15,11 @@ dojo.declare("hyperic.unit.PercentageFormatter",
     },
     
     parseValue: function(/*String*/rawValue, f){
-    	//console.log("parseValue:"+rawValue);
-        //console.log("parseValue2:"+f(rawValue,{type:'percent'}));
         return f(rawValue,{type:'percent'});
     },
 
     parse: function(/*String*/val, unitType, /*String*/locale){
         // summary:
-        //console.log("parsing:" + val + " with type " + unitType);
         var parsedNumber = this.parseValue(val,this.getParser());
         return new hyperic.unit.UnitNumber({value: parsedNumber,
                                             units: hyperic.unit.UnitsConstants.UNIT_PERCENTAGE,

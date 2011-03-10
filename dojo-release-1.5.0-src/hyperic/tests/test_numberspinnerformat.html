@@ -35,19 +35,6 @@
 
     var val;
 
-    var updatearrows = function() {
-        var s = dijit.byId("spinner");
-        var size = dijit.byId("size").get('value');
-        s.width = size;
-        s.height = size;
-        s.arrowCountObj.value = dijit.byId("numOfArrows").get('value');
-        s.arrowWidthObj.value = dijit.byId("arrowWidth").get('value');
-        s.arrowGapObj.value = dijit.byId("arrowGap").get('value');
-        s.arrowHeadLengthObj.value = dijit.byId("arrowHeadLength").get('value');
-        s.rotationTime = dijit.byId("rotationTime").get('value');
-        
-       
-    }
     var updatevalue = function() {
     };
     
@@ -72,6 +59,16 @@
                 id="valuenone">
 </br></br>
 
+<label for="valuesec1">sec</label>
+<input dojoType="hyperic.form.UnitsNumberSpinner"
+                onChange="updatevalue"
+                intermediateChanges="true"
+                value="123"
+                units="sec"
+                name="value"
+                id="valuesec1">
+</br></br>
+
 <label for="valuepercentage">percentage</label>
 <input dojoType="hyperic.form.UnitsNumberSpinner"
                 onChange="updatevalue"
@@ -91,6 +88,7 @@
                 name="value"
                 id="valueB">
 </br></br>
+
 <label for="valueKB">Bytes KB</label>
 <input dojoType="hyperic.form.UnitsNumberSpinner"
                 onChange="updatevalue"
