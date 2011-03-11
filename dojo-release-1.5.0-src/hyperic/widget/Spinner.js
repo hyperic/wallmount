@@ -26,33 +26,16 @@ dojo.declare("hyperic.widget.Spinner",
     //      area which is reserved for numerical output.
     // animation:
     //      
-        
-    // speed: Number
-    // from scale 0-100, how fast we're spinning
-    speed: 0,
-    
-    // minValueForSpeed: Number
-    // Minimum value to determine slowest spinner speed
-    //minValueForSpeed: 0,
-    
-    // minValueForSpeed: Number
-    // Maximum value to determine fastest spinner speed
-    //maxValueForSpeed: 100,
-    
+            
     // speedAcceleration: String, either 'linear' or 'logaritmic'
     // determine how spinner speed is determined from
     // min-max/value scale.
-    speedAcceleration: 'linear',
+    //speedAcceleration: 'linear',
     
-    // rotationTime: Number (milliseconds)
-    // if speed is set to maximum, how long in millis
-    // should one rotation take
-    //rotationTime: 1800,
-        
     // counterclockwise: Boolean
     // arrows are spinning counterclockwise if true,
     // clockwise if false.
-    counterclockwise: true,
+    //counterclockwise: true,
     
     // internal data
     _lastTimeStamp: 0, // last update time
