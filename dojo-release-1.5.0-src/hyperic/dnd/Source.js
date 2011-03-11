@@ -103,6 +103,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.reverse) {
                 args['reverse'] = item.reverse;               
             }   	
+            if(item.arrowColor) {
+                args['arrowColor'] = item.arrowColor;               
+            }       
             if(item.arrowGap) {
                 args['arrowGap'] = item.arrowGap;               
             }       

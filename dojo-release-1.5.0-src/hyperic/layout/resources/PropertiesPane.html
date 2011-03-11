@@ -88,6 +88,17 @@
                     <label class="propertytext">Head:</label>
                     <input style="float:left;" id="${id}_arrowpipeheadlength" name="arrowpipeheadlength" dojoAttachPoint="arrowpipeheadlength" class="textbox" dojoType="dijit.form.NumberSpinner" intermediateChanges="true" observer="handleValues"></input>
                 </p>
+                <p>
+                    <label class="propertytext">Reverse:</label>
+                    <input style="float:left;" id="${id}_arrowpipereverse" name="arrowpipereverse" dojoAttachPoint="arrowpipereverse" class="textbox" dojoType="dijit.form.CheckBox" intermediateChanges="true" observer="handleValues"></input>
+                </p>
+                <p>
+                    <label class="propertytext">Color:</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="arrowpipecolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_arrowpipecolor" name="arrowpipecolor" dojoAttachPoint="arrowpipecolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
             </fieldset>                
         </div>
 

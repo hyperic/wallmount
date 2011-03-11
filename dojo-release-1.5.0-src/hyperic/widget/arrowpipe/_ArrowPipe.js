@@ -3,12 +3,16 @@ dojo.provide("hyperic.widget.arrowpipe._ArrowPipe");
 dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.data.ArrowPipeProperty");
+dojo.require("hyperic.data.RangeSpeedProperty");
+dojo.require("hyperic.data.RangesProperty");
 
 
 dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     [ hyperic.widget.base._WallMountItem,
       hyperic.widget.base._Animatable,
-      hyperic.data.ArrowPipeProperty ],{
+      hyperic.data.ArrowPipeProperty,
+      hyperic.data.RangeSpeedProperty,
+      hyperic.data.RangesProperty ],{
     // summary:
     //      xxx
     //
@@ -22,23 +26,10 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     // 
     //      This class draws point, etc using x-axis, childs are
     //      responsible to do correct transformations.
-    
-    // minValueForSpeed: Number
-    //      min scale to calculate speed
-    minValueForSpeed: 0,
-    
-    // maxValueForSpeed: Number
-    //      max scale to calculate speed
-    maxValueForSpeed: 100,
-    
-    // rotationTime: Number
-    //      if speed is set to maximum, how long in millis
-    //      should shifting arrows 1000 pixels take
-    rotationTime: 2500,
-      
+          
     // arrowColor:
     //      xxx
-    arrowColor: null,
+    arrowColor: "blue",
 
     
     
@@ -56,6 +47,9 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     
     _text:null,
     _valueDirty: true,
+    _fillObj:null,
+    _points:null,
+    _rcolor:null, // caching color, either from main or from ranges
     
     startup: function(){
         // summary:
@@ -74,31 +68,53 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     },
         
     getColor: function(){
-    	if(this.arrowColor) {
-    		return this.arrowColor
-    	} else {
-    		return "blue";
-    	}
+  		return this.arrowColor;
     },
     
     resetValue: function(){
+    	this._cacheColor();
        	this._drawAxis(20);
+       	this.setUpArrowColors();
+    },
+
+    _cacheColor: function(){
+        var range = this.getInRange(this.value);
+        this._rcolor = this.arrowColor;
+        if(range != null) this._rcolor = range.color;       
+    },
+
+    setUpArrowColors: function(){
+    	
+        var c0 = new dojo.Color(this._rcolor).toRgba();
+        c0[3] = 0.0;
+        var c1 = new dojo.Color(this._rcolor).toRgba();
+        c1[3] = 1.0;                
+        this._fillObj = {
+            colors: [
+                { offset: 0, color: c0 },
+                { offset: 1, color: c1 }
+            ]
+        };
+        var fillObj = this._fillObj; // dojo.forEach doesn't play along with this._fillObj
+        var points = this._points;
+        dojo.forEach(this._arrows, function(entry){
+            entry.setFill(dojo.mixin({
+                    type: "linear",
+                    x1: points[0].x, y1: points[0].y,
+                    x2: points[3].x, y2: points[0].y
+                    }, fillObj));
+        });     
     },
     
     draw: function(){
         // summary:
         this.surface.clear();
+        this._cacheColor();
         if(this._arrows === null)
             this._createArrows();
         this._drawAxis(20);
     },
     
-//    storeCallback: function(arg) {
-//    	if(arg != this.value)
-//    	   this._valueDirty = true;
-//    	this.value = arg;
-//    },    
-
     _createArrowPoints: function(rotation){
         // summary:
         //      Creates points for one arrow.
@@ -124,13 +140,13 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         // summary:
 
         var _baseSpeed;
-        if(this.value >= this.maxValueForSpeed) {
+        if(this.value >= this.getMaxRange()) {
             _baseSpeed = 1;
-        } else if(this.value <= this.minValueForSpeed) {
+        } else if(this.value <= this.getMinRange()) {
             _baseSpeed = 0;
         } else {
-            var _scaleMinMax = this.maxValueForSpeed - this.minValueForSpeed;
-            _baseSpeed = (this.value - this.minValueForSpeed) / _scaleMinMax;
+            var _scaleMinMax = this.getMaxRange() - this.getMinRange();
+            _baseSpeed = (this.value - this.getMinRange()) / _scaleMinMax;
         }
         
         //rotationTime is telling how often we should do full rotation in max speed     
@@ -146,7 +162,7 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
 
 
 
-        var _toShiftBase = 1000 / (this.rotationTime / _diff);        
+        var _toShiftBase = 1000 / (this.getSpeedTime() / _diff);        
         var _toShift = _toShiftBase * _baseSpeed;
 
         var rLength = this._arrowTotalLength();
@@ -170,6 +186,12 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         paramObj['arrowCount'] = this.getArrowCount();
         paramObj['arrowGap'] = this.getArrowGap();
         paramObj['arrowHeadLength'] = this.getArrowHeadLength();
+        paramObj['minRange'] = this.getMinRange();        
+        paramObj['maxRange'] = this.getMaxRange();        
+        paramObj['speedTime'] = this.getSpeedTime();
+        paramObj['arrowColor'] = this.arrowColor;    
+        paramObj['reverse'] = this.reverse;    
+        paramObj['ranges'] = this.asRangesParams();    
         return paramObj;
     }
         

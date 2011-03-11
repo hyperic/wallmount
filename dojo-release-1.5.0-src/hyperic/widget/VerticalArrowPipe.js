@@ -31,24 +31,31 @@ dojo.declare("hyperic.widget.VerticalArrowPipe",
         // summary:
         //      Creates all arrow shapes used in this
         //      component.
-        var fillObj = {
+        
+        var c0 = new dojo.Color(this.getColor()).toRgba();
+        c0[3] = 0.0;
+        var c1 = new dojo.Color(this.getColor()).toRgba();
+        c1[3] = 1.0;
+        
+        
+        this._fillObj = {
             colors: [
-                { offset: 0, color: [0, 0, 255, 0.0] },
-                { offset: 1, color: "blue" }
+                { offset: 0, color: c0 },
+                { offset: 1, color: c1 }
             ]
         };
+        
         this._arrows = [];
         var rLength = this._arrowTotalLength();
-        var points = this._createArrowPoints();
+        this._points = this._createArrowPoints();
         var _s = 0 - rLength;
         for(var i = 0; i <= this.getArrowCount(); i++) {
-            var arrow = this.surface.createPolyline(points);
-//                arrow.setFill("blue");
+            var arrow = this.surface.createPolyline(this._points);
                 arrow.setFill(dojo.mixin({
                     type: "linear",
-                    x1: points[0].x, y1: points[0].y,
-                    x2: points[3].x, y2: points[0].y
-                    }, fillObj));
+                    x1: this._points[0].x, y1: this._points[0].y,
+                    x2: this._points[3].x, y2: this._points[0].y
+                    }, this._fillObj));
             if(!this.reverse)
                 arrow.setTransform({dy: _s, xx: 0, xy: 1, yx: 1, yy: 0});
             else 
@@ -59,11 +66,11 @@ dojo.declare("hyperic.widget.VerticalArrowPipe",
     },
     
     _drawAxis: function(height){
-        var sVal = hyperic.unit.UnitsConvert.convert(this.value, "none");
+        var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format);
         
         var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sVal, this.width, height);
         if(this._text) {
-            this._text.setShape({text: sVal}); 
+            this._text.setShape({text: sVal});
         } else {
             this._text = this.drawText(sVal,0 ,0 , "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'}).setTransform({xx: 0, xy: 1, yx: -1, yy: 0, dx: this.width, dy: this.height/2});
         }

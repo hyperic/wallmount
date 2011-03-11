@@ -6,6 +6,7 @@ dojo.require("dijit._Templated");
 dojo.require("dojox.form.Manager");
 dojo.require("dijit.form.TextBox");
 dojo.require("dijit.form.Select");
+dojo.require("dijit.form.CheckBox");
 dojo.require("dijit.form.NumberSpinner");
 
 dojo.require("hyperic.form.UnitsNumberSpinner");
@@ -73,6 +74,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         // so connect event here.
         dojo.connect(this.labelcolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.spinnercolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.arrowpipecolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.alarmrangecolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.warnrangecolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.emptycolor,'onChange',dojo.hitch(this,"handleValues"));
@@ -195,6 +197,13 @@ dojo.declare("hyperic.layout.PropertiesPane",
             this._selected.arrowCountObj.value = this.elementValue("arrowpipecount");
             this._selected.arrowGapObj.value = this.elementValue("arrowpipegap");
             this._selected.arrowHeadLengthObj.value = this.elementValue("arrowpipeheadlength");
+            this._selected.reverse = this.elementValue("arrowpipereverse");
+            var picker = dijit.byId(this.arrowpipecolor);
+            if(picker.value) {
+                dojo.style(this.arrowpipecolorbutton.containerNode, "color", picker.value);
+                dojo.style(this.arrowpipecolorbutton.containerNode, "backgroundColor", picker.value);
+                this._selected.arrowColor = picker.value;               
+            }
         }
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
             this._selected.titlePosition.value = this.elementValue("titleposition");
@@ -333,6 +342,14 @@ dojo.declare("hyperic.layout.PropertiesPane",
         arrowHeadLength.constraints.min = this._selected.arrowHeadLengthObj.min;
         arrowHeadLength.constraints.max = this._selected.arrowHeadLengthObj.max;
         arrowHeadLength.set('value', this._selected.arrowHeadLengthObj.value);       
+
+        var arrowpipereverse = dijit.byId(this.arrowpipereverse);
+        arrowpipereverse.set('value', this._selected.reverse);
+
+        var arrowpipecolorpicker = dijit.byId(this.arrowpipecolor);
+        arrowpipecolorpicker.value = this._selected.getColor();
+        dojo.style(this.arrowpipecolorbutton.containerNode, "color", this._selected.getColor());
+        dojo.style(this.arrowpipecolorbutton.containerNode, "backgroundColor", this._selected.getColor());
     },
     
     titleProperty: function(){
