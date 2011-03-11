@@ -3,32 +3,39 @@ dojo.provide("hyperic.widget.ProgressTube");
 dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
+dojo.require("hyperic.data.EmptyFullColorProperty");
+dojo.require("hyperic.data.RangesProperty");
+dojo.require("hyperic.data.RangeProperty");
 
 dojo.declare("hyperic.widget.ProgressTube",
-    [hyperic.widget.base._WallMountItem],{
+    [ hyperic.widget.base._WallMountItem,
+      hyperic.data.EmptyFullColorProperty,
+      hyperic.data.RangesProperty,
+      hyperic.data.RangeProperty ],{
     // summary:
     //      xxx
     //
     // description:
     //      xxx
 
-    min: 0,
-    max: 1000,
-    fillcolor: "red",
-    emptycolor: "green",
-
     startup: function(){
                 
         this.inherited(arguments);
         this.draw();
-    },
-    
-//    postCreate: function(){
-//    },
-    
+    },    
     
     draw: function(){
         this.surface.clear();
+
+        // range from property
+        var min = this.getLowRange();
+        var max = this.getHighRange();
+        
+        // setup color and overwrite if in range
+        var emptycolor = this.getEmptyColor();
+        var fillcolor = this.getFullColor();        
+        var range = this.getInRange(this.value);
+        if(range != null) fillcolor = range.color;       
         
         // cylinder point of origin is back of the tube (center of tube)
         // if you hold it from the back and point it towards
@@ -59,38 +66,38 @@ dojo.declare("hyperic.widget.ProgressTube",
 
 
         // first cyl
-        var _width1 = _width * ((this.value-this.min)/(this.max-this.min));
+        var _width1 = _width * ((this.value-min)/(max-min));
         var _x1 = 0;
         
         var m = dojox.gfx3d.matrix;
         // only draw if value is larger than min
-        if(this.value > this.min && this.value <= this.max) {
+        if(this.value > min && this.value <= max) {
               view.createCylinder({height:_width1,radius:_radius})
                   .setTransform([m.translate(_width1+1, 0, -_radius-axisH), m.rotateYg(-90)])
                   .setStroke("black")
-                  .setFill({type: "plastic", finish: "shiny", color: "green"});
-        } else if (this.value > this.max ) {
+                  .setFill({type: "plastic", finish: "shiny", color: fillcolor});
+        } else if (this.value > max ) {
               view.createCylinder({height:_width,radius:_radius})
                   .setTransform([m.translate(_width+1, 0, -_radius-axisH), m.rotateYg(-90)])
                   .setStroke("black")
-                  .setFill({type: "plastic", finish: "shiny", color: "green"});
+                  .setFill({type: "plastic", finish: "shiny", color: fillcolor});
         }
 
         // second cyl
-        var _width2 = _width * (1-((this.value-this.min)/(this.max-this.min)));
+        var _width2 = _width * (1-((this.value-min)/(max-min)));
         var _x2 = _width2 + _width1;
         
-        if(this.value < this.max && this.value >= this.min) {
+        if(this.value < max && this.value >= min) {
               view.createCylinder({height:_width2,radius:_radius})
                   .setTransform([m.translate(_x2+1, 0, -_radius-axisH), m.rotateYg(-90)])
                   .setStroke("black")
-                  .setFill({type: "plastic", finish: "shiny", color: "gray"});
+                  .setFill({type: "plastic", finish: "shiny", color: emptycolor});
         	
-        } else if(this.value < this.min) {
+        } else if(this.value < min) {
               view.createCylinder({height:_width,radius:_radius})
                   .setTransform([m.translate(_width+1, 0, -_radius-axisH), m.rotateYg(-90)])
                   .setStroke("black")
-                  .setFill({type: "plastic", finish: "shiny", color: "gray"});
+                  .setFill({type: "plastic", finish: "shiny", color: emptycolor});
         	
         }
         
@@ -105,14 +112,27 @@ dojo.declare("hyperic.widget.ProgressTube",
         // summary:
         //     draws "axix" below the tube. this axis only
         //     contains current value and max
+        var max = this.getHighRange();
+        
         var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format);
-        var sMax = hyperic.unit.UnitsConvert.convert(this.max, this.format);
+        var sMax = hyperic.unit.UnitsConvert.convert(max, this.format);
         
         var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sMax, this.width, height);
         this.drawText(sMax, this.width, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});
         this.drawText(sVal, this.width/2, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});
-    }
+    },
     
+    asParams: function(){
+        // summary:
+        //     Returns component parameters as object.
+        var paramObj = this.inherited(arguments);
+        paramObj['emptyColor'] = this.getEmptyColor();
+        paramObj['fullColor'] = this.getFullColor();
+        paramObj['lowRange'] = this.getLowRange();
+        paramObj['highRange'] = this.getHighRange();
+        paramObj['ranges'] = this.asRangesParams();    
+        return paramObj;
+    }
 
 
 });
