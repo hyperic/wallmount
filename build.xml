@@ -4,6 +4,7 @@
 
     <property name="dist.dir" location="dist"/>
     <property name="assemble.dir" location="assemble"/>
+    <property name="version" value="2.0"/>
 	
     <property name="dojo.source.dir" location="dojo-release-1.5.0-src" />
     <property name="dojobuild.lib" location="${dojo.source.dir}/util/shrinksafe" />
@@ -23,7 +24,7 @@
 
     <target name="dist" depends="clean,assemble-wallmount,assemble-dojo">    
 	    <mkdir dir="${dist.dir}"/>
-		<zip file="${dist.dir}/hqu_wallmount-2.0.zip">
+		<zip file="${dist.dir}/hqu_wallmount-${version}.zip">
 			<fileset dir="${assemble.dir}">
 				<include name="wallmount/**"/>
 			</fileset>
@@ -32,7 +33,7 @@
 
     <target name="dist-hqu" depends="clean,assemble-wallmount">    
         <mkdir dir="${dist.dir}"/>
-        <zip file="${dist.dir}/hqu_wallmount-2.0.zip">
+        <zip file="${dist.dir}/hqu_wallmount-${version}.zip">
             <fileset dir="${assemble.dir}">
                 <include name="wallmount/**"/>
             </fileset>
@@ -48,8 +49,10 @@
     		<arg line="${dojobuild.js}"/>
             <arg line="profile=${dojoprofile}"/>
             <arg line="action=release"/>
-            <arg line="copyTests=true"/>
+            <arg line="copyTests=false"/>
             <arg line="mini=false"/>
+            <arg line="version=${version}"/>
+            <arg line="optimize=shrinksafe"/>
     	</java>
     </target>
 
