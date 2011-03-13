@@ -11,10 +11,7 @@ dojo.declare("hyperic.widget.AvailText",
     // description:
     //      xxx
 
-    alertLegend: null,
-
     constructor: function(){
-        this.legends = true;
         this.preserveRatio = true;
     },
 
@@ -41,33 +38,17 @@ dojo.declare("hyperic.widget.AvailText",
         
         // don't even try to draw legends if those are
         // not marked as supported
-        if(this.legends)
+        if(this.supportLegends)
             this.drawLegends();
     },
 
     storeAvailCallback: function(arg) {
         // summary:
-        if(this.legends) {
-            if(arg.alerts) this._setAlertLegendValue(arg.alerts);        	
+        if(this.supportLegends) {
+            if(typeof(arg.alerts) !== 'undefined') this._setAlertLegendValue(arg.alerts);
+            if(typeof(arg.escalations) !== 'undefined') this._setEscalationLegendValue(arg.escalations);
         }
         this.inherited(arguments);
-    },
-
-    _setAlertLegendValue: function(arg){
-        // summary:
-        if(arg == 0) {
-            if(this.alertLegend){
-                this.removeLegend(this.alertLegend);
-                this.alertLegend = null;                
-            }
-        } else {
-            if(this.alertLegend){
-                this.alertLegend.value = arg;
-            } else {
-                this.alertLegend = 
-                    this.addLegend({position:1,value:arg,color:'red'});
-            }
-        }
     },
 
     _setSizeAttr: function(/*Number*/size){

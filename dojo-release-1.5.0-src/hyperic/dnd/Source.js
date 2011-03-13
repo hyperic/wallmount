@@ -148,7 +148,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.highRange) {
                 args['highRange'] = item.highRange;               
             }       
-        	
+            if(item.supportLegends) {
+                args['supportLegends'] = item.supportLegends;               
+            }       
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);
@@ -187,6 +189,10 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
 
         if(item.ranges){
             w.addRanges(item.ranges);
+        }
+
+        if(item.legends){
+            w.addLegends(item.legends);
         }
 
         // TODO: this title stuff is too complex like this, redesign...

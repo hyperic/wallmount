@@ -12,6 +12,7 @@ dojo.require("dijit.form.NumberSpinner");
 dojo.require("hyperic.form.UnitsNumberSpinner");
 
 dojo.require("hyperic.data.SizeProperty");
+dojo.require("hyperic.data.LegendsProperty");
 dojo.require("hyperic.data.ArrowProperty");
 dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.TitleProperty");
@@ -79,6 +80,8 @@ dojo.declare("hyperic.layout.PropertiesPane",
         dojo.connect(this.warnrangecolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.emptycolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.fullcolor,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.legend0color,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.legend2color,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -103,6 +106,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         this.hide(["labelProperties"]);
         this.hide(["arrowProperties"]);
         this.hide(["arrowPipeProperties"]);
+        this.hide(["legendsProperties"]);
         this.hide(["sizeProperties"]);
         this.hide(["sizePropertiesSize"]);
         this.hide(["titleProperties"]);
@@ -118,6 +122,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this.hide(["sizeProperties"]);
                 this.hide(["sizePropertiesSize"]);
         	}
+
+            if(arg.isInstanceOf(hyperic.data.LegendsProperty)) {
+                this.legendsProperty();
+            } else {
+                this.hide(["legendsProperties"]);
+            }
 
             if(arg.isInstanceOf(hyperic.data.ArrowProperty)) {
                 this.arrowProperty();
@@ -205,6 +215,40 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this._selected.arrowColor = picker.value;               
             }
         }
+
+        if(this._selected.isInstanceOf(hyperic.data.LegendsProperty)) {
+            var l0val =  this.elementValue("legend0position");
+            var l2val =  this.elementValue("legend2position");
+
+            var legend0colorpicker = dijit.byId(this.legend0color);
+            if(legend0colorpicker.value) {
+                dojo.style(this.legend0colorbutton.containerNode, "color", legend0colorpicker.value);
+                dojo.style(this.legend0colorbutton.containerNode, "backgroundColor", legend0colorpicker.value);
+            }
+            var legend2colorpicker = dijit.byId(this.legend2color);
+            if(legend2colorpicker.value) {
+                dojo.style(this.legend2colorbutton.containerNode, "color", legend2colorpicker.value);
+                dojo.style(this.legend2colorbutton.containerNode, "backgroundColor", legend2colorpicker.value);
+            }
+
+            this._selected.clearLegends();
+            
+            // if all legends are set to 'none', disable legend support
+            if(l0val === 'none' && l2val === 'none') {
+            	this._selected.supportLegends = false;
+            } else {
+                this._selected.supportLegends = true;
+                var legends = [];
+                if(l0val !== 'none') {
+                	legends.push({position:0,type:l0val,value:1,color:legend0colorpicker.value});
+                }
+                if(l2val !== 'none') {
+                    legends.push({position:2,type:l2val,value:1,color:legend2colorpicker.value});
+                }
+                this._selected.addLegends(legends);
+            }
+        }
+        
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
             this._selected.titlePosition.value = this.elementValue("titleposition");
             this._selected.setTitle(this.elementValue("titletext"))
@@ -294,6 +338,45 @@ dojo.declare("hyperic.layout.PropertiesPane",
             h.constraints.max = this._selected.maxheight;
             h.set('value', this._selected.height);    		
     	}
+    },
+
+    legendsProperty: function(){
+        this.show(["legendsProperties"]);
+
+        var legends = this._selected.getLegends();
+
+        // legend pos 0       
+        var aType, aCol;
+        if(legends && legends[0]) {
+            aType = legends[0].type;
+            aCol = legends[0].color;
+        } else {
+            aType = "none";
+            aCol = "#ff0000";
+        }
+    	
+        var legend0position = dijit.byId(this.legend0position);
+        legend0position.set('value', aType);
+        var legend0color = dijit.byId(this.legend0color);
+        legend0color.value = aCol;
+        dojo.style(this.legend0colorbutton.containerNode, "color", aCol);
+        dojo.style(this.legend0colorbutton.containerNode, "backgroundColor", aCol);
+
+        // legend pos 2
+        if(legends && legends[2]) {
+            aType = legends[2].type;
+            aCol = legends[2].color;
+        } else {
+            aType = "none";
+            aCol = "#0000ff";
+        }
+        
+        var legend2position = dijit.byId(this.legend2position);
+        legend2position.set('value', aType);
+        var legend2color = dijit.byId(this.legend2color);
+        legend2color.value = aCol;
+        dojo.style(this.legend2colorbutton.containerNode, "color", aCol);
+        dojo.style(this.legend2colorbutton.containerNode, "backgroundColor", aCol);        
     },
     
     arrowProperty: function(){

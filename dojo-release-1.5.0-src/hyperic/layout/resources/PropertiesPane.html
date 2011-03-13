@@ -34,6 +34,42 @@
             </fieldset>                
         </div>
 
+        <div id="${id}_legendsProperties" class="fieldSet" style="display: none;" dojoAttachPoint="legendsProperties">
+            <fieldset>
+                <div class="hypericPropertiesHeader">Legends</div>
+                <p>
+                    <label class="propertytext">Top Left:</label>
+                    <select style="float:left;" id="${id}_legend1position" name="legend0position" dojoAttachPoint="legend0position" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
+                        <option value="none">None</option>
+                        <option value="alert">Alerts</option>
+                        <option value="escalation">Escalations</option>
+                    </select>
+                </p>
+                <p>
+                    <label class="propertytext">&nbsp;</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="legend0colorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_legend0color" name="legend0color" dojoAttachPoint="legend0color" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
+                <p>
+                    <label class="propertytext">Top Right:</label>
+                    <select style="float:left;" id="${id}_legend2position" name="legend2position" dojoAttachPoint="legend2position" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
+                        <option value="none">None</option>
+                        <option value="alert">Alerts</option>
+                        <option value="escalation">Escalations</option>
+                    </select>
+                </p>
+                <p>
+                    <label class="propertytext">&nbsp;</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="legend2colorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_legend2color" name="legend2color" dojoAttachPoint="legend2color" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
+                </p>
+            </fieldset>                
+        </div>
+
         <div id="${id}_sizePropertiesSize" class="fieldSet" style="display: none;" dojoAttachPoint="sizePropertiesSize">
             <fieldset>
                 <div class="hypericPropertiesHeader">Component size</div>

@@ -226,6 +226,15 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                         alerts: 12,
                         escalations: 0
                     };                                      
+                } else if(data[i].id === '1:10303'){
+                    dd = {
+                        last: 1,
+                        alerts: Math.floor(Math.random()*4),
+                        escalations: Math.floor(Math.random()*2)
+                    };
+                    console.log("alerts:"+dd.alerts);                                                      	
+                } else {
+                	dd = data[i];
                 }
                                 
                 this.publish(request.scope + data[i].id, [dd]);                        	
@@ -417,7 +426,18 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
         }
         this.c10585 += this.d10585;
         return val;
-    }
+    },
+
+    _getUrl: function(id){
+        // summary:
+        if(!id)
+           return this.url;        	
+        if(this.idToBaseUrl) {        
+           return this.url + id.replace(":","-");        	
+        } else {
+           return this.url;
+        }
+    },
 
 	
 });

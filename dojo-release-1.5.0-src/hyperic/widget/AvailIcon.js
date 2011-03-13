@@ -11,21 +11,8 @@ dojo.declare("hyperic.widget.AvailIcon",
     // description:
     //
     // 
-    
-    // alertLegend: Object
-    //      Handle to alert legend.
-    //      Legend on top-left corner telling how
-    //      many active alerts there is. 
-    alertLegend: null,
-    
-    // escalationLegend: Object
-    //      Handle to escalation legend.
-    //      Legend on top-right corner telling how
-    //      many active escalations there is.
-    escalationLegend: null,      
-    
+        
     constructor: function(){
-    	this.legends = true;
     	this.preserveRatio = true;
     },
 
@@ -39,46 +26,13 @@ dojo.declare("hyperic.widget.AvailIcon",
         //     Callback function to handle metric store updates.
         
         // forget values for legends if component doesn't support those
-        if(this.legends) {
-        	if(arg.alerts) this._setAlertLegendValue(arg.alerts);
-            if(arg.escalations) this._setEscalationLegendValue(arg.escalations);        	
+        if(this.supportLegends) {
+        	if(typeof(arg.alerts) !== 'undefined') this._setAlertLegendValue(arg.alerts);
+            if(typeof(arg.escalations) !== 'undefined') this._setEscalationLegendValue(arg.escalations);
         }
         this.inherited(arguments);
     },
 
-    _setAlertLegendValue: function(arg){
-        // summary:
-        if(arg == 0) {
-            if(this.alertLegend){
-                this.removeLegend(this.alertLegend);
-                this.alertLegend = null;            	
-            }
-        } else {
-            if(this.alertLegend){
-            	this.alertLegend.value = arg;
-            } else {
-            	this.alertLegend = 
-            	    this.addLegend({position:1,value:arg,color:'red'});
-            }
-        }
-    },
-
-    _setEscalationLegendValue: function(arg){
-        // summary:
-        if(arg == 0) {
-            if(this.escalationLegend){
-                this.removeLegend(this.escalationLegend);
-                this.escalationLegend = null;                
-            }
-        } else {
-            if(this.escalationLegend){
-                this.escalationLegend.value = arg;
-            } else {
-                this.escalationLegend = 
-                    this.addLegend({position:3,value:arg,color:'blue'});
-            }
-        }
-    },
 
     draw: function(){
         this.surface.clear();
@@ -99,12 +53,12 @@ dojo.declare("hyperic.widget.AvailIcon",
         
         // don't even try to draw legends if those are
         // not marked as supported
-        if(this.legends)
+        if(this.supportLegends)
             this.drawLegends();
     },
     
     legendsInsets: function() {
-    	if(!this.legends)
+    	if(!this.supportLegends)
     	   return this.inherited(arguments);
     	// plan to support legend on all 4 corners.
     	

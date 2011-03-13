@@ -1,11 +1,13 @@
 dojo.provide("hyperic.widget.avail._Availability");
 
 dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.data.LegendsProperty");
 dojo.require("hyperic.util.MathUtil");
 dojo.require("hyperic.util.FontUtil");
 
 dojo.declare("hyperic.widget.avail._Availability",
-    [ hyperic.widget.base._WallMountItem ],{
+    [ hyperic.widget.base._WallMountItem,
+      hyperic.data.LegendsProperty ],{
     // summary:
     //      This is a base class for widgets tracking resource
     //      availabilities.
@@ -57,16 +59,6 @@ dojo.declare("hyperic.widget.avail._Availability",
     //      Resource entity id
     eid: null,
     
-    // legends: Boolean
-    //      Flag telling if this component supports or is
-    //      planning to add legends at some point. We need to
-    //      know extra space outside of the main component if
-    //      legend spans itself there.
-    legends: false,
-    
-    // internal data:
-    _legendData: null,
-        
     startup: function(){
         this.inherited(arguments);
     },
@@ -123,6 +115,9 @@ dojo.declare("hyperic.widget.avail._Availability",
     drawLegend: function(data){
         // summary:
         //     Draws a single legend
+        
+        // don't draw if legend value is zero or undefined
+        if(typeof(data.value) === 'undefined' || data.value === 0) return;
     	    	
     	var insets = this.legendsInsets();
     	var val = data.value+''; // make sure it's a string
@@ -139,12 +134,12 @@ dojo.declare("hyperic.widget.avail._Availability",
         var glossystr = ret.glossy;
 
         var trans = {};
-        if(data.position == 1){ // top-left
+        if(data.position == 0){ // top-left
             // shift by half a border + one pixel
             trans.dx = 1+bW/2;
             // shift by half a border + one pixel
             trans.dy = 1+bW/2;
-        } else if(data.position == 3){ // top-right
+        } else if(data.position == 2){ // top-right
             // shift to right total component width, then
             // shift back by legend width, half a border
             // and one pixel
@@ -238,7 +233,8 @@ dojo.declare("hyperic.widget.avail._Availability",
         
         if(this._legendData){
         	for(var i=0; i<this._legendData.length; i++){
-        	   this.drawLegend(this._legendData[i]);	
+        	    if(typeof(this._legendData[i]) !== 'undefined' && typeof(this._legendData[i].value) !== 'undefined')
+        	        this.drawLegend(this._legendData[i]);	
         	}
         }
     },
@@ -265,33 +261,28 @@ dojo.declare("hyperic.widget.avail._Availability",
         return {top:0,left:0,bottom:0,right:0};
     },
 
-    addLegend: function(/*Object*/legend){
+    _setAlertLegendValue: function(arg){
         // summary:
-        //      This method is used to add a legend to the component.
-        this.addLegends([legend]);
-        return legend;
-    },
-    
-    addLegends: function(/*Array*/legends){
-        // summary:
-        //      This method is used to add a legends to the component.
-        if(!this._legendData){ 
-            this._legendData = [];
+        
+        if(this._legendData){
+            for(var i=0; i<this._legendData.length; i++){
+                if(typeof(this._legendData[i]) !== 'undefined') {
+                    if(this._legendData[i].type === 'alert')
+                       this._legendData[i].value = arg;
+                }
+            }
         }
-        var legend;
-        for(var i=0; i<legends.length; i++){
-            legend = legends[i];
-            this._legendData[this._legendData.length] = legend;
-        }       
     },
-    
-    removeLegend: function(/*Object*/legend){
+
+    _setEscalationLegendValue: function(arg){
         // summary:
-        //      Removes the given legend from component.    	
-        for(var i=0; i<this._legendData.length; i++){
-            if(this._legendData[i] === legend){
-                this._legendData.splice(i, 1);
-                break;
+        
+        if(this._legendData){
+            for(var i=0; i<this._legendData.length; i++){
+                if(typeof(this._legendData[i]) !== 'undefined') {
+                    if(this._legendData[i].type === 'escalation')
+                       this._legendData[i].value = arg;
+                }
             }
         }
     },
@@ -299,6 +290,8 @@ dojo.declare("hyperic.widget.avail._Availability",
     asParams: function(){
     	var paramObj = this.inherited(arguments);
     	paramObj['eid'] = this.eid;
+        paramObj['legends'] = this.asLegendsParams();
+        paramObj['supportLegends'] = this.supportLegends;
     	return paramObj;
     }
 
