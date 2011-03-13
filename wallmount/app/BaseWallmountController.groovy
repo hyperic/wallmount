@@ -9,6 +9,9 @@ import org.hyperic.hq.measurement.shared.MeasurementManager
 import org.hyperic.hq.measurement.shared.AvailabilityManager
 import org.hyperic.hq.bizapp.shared.AppdefBoss
 import org.hyperic.hq.auth.shared.SessionManager
+import org.hyperic.hq.escalation.shared.EscalationManager;
+import org.hyperic.hq.events.shared.AlertDefinitionManager
+
 
 /**
  * Base class for all wallmount controllers.
@@ -25,6 +28,8 @@ abstract class BaseWallmountController extends BaseController {
     private ResourceManager resourceManager
     private AppdefBoss appdefBoss
     private AvailabilityManager availabilityManager
+    private EscalationManager escalationManager
+    private AlertDefinitionManager alertDefinitionManager
     
     def getPlatformManager() {
         if(platformManager == null) platformManager = Bootstrap.getBean(PlatformManager.class)
@@ -59,6 +64,16 @@ abstract class BaseWallmountController extends BaseController {
     def getAvailabilityManager() {
         if(availabilityManager == null) availabilityManager = Bootstrap.getBean(AvailabilityManager.class)
         availabilityManager
+    }
+
+    def getEscalationManager() {
+        if(escalationManager == null) escalationManager = Bootstrap.getBean(EscalationManager.class)
+        escalationManager
+    }
+
+    def getAlertDefinitionManager() {
+        if(alertDefinitionManager == null) alertDefinitionManager = Bootstrap.getBean(AlertDefinitionManager.class)
+        alertDefinitionManager
     }
 
     /**
