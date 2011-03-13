@@ -24,7 +24,6 @@
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.Designer");
       dojo.require("hyperic.wallmount.Registry");
-      dojo.require("hyperic.tests.TestUtil");
       
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
