@@ -20,6 +20,7 @@ dojo.require("hyperic.data.RangeSpeedProperty");
 dojo.require("hyperic.data.RangesProperty");
 dojo.require("hyperic.data.RangeProperty");
 dojo.require("hyperic.data.EmptyFullColorProperty");
+dojo.require("hyperic.data.ChartProperty");
 
 dojo.require("hyperic.widget.label.Label");
 dojo.require("dijit.form.TextBox");
@@ -99,6 +100,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
 
         
         // first hide all, we'll show needed components later
+        this.hide(["chartProperties"]);
         this.hide(["rangesProperties"]);
         this.hide(["emptyFullColorProperties"]);
         this.hide(["rangeProperties"]);
@@ -169,6 +171,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this.emptyFullColorProperty();
             } else {
                 this.hide(["emptyFullColorProperties"]);
+            }
+
+            if(arg.isInstanceOf(hyperic.data.ChartProperty)) {
+                this.chartProperty();
+            } else {
+                this.hide(["chartProperties"]);
             }
         	
         }
@@ -314,6 +322,15 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 
             }
             
+        }
+
+        if(this._selected.isInstanceOf(hyperic.data.ChartProperty)) {
+        	this._selected.set("chartType", this.elementValue("charttype"));
+            this._selected.set("chartTimeScale", this.elementValue("charttimescale"));
+            this._selected.set("chartTheme", this.elementValue("charttheme"));
+//            this._selected.setChartType(this.elementValue("charttype"))
+//            this._selected.setChartTimeScale(this.elementValue("charttimescale"))
+//            this._selected.setChartTheme(this.elementValue("charttheme"))
         }
         
         this._selected.reset();
@@ -564,6 +581,19 @@ dojo.declare("hyperic.layout.PropertiesPane",
         dojo.style(this.warnrangecolorbutton.containerNode, "color", wCol);
         dojo.style(this.warnrangecolorbutton.containerNode, "backgroundColor", wCol);
         
+    },
+
+    chartProperty: function(){
+        this.show(["chartProperties"]);
+
+        var type = dijit.byId(this.charttype);
+        type.set('value', this._selected.getChartType());
+        
+        var timescale = dijit.byId(this.charttimescale);
+        timescale.set('value', this._selected.getChartTimeScale());
+
+        var theme = dijit.byId(this.charttheme);
+        theme.set('value', this._selected.getChartTheme());        
     }
     
 

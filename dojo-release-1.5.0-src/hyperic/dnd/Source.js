@@ -151,6 +151,15 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.supportLegends) {
                 args['supportLegends'] = item.supportLegends;               
             }       
+            if(item.chartType) {
+                args['chartType'] = item.chartType;               
+            }       
+            if(item.chartTheme) {
+                args['chartTheme'] = item.chartTheme;               
+            }       
+            if(item.chartTimeScale) {
+                args['chartTimeScale'] = item.chartTimeScale;               
+            }       
         	dojo.require(item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);

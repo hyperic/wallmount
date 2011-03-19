@@ -2,6 +2,8 @@ dojo.provide("hyperic.tests.MetricStore");
 
 dojo.require("hyperic.data.MetricStore");
 
+dojo.require("hyperic.tests.TestData");
+
 dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
 
     // 10200:
@@ -156,7 +158,11 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                             vv =+ rand2;
                             dd.push({x: j, y: vv+3456});
                         }                                           					
+                    } else if(data[i].id === '10522') {
+                        dd = hyperic.tests.TestData.data1h5min;	
     				}
+    				this.publish(request.scope + data[i].id, [{id:data[i].id, last:1, serie:dd}]);
+    				return;
     			} else if(data[i].id === '10200'){
     				dd = this.get10200();
                 } else if(data[i].id === '10300'){

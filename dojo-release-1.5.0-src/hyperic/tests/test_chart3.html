@@ -1,0 +1,252 @@
+<html>
+<head>
+
+<title>Hyperic Chart Test 3</title>
+
+<style type="text/css">
+    @import "../../dojo/resources/dojo.css";
+    @import "../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+
+    var update = function() {
+        var s = dijit.byId("chart");
+        s.width = dijit.byId("width").get('value');
+        s.height = dijit.byId("height").get('value');
+        
+        var type = dijit.byId("type").get('value');
+        s.chartType = type;
+        
+        s.reset();
+    }
+
+    var theme = function() {
+        var s = dijit.byId("chart");
+        var theme = dijit.byId("theme").get('value');
+        
+        s.setTheme(theme);
+        
+        s.reset();
+    }
+    
+
+    var updateUnit = function() {
+        var s = dijit.byId("chart");
+        var unit = dijit.byId("unit").get('value');
+        s.format = unit;
+        s.reset();
+    }
+    
+    var updateSerie = function() {
+        var epoch = new Date().getTime();    
+        var s = dijit.byId("chart");
+        var scale = dijit.byId("scale").get('value');
+        var multiply = dijit.byId("multiply").get('value');
+        
+        var serie = [];
+        var timeScale = "8h";
+        if(scale == '1y') {
+            serie = hyperic.tests.TestData.data365d1d;        
+            timeScale = "1y";
+        } else if(scale == '30d') {
+            serie = hyperic.tests.TestData.data30d6h;
+            timeScale = "1m";
+        } else if(scale == '10d') {
+            serie = hyperic.tests.TestData.data10d1h;
+            timeScale = "1w";
+        } else if(scale == '1d') {
+            serie = hyperic.tests.TestData.data1d5min;
+            timeScale = "1d";
+        } else if(scale == '1h') {
+            serie = hyperic.tests.TestData.data1h5min;
+            timeScale = "1h";
+        } else if(scale == '8h') {
+            serie = hyperic.tests.TestData.data8h5min;
+            timeScale = "8h";
+        }
+        
+        var mSerie = dojo.clone(serie);
+        dojo.forEach(mSerie,function(item){
+            item.y = item.y*multiply;
+        });
+                
+        s.setSerie(mSerie);
+        s.chartTimeScale = timeScale;
+    
+        s.reset();
+        
+    }
+    
+</script>
+
+
+<script type="text/javascript">
+    dojo.require("hyperic.widget.chart.Chart");
+    dojo.require("hyperic.widget.Spinner");
+    dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.Select");
+    dojo.require("hyperic.tests.TestData");
+    
+    
+    
+    dojo.addOnLoad(function(){
+
+    var epoch = new Date().getTime();    
+    var serie = [];
+    
+serie.push({ x: 1300318800000, y: 0.527});
+serie.push({ x: 1300318500000, y: 0.21});
+serie.push({ x: 1300318200000, y: 0.523});
+serie.push({ x: 1300317900000, y: 0.221});
+serie.push({ x: 1300317600000, y: 0.514});
+serie.push({ x: 1300317300000, y: 0.203});
+//serie.push({ x: 1300317000000, y: 0.514});
+serie.push({ x: 1300316700000, y: 0.22});
+serie.push({ x: 1300316400000, y: 0.513});
+serie.push({ x: 1300316100000, y: 0.193});
+serie.push({ x: 1300315800000, y: 0.542});
+serie.push({ x: 1300315500000, y: 0.21});
+    
+    
+    
+    var s = dojo.byId("chart");
+    s = new hyperic.widget.chart.Chart({width:400, height:200},s);
+//    s.setSerie(serie);
+    s.setSerie([]);
+    s.startup();
+    
+    });
+</script>
+
+</head>
+<body class="claro">
+
+<label for="width">width</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="400"
+                constraints="{max:1200,min:10}"
+                name="width"
+                id="width">
+</br>
+<label for="width">height</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="update"
+                intermediateChanges="true"
+                value="200"
+                constraints="{max:700,min:10}"
+                name="height"
+                id="height">
+</br>
+
+<label for="type">Type</label>
+<select dojoType="dijit.form.Select" 
+        id="type"
+        name="type"
+        dojoAttachPoint="titleposition"
+        class="textbox"
+        intermediateChanges="true"
+        onChange="update">
+    <option value="Lines">Lines</option>
+    <option value="Bars">Bars</option>
+</select>
+
+<label for="scale">Scale</label>
+<select dojoType="dijit.form.Select" 
+        id="scale"
+        dojoAttachPoint="titleposition"
+        class="textbox"
+        intermediateChanges="true"
+        onChange="updateSerie">
+    <option value="1h">1h</option>
+    <option value="8h">8h</option>
+    <option value="1d">1d</option>
+    <option value="10d">7d</option>
+    <option value="30d">30d</option>
+    <option value="1y">1y</option>
+</select>
+
+<label for="theme">Theme</label>
+<select dojoType="dijit.form.Select" 
+        id="theme"
+        dojoAttachPoint="titleposition"
+        class="textbox"
+        intermediateChanges="true"
+        onChange="theme">
+    <option value="Julie">Julie</option>
+    <option value="ThreeD">ThreeD</option>
+    <option value="CubanShirts">CubanShirts</option>
+</select>
+
+<label for="theme">Unit</label>
+<select dojoType="dijit.form.Select" 
+        id="unit"
+        class="textbox"
+        onChange="updateUnit">
+    <option value="none">none</option>
+    <option value="percentage">percentage</option>
+    <option value="percent">percent</option>
+    <option value="B">B</option>
+    <option value="KB">KB</option>
+    <option value="MB">MB</option>
+    <option value="GB">GB</option>
+    <option value="TB">TB</option>
+    <option value="PB">PB</option>
+    <option value="b">b</option>
+    <option value="bytesToBits">bytesToBits</option>
+    <option value="Kb">Kb</option>
+    <option value="Mb">Mb</option>
+    <option value="Gb">Gb</option>
+    <option value="Tb">Tb</option>
+    <option value="Pb">Pb</option>
+    <option value="epoch-millis">epoch-millis</option>
+    <option value="epoch-seconds">epoch-seconds</option>
+    <option value="ns">ns</option>
+    <option value="mu">mu</option>
+    <option value="ms">ms</option>
+    <option value="jiffys">jiffys</option>
+    <option value="sec">sec</option>
+</select>
+
+<label for="multiply">Multiply</label>
+<select dojoType="dijit.form.Select" 
+        id="multiply"
+        dojoAttachPoint="titleposition"
+        class="textbox"
+        intermediateChanges="true"
+        onChange="updateSerie">
+    <option value="1">1x</option>
+    <option value="10">10x</option>
+    <option value="100">100x</option>
+    <option value="1000">1000x</option>
+    <option value="1000000">1000000x</option>
+    <option value="1000000000">1000000000x</option>
+</select>
+
+
+</br>
+</br>
+</br>
+
+<div id="chart"></div>
+
+</body>
+</html>

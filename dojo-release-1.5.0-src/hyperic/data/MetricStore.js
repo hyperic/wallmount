@@ -44,8 +44,6 @@ dojo.declare("hyperic.data.MetricStore", null, {
     //     /hyperic/tavail/2-12345 (server)
     //     /hyperic/tavail/3-12345 (service)
 	//
-	// example:
-	//
 
     // url: String
     //      The URL to the metric data service
@@ -78,6 +76,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
         //          idToBaseUrl: String
         //          urlPreventCache: Boolean
         //          syncTime: Number
+        
     	this._current = {};
     	this._clients = {};
     	
@@ -104,6 +103,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
         // arguments:
         //      status: Boolean
         //          If true start time, if false stop timer.
+        
         if(status) {
             this._timer.start();    
         } else {
@@ -149,16 +149,15 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	// summary:
     	//     Updates status of all items currently
     	//     handled by this store.
-//    	console.log("updateStore");
+    	
     	for(var i in this._clients){
-//            console.log('key', i, 'value', this._clients[i]);
             var val = this._clients[i];
-            // /hyperic/metric/0/12345 to
-            // metric/0/12345
+            
+            // /hyperic/metric/0/12345 to metric/0/12345
             var id = i.substring(this._baseTopic.length, i.length);
             var d = id.lastIndexOf('/');
             var scope = id.substring(0, d+1);
-//            console.log("scope: " + scope);
+            
             if(val > 0)
                 this.loadItem({id: id, scope: scope});        
         }
@@ -167,6 +166,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     fetch: function(/* Object */ keywordArgs){
         // summary:
         //     xxx
+        
         var request = null; 
         throw new Error('Unimplemented API: dojo.data.api.Read.fetch');
         return request; // an object conforming to the dojo.data.api.Request API
@@ -175,6 +175,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     subscribe: function(topic, scope, method, acceptNull){
         // summary:
         //     Subscribes client to a specific topic
+        
     	var _topic = this._baseTopic + topic;
     	var hdl = dojo.subscribe(_topic, scope, method);
     	if(acceptNull || this._current[_topic]){
@@ -189,6 +190,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     unsubscribe: function(handle){
         // summary:
         //     Unsubscribes client from a specific metric
+        
         this._updateInterests(handle, false);
         dojo.unsubscribe(handle);
     },
@@ -197,6 +199,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
         // summary:
         //     Publish event to a specific topic notifying
         //     updates for metric.
+        
         var _topic = this._baseTopic + topic;
     	dojo.publish(_topic, args);
     	this._current[_topic] = args;
@@ -204,6 +207,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     
     _getUrl: function(id){
         // summary:
+        
     	if(!id)
            return this.url;
     	if(this.idToBaseUrl)

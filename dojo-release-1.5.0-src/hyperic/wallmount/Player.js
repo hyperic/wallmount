@@ -84,7 +84,10 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
                 fullColor: witem.fullColor,
                 lowRange: witem.lowRange,
                 highRange: witem.highRange,
-                supportLegends: witem.supportLegends
+                supportLegends: witem.supportLegends,
+                chartType: witem.chartType,
+                chartTheme: witem.chartTheme,
+                chartTimeScale: witem.chartTimeScale
             	}]);    		
     	}
         
