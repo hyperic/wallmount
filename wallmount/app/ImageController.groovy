@@ -1,5 +1,4 @@
 import org.hyperic.hq.context.Bootstrap;
-import org.hyperic.hq.hqu.rendit.BaseController
 
 import java.awt.RenderingHints;
 import java.awt.Transparency;
@@ -10,9 +9,6 @@ import java.awt.image.WritableRaster
 import java.awt.image.DataBufferByte
 
 import java.io.ByteArrayOutputStream
-
-import org.apache.commons.logging.Log
-import org.apache.commons.logging.LogFactory
 
 
 /**
@@ -28,132 +24,120 @@ import org.apache.commons.logging.LogFactory
  * radically boost performance in cases where multiple images and
  * sizes are used.
  * 
+ * Image which is scaled on server has to exist on plugin's public
+ * material. All PNG images under path /hqu/wallmount/public/...
+ * 
  */
-class ImageController extends BaseController {
-    
-    Log log = LogFactory.getLog(this.getClass())
-    
-    private static BASE_IMAGE_PATH = "hqu/wallmount/public/images/"
-    private static IMAGE_ELLIPSE_BG_GREEN = BASE_IMAGE_PATH + "ok-ellipse.png"
-    
-    /**
-     * Overwriting BaseController render method to
-     * handle images. 
-     */
-    protected void render(opts) {
-        // TODO: move code to BaseController
+class ImageController extends BaseWallmountController {
         
-    }
-    
+    private static BASE_IMAGE_PATH = "hqu/wallmount/public/"
+    private static IMAGE_ELLIPSE_BG_GREEN = BASE_IMAGE_PATH + "js/hyperic/widget/avail/resources/ok-ellipse.png"
+        
     /**
-     * Writes image to response.
-     */
-    protected void renderImage(bytes) {		
-        invokeArgs.response.setContentType('image/png')
-        def outStream = invokeArgs.response.outputStream
-        new OutputStreamWriter(outStream, "UTF-8")
-        outStream.write(bytes, 0, bytes.length)
-        outStream.flush()
-    }
-    
-    /**
+     * Returns modified image.
      * 
+     * path - relative path to image from BASE_IMAGE_PATH
+     * w - scale to given width
+     * h - scale to given height
+     * 
+     * If w and h is not given, origin image size is used.
+     * If only w is given, aspect ratio is preserved and height calculated from given width.
+     * If only h is given, aspect ratio is preserved and width calculated from given height.
      */
     def getScaledImage(params) {
-        //		def img = params.getOne('img')
-        //		def w = params.getOne('w').toInteger()
-        //		def h = params.getOne('h').toInteger()
         
+        def path = params.getOne('path')
+        def w = params.getOne('w', '0') as int
+        def h = params.getOne('h', '0') as int
         
+        def imgPath = BASE_IMAGE_PATH + path
+        def imageFile = getImageFile(imgPath);
+
+        setRendered(true)
         
-        def imgPath = IMAGE_ELLIPSE_BG_GREEN
-        
-        BufferedImage originalImage = ImageIO.read(Bootstrap.getResource(imgPath).getFile());
-        
-        BufferedImage scaledImage = getScaledInstance(originalImage, 100, 100, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR, false)
-        
-        byte[] data = imageByteData(scaledImage) 
-        
-        
-        renderImage(data)
-        
-    }
-    
-    /**
-     * 
-     */
-    private byte[] getImageData(path) {
-        def file = Bootstrap.getResource(path).getFile();
-        return file.readBytes()
-    }
-    
-    
-    public static BufferedImage getScaledInstance(BufferedImage img,
-    int targetWidth,
-    int targetHeight,
-    Object hint,
-    boolean higherQuality) {
-        
-        int type = (img.getTransparency() == Transparency.OPAQUE) ?
-                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage)img;
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
+        if((w < 1 && h < 1) || imageFile == null) {
+            sendError()
+            return
         }
         
-        BufferedImage tmp = new BufferedImage(w, h, type);
-        Graphics2D g2 = tmp.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-        g2.drawImage(ret, 0, 0, w, h, null);
-        g2.dispose();
-        ret = tmp;
+        BufferedImage originalImage = ImageIO.read(imageFile);
         
-        //		while (w != targetWidth || h != targetHeight) {
-        //			if (higherQuality && w > targetWidth) {
-        //				w /= 2;
-        //				if (w < targetWidth) {
-        //					w = targetWidth;
-        //				}
-        //			}
-        //
-        //			if (higherQuality && h > targetHeight) {
-        //				h /= 2;
-        //				if (h < targetHeight) {
-        //					h = targetHeight;
-        //				}
-        //			}
-        //
-        //			BufferedImage tmp = new BufferedImage(w, h, type);
-        //			Graphics2D g2 = tmp.createGraphics();
-        //			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-        //			g2.drawImage(ret, 0, 0, w, h, null);
-        //			g2.dispose();
-        //
-        //			ret = tmp;
-        //		} 
+        def ratio = originalImage.width / originalImage.height 
         
-        return ret;
+        if(w < 1) {
+            w = (h * ratio) as int
+        } else if(h < 1) {
+            h = (w / ratio) as int
+        }
+               
+        BufferedImage scaledImage = getScaledInstance(originalImage, w, h, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR)
+        byte[] data = imageByteData(scaledImage)         
+        
+        renderImage(data)
     }
 
     /**
-     * returns byte array from BufferedImage.    
+     * Gets image File instance.    
+     */
+    private File getImageFile(String path) {
+        def fileResource = Bootstrap.getResource(path)
+        if(fileResource.exists()) {
+            return fileResource.file;
+        } else {
+            return null;
+        }
+        
+    }
+    
+    /**
+     * Scaling the image.
+     */
+    private BufferedImage getScaledInstance(BufferedImage image,
+                                            int width, int height,
+                                            Object hint) {
+        
+        int type = (image.getTransparency() == Transparency.OPAQUE) ?
+                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage bufImage = (BufferedImage)image;
+        int w, h;
+        
+        w = width;
+        h = height;
+            
+        BufferedImage tmp = new BufferedImage(w, h, type);
+        Graphics2D g2 = tmp.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
+        g2.drawImage(bufImage, 0, 0, w, h, null);
+        g2.dispose();
+        bufImage = tmp;            
+        
+        return bufImage;
+    }
+
+    /**
+     * Renders image data to output stream.                                        
+     */
+    private void renderImage(bytes) {
+        invokeArgs.response.setContentType('image/png')
+        def outStream = invokeArgs.response.outputStream
+        new OutputStreamWriter(outStream, "UTF-8")
+                               outStream.write(bytes, 0, bytes.length)
+                               outStream.flush()
+    }
+
+                                            
+    /**
+     * returns byte array from BufferedImage.
+     * 
+     * @param image Instance of BufferedImage
+     * @return byte array of raw image data
      */
     private byte[] imageByteData(BufferedImage image) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream()
-        ImageIO.write(image, "png", out)
-        out.flush()
-        byte[] bytes = out.toByteArray()
-        out.close()
-        return bytes
+        ByteArrayOutputStream tempOut = new ByteArrayOutputStream()
+        ImageIO.write(image, "png", tempOut)
+        tempOut.flush()
+        byte[] bytes = tempOut.toByteArray()
+        tempOut.close()
+        bytes
     }
 }
