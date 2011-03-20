@@ -99,7 +99,7 @@
           </div>
         </div>        
         <div class="dijitmenuitem dijitinline">|</div>
-        <div id="layoutinfo" class="dijitmenuitem dijitinline">Layout Name:[]</div>
+        <div dojoType="hyperic.layout.LayoutName" id="layoutName"></div>
       </div>
             
       <div dojoType="dojox.layout.ExpandoPane" 

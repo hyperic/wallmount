@@ -61,8 +61,13 @@ hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
 };
 
 hyperic.wallmount.LayoutUtil.setLayoutName = function(name) {
-	var layoutInfo = dojo.byId("layoutinfo");
-    layoutInfo.innerHTML = "Layout Name:[" + name + "]";
+	var layoutName = dijit.byId("layoutName");
+	layoutName.setLayoutName(name);
+};
+
+hyperic.wallmount.LayoutUtil.getLayoutName = function() {
+    var layoutName = dijit.byId("layoutName");
+    return layoutName.getLayoutName();
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
@@ -137,12 +142,8 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
     }
 	
 	// get layout name
-    var wallmountPane = dojo.byId('layoutinfo');
-    var layoutInfoContent = wallmountPane.innerHTML;
-    var start = layoutInfoContent.indexOf('[');
-    var end = layoutInfoContent.indexOf(']');
-	layout['name'] = layoutInfoContent.substring(start+1,end);
-
+    layout['name'] = hyperic.wallmount.LayoutUtil.getLayoutName();
+  
     // get layout size
     var wallmountPane = dojo.byId('wallmountpane');
     var lW = dojo.style(wallmountPane,'width');
