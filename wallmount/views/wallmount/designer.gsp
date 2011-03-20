@@ -51,7 +51,7 @@
          plugins="[
              {plugin: 'hyperic.widget.Tank', attach:[{type:'metric'}], properties:{width:100,height:150}},
              {plugin: 'hyperic.widget.ProgressTube', attach:[{type:'metric'}], properties:{width:200,height:100}},
-             {plugin: 'hyperic.widget.EllipseLabel', attach:[{type:'metric'}], properties:{size:160}},
+             {plugin: 'hyperic.widget.EllipseLabel', attach:[{type:'metric'}], properties:{size:160,labelColor:'#fff8dc'}},
              {plugin: 'hyperic.widget.HorizontalArrowPipe', attach:[{type:'metric'}], properties:{width:150,height:60}},
              {plugin: 'hyperic.widget.VerticalArrowPipe', attach:[{type:'metric'}], properties:{width:60,height:150}},
              {plugin: 'hyperic.widget.Spinner', attach:[{type:'metric'}], defaults:[{type:'metric', filter:'name', include:'Load Average 5 Minutes'}], properties:{size:120}},
