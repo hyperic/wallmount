@@ -4,6 +4,7 @@ dojo.require("hyperic.wallmount.WindowUtil");
 dojo.require("hyperic.wallmount.LayoutUtil");
 dojo.require("hyperic.layout.LayoutName");
 dojo.require("dijit.form.RadioButton");
+dojo.require("dojox.widget.Toaster");
 dojo.require("dojo.parser");
 
 hyperic.wallmount.Designer.loadLayout = function(/*String*/url) {
@@ -109,4 +110,9 @@ hyperic.wallmount.Designer.closeAllWindows = function() {
             dijit.byId(item.id).close();
         }
     );
-}
+};
+
+hyperic.wallmount.Designer.sendUserMessage = function(message, level) {
+	var type = level || "message"
+	dojo.publish("userMessageTopic", [{message:message, type:type}] );
+};

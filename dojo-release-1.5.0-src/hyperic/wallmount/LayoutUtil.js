@@ -3,6 +3,7 @@ dojo.provide("hyperic.wallmount.LayoutUtil");
 dojo.require("hyperic.dialog.LoadLayoutDialog");
 dojo.require("hyperic.dialog.SaveLayoutDialog");
 dojo.require("hyperic.dialog.DashboardSizeDialog");
+dojo.require("hyperic.wallmount.Designer");
 
 hyperic.wallmount.LayoutUtil.saveLayoutDialog = function() {
     if(!hyperic.wallmount.LayoutUtil.saveLayoutDlg) {
@@ -15,8 +16,17 @@ hyperic.wallmount.LayoutUtil.saveLayoutDialog = function() {
     hyperic.wallmount.LayoutUtil.saveLayoutDlg.show();  
 };
 
+hyperic.wallmount.LayoutUtil.saveCurrentLayout = function() {
+	var lName = hyperic.wallmount.LayoutUtil.getLayoutName();
+	if(lName.length > 0) {
+		hyperic.wallmount.LayoutUtil.saveLayout(lName)
+	} else {
+		hyperic.wallmount.LayoutUtil.saveLayoutDialog();
+	}
+};
+
 hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
-    hyperic.wallmount.LayoutUtil.setLayoutName(name);
+    
     var data = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();
     var contentObject = {};
     contentObject['layoutdata'] = data;
@@ -27,10 +37,12 @@ hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
         timeout: 5000,
         content: contentObject,
         load: function(response, ioArgs) {
+        	hyperic.wallmount.LayoutUtil.setLayoutName(name);
+            hyperic.wallmount.Designer.sendUserMessage("Succesfully saved layout with name " + name);
             return response;
         },
         error: function(response, ioArgs) {
-            alert('error ' + response);
+            hyperic.wallmount.Designer.sendUserMessage("Error saving layout.", "error");
             return response;
         }
     });

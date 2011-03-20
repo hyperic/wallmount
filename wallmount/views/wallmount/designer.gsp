@@ -10,6 +10,7 @@
       @import "../public/js/dojox/layout/resources/ExpandoPane.css";
       @import "../public/js/dojox/layout/resources/ResizeHandle.css"; 
       @import "../public/js/dojox/layout/resources/FloatingPane.css";
+      @import "../public/js/dojox/widget/Toaster/Toaster.css";
       @import "../public/js/hyperic/layout/resources/MoveablePane.css";
       @import "../public/js/hyperic/data/resources/hypericicons.css";
       @import "../public/css/designer.css";
@@ -38,6 +39,12 @@
   </head>
 
   <body class="claro">
+  
+    <div dojoType="dojox.widget.Toaster" id="toastMessenger" 
+         positionDirection="br-up" duration="3000" 
+         messageTopic="userMessageTopic"></div>   
+  
+  
     <div dojoType="hyperic.wallmount.Registry"
          id="registry"
          jsId="hyperic.wallmount.Registry._registry"
@@ -70,7 +77,7 @@
                  onClick="hyperic.wallmount.LayoutUtil.selectLayoutDialog();">Open...</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSave"
-                 onClick="hyperic.wallmount.LayoutUtil.getLayoutAsJSON();">Save</div>
+                 onClick="hyperic.wallmount.LayoutUtil.saveCurrentLayout();">Save</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSaveAs"
                  onClick="hyperic.wallmount.LayoutUtil.saveLayoutDialog();">Save As...</div>
