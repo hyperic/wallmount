@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Dojox RangeSlider Test</title>
+    <style type="text/css">
+        @import "../../../dojo/resources/dojo.css";
+        @import "../../../dijit/themes/tundra/tundra.css";
+        @import "../../../dijit/themes/dijit.css";
+        @import "../../../dijit/tests/css/dijitTests.css";
+        @import "../../../dojox/form/resources/RangeSlider.css";
+    </style>
+    
+    <link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+    <style>
+        /* showing a big yellow bar */
+        #hrCustomSlider .dijitSliderProgressBar {
+            background:yellow;
+            height:12px;
+            overflow:visible;
+            margin-top: -5px;
+        }
+
+        #hrCustomSlider .dijitSliderProgressBarAfter {
+            background:red;
+            height:12px;
+            overflow:visible;
+            margin-top: -5px;
+        }
+
+        #hrCustomSlider .dijitSliderProgressBarBefore {
+            background:green;
+            height:12px;
+            overflow:visible;
+            margin-top: -5px;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="../../../dojo/dojo.js" djConfig="isDebug:true, parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("hyperic.tests.sandbox.RangeSlider");
+        dojo.require("dijit.form.HorizontalRule");
+        dojo.require("dijit.form.HorizontalRuleLabels");
+        dojo.require("dijit.form.VerticalRule");
+        dojo.require("dijit.form.VerticalRuleLabels");
+        
+        dojo.require("dijit.form.NumberSpinner");
+        
+        
+        dojo.require("dijit.form.DropDownButton");
+        dojo.require("dijit.ColorPalette");
+        
+        
+        var horizOnChange = function(){
+        
+            dojo.byId('minValue').value = dojo.number.format(arguments[0][0], { pattern:'#' });
+            dojo.byId('maxValue').value = dojo.number.format(arguments[0][1], { pattern:'#' });
+    
+        };
+        
+        var updateminmax = function(){
+            var min = dijit.byId("low").get('value');
+            var max = dijit.byId("high").get('value');
+            var slider = dijit.byId("hrCustomSlider");
+            slider.minimum = min;
+            slider.maximum = max;
+        };
+        
+        var updatecolor1 = function(){
+            var picker = dijit.byId("labelcolor1");
+            var slider = dijit.byId("hrCustomSlider");
+            slider.setLowColor(picker.value);
+        };
+        
+        var updatecolor2 = function(){
+            var picker = dijit.byId("labelcolor2");
+            var slider = dijit.byId("hrCustomSlider");
+            slider.setMiddleColor(picker.value);
+        };
+
+        var updatecolor3 = function(){
+            var picker = dijit.byId("labelcolor3");
+            var slider = dijit.byId("hrCustomSlider");
+            slider.setHighColor(picker.value);
+        };
+        
+        
+    </script>
+
+    <script type="text/javascript" src="../../../dijit/tests/_testCommon.js"></script>
+</head>
+<body class="claro">
+    <h1 class="testTitle">Dojox RangeSlider test</h1>
+    Just try to drag the slider endpoints and the bar in the middle. You can also use the bumper and the arrows on the left and right to manipulate the range. It's also possible to tab through the slider parts and move the handlers or bar with left/right/up/down-button. 
+    
+    <h2>A customized horizontal slider</h2>
+
+<label for="low">low</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updateminmax"
+                intermediateChanges="true"
+                value="0"
+                constraints="{max:200000,min:0}"
+                name="low"
+                id="low">
+
+</br>          
+
+<label for="high">high</label>
+<input dojoType="dijit.form.NumberSpinner"
+                onChange="updateminmax"
+                intermediateChanges="true"
+                value="200000"
+                constraints="{max:200000,min:1}"
+                name="high"
+                id="high">
+
+</br>          
+
+    <div 
+        id="hrCustomSlider"
+        discreteValues="300"
+        style="width:300px;" 
+        minimum="0"
+        onChange="horizOnChange"
+        maximum="200000"
+        value="100000,20000" 
+        dojoType="hyperic.form.HorizontalRangeSlider"
+        showButtons="true"
+    >
+        <ol dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration" minimum=0 maximum=200000 style="height:1.2em;font-size:75%;color:gray;" count="6" constraints="{pattern:'#'}"></ol>
+        <div dojoType="dijit.form.HorizontalRule" container="topDecoration" count=6 style="height:10px;margin-bottom:-5px;"></div>
+    </div>
+    Horizontal Slider Min Value:<input readonly id="minValue" size="10" value="20000"/><br/>
+    Horizontal Slider Max Value:<input readonly id="maxValue" size="10" value="100000"/><br/>
+    
+    <button id="getValues" dojoType="dijit.form.Button" onClick="console.dir(dijit.byId('hrCustomSlider').get('value'));">Get Value</button>
+
+    <div>               
+    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="labelcolorbutton1" iconClass="noteIcon" value="color">
+      <span>Color</span>
+      <div id="labelcolor1" name="labelcolor1" dojoAttachPoint="labelcolor1" onChange="updatecolor1" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+    </button>
+    </div>            
+
+    <div>               
+    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="labelcolorbutton2" iconClass="noteIcon" value="color">
+      <span>Color</span>
+      <div id="labelcolor2" name="labelcolor2" dojoAttachPoint="labelcolor2" onChange="updatecolor2" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+    </button>
+    </div>            
+
+    <div>               
+    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="labelcolorbutton3" iconClass="noteIcon" value="color">
+      <span>Color</span>
+      <div id="labelcolor3" name="labelcolor3" dojoAttachPoint="labelcolor3" onChange="updatecolor3" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+    </button>
+    </div>            
+
+
+</body>
+</html>
