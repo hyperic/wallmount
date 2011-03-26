@@ -22,7 +22,7 @@ import org.hyperic.hq.auth.shared.SessionManager
  */
 class ResourcetreeController extends BaseJSONController {
 	    
-    private static String baseUrl = '/hqu/wallmount/resourcetree/resourcetree.hqu?path='
+    private static String baseUrl = '/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path='
 		
     /**
      * 

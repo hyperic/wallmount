@@ -5,7 +5,7 @@ import ImageController
 
 class Plugin extends HQUPlugin {
 	Plugin() {
-		addAdminView(true, '/wallmount/index.hqu', 'Wall Mount')
+        addMastheadView(true, '/wallmount/index.hqu', 'Wall Mount Visualizer', 'tracker')
     }         
 }
 

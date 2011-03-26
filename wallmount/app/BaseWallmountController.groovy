@@ -86,7 +86,7 @@ abstract class BaseWallmountController extends BaseController {
      * Returns template directory for layouts
      */
     protected def getTemplateDir() {
-        Resource templateResource = Bootstrap.getResource("WEB-INF/wallmount2Templates");
+        Resource templateResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates");
         if(!templateResource.exists()) {
             def dir = templateResource.file
             dir.mkdir()

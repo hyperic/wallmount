@@ -27,7 +27,7 @@ table.layouts td {
 <%
 
 def link(l,e) {
-	out.write('<a href="/hqu/wallmount/wallmount/player.hqu?layout=')
+	out.write('<a href="/hqu/wmvisualizer/wallmount/player.hqu?layout=')
 	out.write(l)
 	out.write('">' + e + '</a>')	
 }
@@ -50,6 +50,6 @@ if(!templates) {
 	out.write('</table></div>')
 }
 
-out.write('<div><a href="/hqu/wallmount/wallmount/designer.hqu">Launch Designer<a/></div>')
+out.write('<div><a href="/hqu/wmvisualizer/wallmount/designer.hqu">Launch Designer<a/></div>')
 %>
 

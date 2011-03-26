@@ -4,7 +4,7 @@
 
     <property name="dist.dir" location="dist"/>
     <property name="assemble.dir" location="assemble"/>
-    <property name="version" value="2.0"/>
+    <property name="version" value="1.0.M1"/>
 	
     <property name="dojo.source.dir" location="dojo-release-1.5.0-src" />
     <property name="dojobuild.lib" location="${dojo.source.dir}/util/shrinksafe" />
@@ -24,21 +24,12 @@
 
     <target name="dist" depends="clean,assemble-wallmount,assemble-dojo">    
 	    <mkdir dir="${dist.dir}"/>
-		<zip file="${dist.dir}/hqu_wallmount-${version}.zip">
+		<zip file="${dist.dir}/hqu_wmvisualizer-${version}.zip">
 			<fileset dir="${assemble.dir}">
-				<include name="wallmount/**"/>
+				<include name="wmvisualizer/**"/>
 			</fileset>
 		</zip>
 	</target>
-
-    <target name="dist-hqu" depends="clean,assemble-wallmount">    
-        <mkdir dir="${dist.dir}"/>
-        <zip file="${dist.dir}/hqu_wallmount-${version}.zip">
-            <fileset dir="${assemble.dir}">
-                <include name="wallmount/**"/>
-            </fileset>
-        </zip>
-    </target>
 
     <target name="build-dojo">
     	<java fork="true" dir="${dojobuild.dir}"
@@ -57,15 +48,15 @@
     </target>
 
     <target name="assemble-wallmount">
-        <copy todir="${assemble.dir}">
-            <fileset dir=".">
-                <include name="wallmount/**"/>
+        <copy todir="${assemble.dir}/wmvisualizer">
+            <fileset dir="wallmount">
+                <include name="**"/>
             </fileset>
         </copy>
     </target>
 
     <target name="assemble-dojo" depends="build-dojo">
-    	<copy todir="${assemble.dir}/wallmount/public/js">
+    	<copy todir="${assemble.dir}/wmvisualizer/public/js">
     		<fileset dir="${dojo.source.dir}/release/dojo">
                 <include name="**"/>
             </fileset>

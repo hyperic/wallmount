@@ -25,12 +25,12 @@ import java.io.ByteArrayOutputStream
  * sizes are used.
  * 
  * Image which is scaled on server has to exist on plugin's public
- * material. All PNG images under path /hqu/wallmount/public/...
+ * material. All PNG images under path /hqu/wmvisualizer/public/...
  * 
  */
 class ImageController extends BaseWallmountController {
         
-    private static BASE_IMAGE_PATH = "hqu/wallmount/public/"
+    private static BASE_IMAGE_PATH = "hqu/wmvisualizer/public/"
     private static IMAGE_ELLIPSE_BG_GREEN = BASE_IMAGE_PATH + "js/hyperic/widget/avail/resources/ok-ellipse.png"
         
     /**

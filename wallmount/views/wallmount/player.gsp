@@ -25,13 +25,13 @@
       
       function init(){
         hyperic.wallmount.base.metricStore = new hyperic.data.MetricStore(
-            {url: "/hqu/wallmount/metricstore/getMetrics.hqu",
+            {url: "/hqu/wmvisualizer/metricstore/getMetrics.hqu",
              idToBaseUrl: false}
         );
         
         hyperic.wallmount.base.metricStore.sync(true);
         
-        var url = "/hqu/wallmount/wallmount/getLayout.hqu?layout=${useLayout}";
+        var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=${useLayout}";
         hyperic.wallmount.Player.loadLayout(url,true);
                 
       }

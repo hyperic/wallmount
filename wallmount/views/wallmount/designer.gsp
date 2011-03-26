@@ -29,7 +29,7 @@
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
               console.log("i got", data);
-              var url = "/hqu/wallmount/wallmount/getLayout.hqu?layout=" + data[0];
+              var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=" + data[0];
               hyperic.wallmount.Designer.loadLayout(url);
           });
       }    
@@ -132,7 +132,7 @@
                
             <div dojoType="dojox.data.JsonRestStore" 
                  jsId="metricStore" 
-                 target="/hqu/wallmount/resourcetree/resourcetree.hqu?path=/platform"
+                 target="/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path=/platform"
                  allowNoTrailingSlash="true" 
                  labelAttribute="name"></div>
                
