@@ -5,6 +5,7 @@
   { id: 'm10522', mid: '10522', name:'Free Memory', format:'B' },
   { id: 'm10523', mid: '10523', name:'Free Memory2', format:'KB' },
   { id: 'm10586', mid: '10586', name:'Idle Time', format:'percentage' },
-  { id: 'm10585', mid: '10585', name:'Load Average 5 Minutes', format:'none' }
+  { id: 'm10585', mid: '10585', name:'Load Average 5 Minutes', format:'none' },
+  { id: 'm10600', mid: '10600', name:'Transfer rate per Min', format:'bytesToBits' }
 ]
 }
