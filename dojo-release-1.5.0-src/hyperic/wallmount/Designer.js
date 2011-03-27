@@ -61,6 +61,7 @@ hyperic.wallmount.Designer.createLayout = function(data) {
             var witem = items[i].items[j];
             source.insertNodes(false, [{
                 type:witem.type,
+                titlePosition: witem.titlePosition,
                 title: witem.title,
                 mid:witem.mid,
                 eid:witem.eid,

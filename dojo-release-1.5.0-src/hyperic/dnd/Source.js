@@ -32,6 +32,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     	//     xxx
     	var obj = dijit.byId(item);
     	var _title = obj.getTitle();
+        var _titlePosition = obj.getTitlePosition();
     	var _eid = obj.eid;	
         var _subscribeId = obj.subscribeId; 
         var _format = obj.format; 
@@ -47,6 +48,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         // is able to ask its replacement or removal.
         
         w.setTitle(_title);
+        w._setTitlePositionAttr(_titlePosition);
         w.subscribeId = _subscribeId;
         w.eid = _eid;
         w.format = _format;
@@ -205,6 +207,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         }
 
         // TODO: this title stuff is too complex like this, redesign...
+        var titlePosition = item.titlePosition || "top";
+        w.set("titlePosition", titlePosition);
         var title = w.getTitle() || item.name || item.title;
         if(title && title.length > 0){
             w.setTitle(title);

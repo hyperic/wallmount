@@ -103,10 +103,12 @@ dojo.declare("hyperic.widget.base._WallMountItem",
             div = this.wallMountItemRight;
         } else if(this.titlePosition.value === "left") {        	
             div = this.wallMountItemLeft;
+        } else {
+            div = this.wallMountItemTop;        	
         }
 
         if(t && t.length > 0) {
-            div.innerHTML = this.titleText.value;
+            div.innerHTML = this.getTitle();
             dojo.style(div, {
                 display: "block",
                 textAlign: "center"
@@ -115,9 +117,9 @@ dojo.declare("hyperic.widget.base._WallMountItem",
                 
     },
     
-    getTitle: function(){
-    	return this.titleText.value;
-    },
+//    getTitle: function(){
+//    	return this.titleText.value;
+//    },
     
     _onClick: function(event){
     	console.log("mouse:"+event);
@@ -303,6 +305,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
             paramObj['height'] = this.height;         
     	}
         paramObj['color'] = this.color;
+        paramObj['titlePosition'] = this.getTitlePosition();
     	paramObj['title'] = this.getTitle();
     	return paramObj;
     }

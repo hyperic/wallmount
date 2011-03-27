@@ -17,6 +17,18 @@ dojo.declare("hyperic.data.TitleProperty",null,{
 
     _setTitleAttr: function(title){
         this.setTitle(title);
+    },
+
+    _setTitlePositionAttr: function(pos){
+        this.titlePosition.value = pos;
+    },
+
+    getTitle: function(){
+        return this.titleText.value;
+    },
+
+    getTitlePosition: function(){
+        return this.titlePosition.value;
     }
     
 });
