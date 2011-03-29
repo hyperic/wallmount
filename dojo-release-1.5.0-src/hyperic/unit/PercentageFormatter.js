@@ -15,7 +15,7 @@ dojo.declare("hyperic.unit.PercentageFormatter",
     },
     
     parseValue: function(/*String*/rawValue, f){
-        return f(rawValue,{type:'percent'});
+        return f(rawValue,{type:'percent'})*(100/this.getMultiplier());
     },
 
     parse: function(/*String*/val, unitType, /*String*/locale){
