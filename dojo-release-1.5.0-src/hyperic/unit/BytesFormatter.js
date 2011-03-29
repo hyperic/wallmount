@@ -9,6 +9,7 @@ dojo.declare("hyperic.unit.BytesFormatter",
     [ hyperic.unit.BinaryFormatter ],{
         
     formatNumber: function(value, f){
+    	console.log("BytesFormatter.formatNumber");
         return f(value,{});
     },
     
@@ -37,7 +38,6 @@ dojo.declare("hyperic.unit.BytesFormatter",
         }
         var parsedNumber = dojo.number.parse(number,{});
         return new hyperic.unit.UnitNumber({value: parsedNumber, units: hyperic.unit.UnitsConstants.UNIT_BYTES, scale: scale});
-//        return this.getBaseValue(parsedNumber, scale);
     }
     
         

@@ -13,7 +13,7 @@ dojo.declare("hyperic.unit.BitRateFormatter",
         var scale;
         var tag = t.toLowerCase();
         if(tag == ("b") || tag == ("b/sec")) {
-            scale = hyperic.unit.UnitsConstants.SCALE_BIT;
+            scale = hyperic.unit.UnitsConstants.SCALE_NONE;
         } else if(tag == ("k") || tag == ("kb") || tag == ("kb/sec")) {
             scale = hyperic.unit.UnitsConstants.SCALE_KILO;
         } else if(tag == ("m") || tag == ("mb") || tag == ("mb/sec")) {

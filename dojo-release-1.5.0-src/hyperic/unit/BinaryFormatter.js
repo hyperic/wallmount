@@ -14,7 +14,6 @@ dojo.declare("hyperic.unit.BinaryFormatter",
         var newVal = this.getTargetValue(baseVal, targScale);
         //var fmt = hyperic.unit.UnitsUtil.getNumberFormat(newVal);
         var fmt = dojo.number.format;
-
         return this.createFormattedValue(newVal, targScale, fmt);
     },
 
@@ -83,9 +82,9 @@ dojo.declare("hyperic.unit.BinaryFormatter",
         return value / this.getScaleCoeff(targScale);
     },
         
-    getTagName: function(){
-        return "";
-    },
+//    getTagName: function(){
+//        return "";
+//    },
         
     findGoodLookingScale: function(val){
 
