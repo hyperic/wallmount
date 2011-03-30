@@ -8,11 +8,6 @@ dojo.require("dojo.number");
 dojo.declare("hyperic.unit.BytesFormatter",
     [ hyperic.unit.BinaryFormatter ],{
         
-    formatNumber: function(value, f){
-    	console.log("BytesFormatter.formatNumber");
-        return f(value,{});
-    },
-    
     getTagName: function(){
     	return "B";
     },

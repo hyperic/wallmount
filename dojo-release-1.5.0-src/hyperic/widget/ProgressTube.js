@@ -114,8 +114,8 @@ dojo.declare("hyperic.widget.ProgressTube",
         //     contains current value and max
         var max = this.getHighRange();
         
-        var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format);
-        var sMax = hyperic.unit.UnitsConvert.convert(max, this.format);
+        var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});
+        var sMax = hyperic.unit.UnitsConvert.convert(max, this.format, {places:'0,2'});
         
         var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sMax, this.width, height);
         this.drawText(sMax, this.width, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});

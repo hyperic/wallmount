@@ -28,8 +28,11 @@
         s.width = dijit.byId("width").get('value');
         s.height = dijit.byId("height").get('value');
         s.value = dijit.byId("value").get('value');
-        s.max = dijit.byId("max").get('value');
-        s.min = dijit.byId("min").get('value');
+        s._setHighRangeAttr(dijit.byId("max").get('value'));
+        s._setLowRangeAttr(dijit.byId("min").get('value'));
+        
+        var unit = dijit.byId("unit").get('value');
+        s.format = unit;
         
         s.reset();
     }
@@ -42,6 +45,7 @@
 <script type="text/javascript">
     dojo.require("hyperic.widget.ProgressTube");
     dojo.require("dijit.form.NumberSpinner");
+    dojo.require("dijit.form.Select");
 </script>
 
 </head>
@@ -96,6 +100,38 @@
 
 </br>
 
+<label for="theme">Unit</label>
+<select dojoType="dijit.form.Select" 
+        id="unit"
+        class="textbox"
+        onChange="update">
+    <option value="none">none</option>
+    <option value="percentage">percentage</option>
+    <option value="percent">percent</option>
+    <option value="B">B</option>
+    <option value="KB">KB</option>
+    <option value="MB">MB</option>
+    <option value="GB">GB</option>
+    <option value="TB">TB</option>
+    <option value="PB">PB</option>
+    <option value="b">b</option>
+    <option value="bytesToBits">bytesToBits</option>
+    <option value="Kb">Kb</option>
+    <option value="Mb">Mb</option>
+    <option value="Gb">Gb</option>
+    <option value="Tb">Tb</option>
+    <option value="Pb">Pb</option>
+    <option value="epoch-millis">epoch-millis</option>
+    <option value="epoch-seconds">epoch-seconds</option>
+    <option value="ns">ns</option>
+    <option value="mu">mu</option>
+    <option value="ms">ms</option>
+    <option value="jiffys">jiffys</option>
+    <option value="sec">sec</option>
+</select>
+
+</br>
+</br>
 
 <div id="tank" style="float: left; padding: 10px;"
      dojoType="hyperic.widget.ProgressTube"

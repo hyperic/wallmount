@@ -7,14 +7,14 @@ dojo.require("hyperic.unit.UnitsConstants");
 dojo.declare("hyperic.unit.BinaryFormatter",
     null,{
         
-    format: function(/*Object*/val) {
+    format: function(/*Object*/val, format) {
 
         var baseVal = val.getBaseValue();
         var targScale = this.findGoodLookingScale(baseVal);
         var newVal = this.getTargetValue(baseVal, targScale);
         //var fmt = hyperic.unit.UnitsUtil.getNumberFormat(newVal);
         var fmt = dojo.number.format;
-        return this.createFormattedValue(newVal, targScale, fmt);
+        return this.createFormattedValue(newVal, targScale, fmt, format);
     },
 
     parse: function(/*String*/val, unitType, /*String*/locale){
@@ -25,7 +25,7 @@ dojo.declare("hyperic.unit.BinaryFormatter",
         return this.parseTag(numberPart,nonNumberPart,nonIdx);
     },
 
-    createFormattedValue: function(value, scale, fmt) {
+    createFormattedValue: function(value, scale, fmt, format) {
         var tag;
 
         switch(scale){
@@ -49,8 +49,9 @@ dojo.declare("hyperic.unit.BinaryFormatter",
                 break;
         }
     
+        var f = format || {pattern:'#.############'};
         // TODO: this formatting pattern just feels wrong
-        return fmt(value,{pattern:'#.############'}) + tag + this.getTagName();         
+        return fmt(value,f) + tag + this.getTagName();         
     },
         
     getBaseValue: function(/*double*/value, /*int*/scale){
