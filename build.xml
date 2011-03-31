@@ -44,6 +44,7 @@
             <arg line="mini=false"/>
             <arg line="version=${version}"/>
             <arg line="optimize=shrinksafe"/>
+            <arg line="cssOptimize=comments.keepLines"/>
     	</java>
     </target>
 

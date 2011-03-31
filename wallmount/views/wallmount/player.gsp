@@ -3,16 +3,10 @@
   <head>
     <meta http-equiv="content-script-type" content="text/javascript">
     <title>Wallmount Player - ${useLayout}</title>
-    <style type="text/css">
-      @import "../public/js/dijit/themes/claro/claro.css";
-      @import "../public/js/dojo/resources/dojo.css";
-      @import "../public/js/dojox/layout/resources/ExpandoPane.css";
-      @import "../public/js/dojox/layout/resources/ResizeHandle.css"; 
-      @import "../public/js/dojox/layout/resources/FloatingPane.css";
-      @import "../public/js/hyperic/data/resources/hypericicons.css";
-      @import "../public/css/player.css";
-    </style>
-  
+
+    <link rel="stylesheet" type="text/css"
+          href="../public/js/hyperic/wallmount/resources/PlayerCombined.css" />
+      
     <script type="text/javascript"
             src="../public/js/dojo/dojo.js"
             djConfig="parseOnLoad: true, isDebug: true, locale: 'en'"

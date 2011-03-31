@@ -2,19 +2,10 @@
 
   <head>
     <title>Wallmount Designer Test 2 - against release</title>
-    <style type="text/css">
-      @import "../../dijit/themes/claro/claro.css";
-      @import "../../dojo/resources/dojo.css";
-      @import "../../dojox/grid/resources/Grid.css";
-      @import "../../dojox/grid/resources/tundraGrid.css";
-      @import "../../dojox/layout/resources/ExpandoPane.css";
-      @import "../../dojox/layout/resources/ResizeHandle.css"; 
-      @import "../../dojox/layout/resources/FloatingPane.css";
-      @import "../../hyperic/layout/resources/MoveablePane.css";
-      @import "../../dojox/widget/Toaster/Toaster.css";
-      @import "../data/resources/hypericicons.css";
-      @import "designer.css";
-    </style>
+
+    <link rel="stylesheet" type="text/css"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombined.css" />
+    
   
     <script type="text/javascript"
             src="../../release/dojo/dojo/dojo.js.uncompressed.js"
@@ -28,9 +19,6 @@
             src="../../hyperic/tests/TestUtil.js"></script>
           
     <script type="text/javascript">
-//      dojo.require("hyperic.wallmount.base");
-//      dojo.require("hyperic.wallmount.Designer");
-//      dojo.require("hyperic.wallmount.Registry");
       
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){

@@ -2,20 +2,10 @@
 
   <head>
     <title>Wallmount Dashboard Designer</title>
-    <style type="text/css">    
-      @import "../public/js/dijit/themes/claro/claro.css";
-      @import "../public/js/dojo/resources/dojo.css";
-      @import "../public/js/dojox/grid/resources/Grid.css";
-      @import "../public/js/dojox/grid/resources/tundraGrid.css";
-      @import "../public/js/dojox/layout/resources/ExpandoPane.css";
-      @import "../public/js/dojox/layout/resources/ResizeHandle.css"; 
-      @import "../public/js/dojox/layout/resources/FloatingPane.css";
-      @import "../public/js/dojox/widget/Toaster/Toaster.css";
-      @import "../public/js/hyperic/layout/resources/MoveablePane.css";
-      @import "../public/js/hyperic/data/resources/hypericicons.css";
-      @import "../public/css/designer.css";
-    </style>
-  
+    
+    <link rel="stylesheet" type="text/css"
+          href="../public/js/hyperic/wallmount/resources/DesignerCombined.css" />
+      
     <script type="text/javascript"
             src="../public/js/dojo/dojo.js"
             djConfig="parseOnLoad: true, isDebug: true, locale: 'en'",
