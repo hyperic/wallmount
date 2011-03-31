@@ -8,7 +8,7 @@
       
     <script type="text/javascript"
             src="../public/js/dojo/dojo.js"
-            djConfig="parseOnLoad: true, isDebug: true, locale: 'en'",
+            djConfig="parseOnLoad: true, isDebug: false, locale: 'en'",
             gfxRenderer: 'canvas'></script>
 
     <script type="text/javascript"
