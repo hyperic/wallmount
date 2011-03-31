@@ -6,6 +6,9 @@ dojo.require("hyperic.dialog.DashboardSizeDialog");
 dojo.require("hyperic.wallmount.Designer");
 
 hyperic.wallmount.LayoutUtil.saveLayoutDialog = function() {
+	// summary:
+	//     Opens dialog used to ask name for layout to be saved
+	
     if(!hyperic.wallmount.LayoutUtil.saveLayoutDlg) {
         hyperic.wallmount.LayoutUtil.saveLayoutDlg = new hyperic.dialog.SaveLayoutDialog({
             title: "Save Layout",
@@ -17,6 +20,14 @@ hyperic.wallmount.LayoutUtil.saveLayoutDialog = function() {
 };
 
 hyperic.wallmount.LayoutUtil.saveCurrentLayout = function() {
+	// summary:
+	//     Saves current layout
+	//
+	// description:
+	//     Saves current layout if name is already knows.
+	//     If layout name is not knows, forwards user to
+	//     layout name selection dialog.
+	
 	var lName = hyperic.wallmount.LayoutUtil.getLayoutName();
 	if(lName.length > 0) {
 		hyperic.wallmount.LayoutUtil.saveLayout(lName)
@@ -26,8 +37,24 @@ hyperic.wallmount.LayoutUtil.saveCurrentLayout = function() {
 };
 
 hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
+	// summary:
+	//     Method to do layout saving to HQU backend
+	//
+	// description:
+	//     This method gets current layout as JSON and posts
+	//     it to HQU backend. Status of saving action is posted
+	//     to internal message bus.
     
-    var data = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();
+    var dataObj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();
+    
+    // if this is a first time layout is to be saved or user
+    // wants to save current restored layout with different name
+    // the actual JSON data contains a wrong name.
+    // update it with name given as parameter to this function.
+    dataObj.name = name;
+    
+    var data = dojo.toJson(dataObj);
+    
     var contentObject = {};
     contentObject['layoutdata'] = data;
     contentObject['layoutname'] = name;
@@ -49,7 +76,9 @@ hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
 };
 
 hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
-	console.log("selectLayoutDialog");
+    // summary:
+    //     Opens a dialog to restore stored layout
+    
 	if(!hyperic.wallmount.LayoutUtil.layoutDlg) {
         hyperic.wallmount.LayoutUtil.layoutDlg = new hyperic.dialog.LoadLayoutDialog({
             title: "Select Layout",
@@ -62,6 +91,9 @@ hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
 };
 
 hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
+	// summary:
+	//     Opens a dialog to change dashboard size
+	
     if(!hyperic.wallmount.LayoutUtil.dashboardSizeDlg) {
         hyperic.wallmount.LayoutUtil.dashboardSizeDlg = new hyperic.dialog.DashboardSizeDialog({
             title: "Change Dashboard Size",
@@ -73,18 +105,24 @@ hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
 };
 
 hyperic.wallmount.LayoutUtil.setLayoutName = function(name) {
+	// summary:
+	//     Helper method to set current layout name in UI
+	
 	var layoutName = dijit.byId("layoutName");
 	layoutName.setLayoutName(name);
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutName = function() {
+    // summary:
+    //     Helper method to get current used layout name
+    
     var layoutName = dijit.byId("layoutName");
     return layoutName.getLayoutName();
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	// summary:
-	//     Builds a json representation of current layout in designer.
+	//     Builds a json representation of current layout.
 	
     var layout = {}; // main json object
 
@@ -164,15 +202,14 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
     layout['h'] = lH;
 	
 	layout['items'] = windowNodeList;
-//	var str = dojo.toJson(layout);
-//	console.log("Logging layout json");
-//    console.log(str);
     return layout;
 };
 
 hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
+	// summary:
+	//     Returns current layout as JSON string
+	
 	var obj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();
-	console.log(dojo.toJson(obj));
 	return dojo.toJson(obj);
 };
 
