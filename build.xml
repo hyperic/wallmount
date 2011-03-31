@@ -10,7 +10,7 @@
     <property name="dojobuild.lib" location="${dojo.source.dir}/util/shrinksafe" />
     <property name="dojobuild.dir" location="${dojo.source.dir}/util/buildscripts" />
     <property name="dojobuild.js" location="${dojobuild.dir}/build.js" />
-    <property name="dojoprofile" value="wallmount" />
+    <property name="dojoprofile" value="wmvisualizer" />
 
     <path id="dojojars">
     	<fileset dir="${dojobuild.lib}" includes="js.jar" />

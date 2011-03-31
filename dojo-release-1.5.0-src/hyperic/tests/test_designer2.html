@@ -1,49 +1,54 @@
 <html>
 
   <head>
-    <title>Wallmount Dashboard Designer</title>
-    <style type="text/css">    
-      @import "../public/js/dijit/themes/claro/claro.css";
-      @import "../public/js/dojo/resources/dojo.css";
-      @import "../public/js/dojox/grid/resources/Grid.css";
-      @import "../public/js/dojox/grid/resources/tundraGrid.css";
-      @import "../public/js/dojox/layout/resources/ExpandoPane.css";
-      @import "../public/js/dojox/layout/resources/ResizeHandle.css"; 
-      @import "../public/js/dojox/layout/resources/FloatingPane.css";
-      @import "../public/js/dojox/widget/Toaster/Toaster.css";
-      @import "../public/js/hyperic/layout/resources/MoveablePane.css";
-      @import "../public/js/hyperic/data/resources/hypericicons.css";
-      @import "../public/css/designer.css";
+    <title>Wallmount Designer Test 2 - against release</title>
+    <style type="text/css">
+      @import "../../dijit/themes/claro/claro.css";
+      @import "../../dojo/resources/dojo.css";
+      @import "../../dojox/grid/resources/Grid.css";
+      @import "../../dojox/grid/resources/tundraGrid.css";
+      @import "../../dojox/layout/resources/ExpandoPane.css";
+      @import "../../dojox/layout/resources/ResizeHandle.css"; 
+      @import "../../dojox/layout/resources/FloatingPane.css";
+      @import "../../hyperic/layout/resources/MoveablePane.css";
+      @import "../../dojox/widget/Toaster/Toaster.css";
+      @import "../data/resources/hypericicons.css";
+      @import "designer.css";
     </style>
   
     <script type="text/javascript"
-            src="../public/js/dojo/dojo.js"
-            djConfig="parseOnLoad: true, isDebug: true, locale: 'en'",
+            src="../../release/dojo/dojo/dojo.js.uncompressed.js"
+            djConfig="parseOnLoad: true, isDebug: true",
             gfxRenderer: 'canvas'></script>
 
     <script type="text/javascript"
-            src="../public/js/dojo/wmvisualizer.js"></script>
+            src="../../release/dojo/dojo/wmvisualizer.js.uncompressed.js"></script>
+
+    <script type="text/javascript"
+            src="../../hyperic/tests/TestUtil.js"></script>
           
     <script type="text/javascript">
-
-      dojo.addOnLoad(function(){
+//      dojo.require("hyperic.wallmount.base");
+//      dojo.require("hyperic.wallmount.Designer");
+//      dojo.require("hyperic.wallmount.Registry");
+      
+      function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
-              var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=" + data[0];
+              var url = "/dojo-release-1.5.0-src/hyperic/tests/layouts/" + data[0];
               hyperic.wallmount.Designer.loadLayout(url);
-          });      
-      }); 
-                    
+          });
+      }    
+      dojo.addOnLoad(init);      
     </script>
     
   </head>
 
   <body class="claro">
-  
+
     <div dojoType="dojox.widget.Toaster" id="toastMessenger" 
          positionDirection="br-up" duration="3000" 
          messageTopic="userMessageTopic"></div>   
-  
-  
+
     <div dojoType="hyperic.wallmount.Registry"
          id="registry"
          jsId="hyperic.wallmount.Registry._registry"
@@ -73,7 +78,10 @@
           <div dojoType="dijit.Menu" id="fileMenu">
             <div dojoType="dijit.MenuItem"
                  id="fileMenuOpen" 
-                 onClick="hyperic.wallmount.LayoutUtil.selectLayoutDialog();">Open...</div>
+                 onClick="hyperic.tests.TestUtil.selectLayoutDialog();">Open...</div>
+            <div dojoType="dijit.MenuItem"
+                 id="fileMenuLogLayout"
+                 onClick="hyperic.wallmount.LayoutUtil.getLayoutAsJSON();">Log layout</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSave"
                  onClick="hyperic.wallmount.LayoutUtil.saveCurrentLayout();">Save</div>
@@ -101,9 +109,9 @@
                  onClick="hyperic.wallmount.LayoutUtil.dashboardSizeDialog();">Dashboard Size...</div>
             <div dojoType="dijit.MenuItem"
                  id="settingsTest"
-                 onClick="hyperic.wallmount.WindowUtil.newLayoutTestWindow();">Test this configuration</div>
+                 onClick="hyperic.tests.TestUtil.newLayoutTestWindow();">Test this configuration</div>
           </div>
-        </div>        
+        </div>
         <div class="dijitmenuitem dijitinline">|</div>
         <div dojoType="hyperic.layout.LayoutName" id="layoutName"></div>
       </div>
@@ -131,7 +139,7 @@
                
             <div dojoType="dojox.data.JsonRestStore" 
                  jsId="metricStore" 
-                 target="/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path=/platform"
+                 target="/dojo-release-1.5.0-src/hyperic/tests/data/platform"
                  allowNoTrailingSlash="true" 
                  labelAttribute="name"></div>
                
@@ -141,7 +149,7 @@
               <div dojoType="dijit.tree.ForestStoreModel" 
                    jsId="metricModel"
                    store="metricStore"
-                   query="{}"
+                   query="{foo:'jee'}"
                    deferItemLoadingUntilExpand="true"
                    childrenAttrs="children"></div>
               <div dojoType="hyperic.data.ResourceTree"
@@ -155,6 +163,48 @@
 
               
             </div>
+
+<!--
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Groups">
+                 
+              <div dojoType="hyperic.data.GroupsStoreModel" 
+                   jsId="groupModel"
+                   store="metricStore"
+                   deferItemLoadingUntilExpand="true"
+                   childrenAttrs="children"></div>
+              <div dojoType="hyperic.data.ResourceTree"
+                   id="groupsTree"
+                   dndController="hyperic.data.TreeDndSource"
+                   label="Groups" 
+                   persist="false"
+                   deferItemLoadingUntilExpand="true" 
+                   model="groupModel" 
+                   labelAttr="name"></div>
+            </div>
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Applications">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Resource Types">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+            
+            <div dojoType="dijit.layout.ContentPane"
+                 title="Search">
+              <div class="wrap">
+              jeejee
+              </div>
+            </div>
+-->
             
           </div>
 
@@ -162,6 +212,9 @@
                id="rightAccordion2" 
                style="height:200px;"
                attachParent="true">
+
+<!--
+-->               
             <div dojoType="hyperic.layout.PropertiesPane" 
                  style="height:300px;"
                  attachParent="true"
@@ -172,6 +225,14 @@
         </div>
         
       </div>
+
+<!--
+      <div dojoType="dijit.layout.ContentPane"
+           region="center"
+           splitter="false">
+         <div id="layoutinfo" class="hypericLayoutInfo">Layout Name:[]</div>
+      </div>
+-->               
       
       <div dojoType="dijit.layout.ContentPane"
            region="center"
@@ -180,7 +241,6 @@
       </div>
       
     </div>
-  
 
   </body>
 

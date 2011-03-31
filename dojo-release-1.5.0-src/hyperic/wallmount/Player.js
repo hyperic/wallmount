@@ -1,6 +1,7 @@
 dojo.provide("hyperic.wallmount.Player");
 
 dojo.require("hyperic.wallmount.WindowUtil");
+dojo.require("hyperic.data.MetricStore");
 
 hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAnim) {
     // summary:

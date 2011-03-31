@@ -1,17 +1,6 @@
 dojo.provide("hyperic.dnd.Source");
 
 dojo.require("dojo.dnd.Source");
-//dojo.require("hyperic.widget.Spinner");
-//dojo.require("hyperic.widget.HorizontalArrowPipe");
-//dojo.require("hyperic.widget.VerticalArrowPipe");
-//dojo.require("hyperic.widget.Tank");
-//dojo.require("hyperic.widget.ProgressTube");
-//dojo.require("hyperic.widget.AvailIcon");
-//dojo.require("hyperic.widget.AvailText");
-//dojo.require("hyperic.widget.chart.Chart");
-//dojo.require("hyperic.widget.EllipseLabel");
-//dojo.require("hyperic.widget.label.Label");
-//dojo.require("hyperic.widget.label.AvailabilityLabel");
 
 dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
 // summary:
@@ -40,7 +29,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         var parent = dojo.byId(item).parentNode;
     	dojo._destroyElement(dojo.byId(item));
     	
-        dojo.require(widget);
+    	// dojo.require(...) brakes the build system
+    	// because "widget" is not found
+        dojo["require"](widget);
         var clazz = dojo.getObject(widget);
         var props = this.registry.getPluginProperties(widget);
         var w = new clazz(props);
@@ -162,12 +153,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.chartTimeScale) {
                 args['chartTimeScale'] = item.chartTimeScale;               
             }       
-        	dojo.require(item.type);
+        	dojo["require"](item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);
         } else {
         	var _pluginName = this.registry.getPluginName(item);
-        	dojo.require(_pluginName);
+        	dojo["require"](_pluginName);
             var clazz = dojo.getObject(_pluginName);
             
             // check if passed item contains reference to widget.

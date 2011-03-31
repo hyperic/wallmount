@@ -18,12 +18,12 @@
             djConfig="parseOnLoad: true, isDebug: true, locale: 'en'"
             gfxRenderer: 'canvas'></script>
           
+    <script type="text/javascript"
+            src="../public/js/dojo/wmvisualizer.js"></script>
+            
     <script type="text/javascript">
-      dojo.require("hyperic.wallmount.base");
-      dojo.require("hyperic.wallmount.Player");
-      dojo.require("hyperic.data.MetricStore");
       
-      function init(){
+      dojo.addOnLoad(function(){
         hyperic.wallmount.base.metricStore = new hyperic.data.MetricStore(
             {url: "/hqu/wmvisualizer/metricstore/getMetrics.hqu",
              idToBaseUrl: false}
@@ -33,10 +33,8 @@
         
         var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=${useLayout}";
         hyperic.wallmount.Player.loadLayout(url,true);
-                
-      }
-
-      dojo.addOnLoad(init);
+      }); 
+      
     </script>
         
   </head>
