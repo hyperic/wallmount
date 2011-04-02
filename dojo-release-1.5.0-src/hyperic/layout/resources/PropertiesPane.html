@@ -267,10 +267,16 @@
                 <p>
                     <label class="propertytext">Theme:</label>
                     <select style="float:left;" id="${id}_charttheme" name="charttheme" dojoAttachPoint="charttheme" class="textbox" dojoType="dijit.form.Select" intermediateChanges="true" observer="handleValues">
-                        <option value="Julie">Julie</option>
-                        <option value="ThreeD">ThreeD</option>
-                        <option value="CubanShirts">CubanShirts</option>
+                        <option value="simple">Simple</option>
+                        <option value="glossy">Glossy</option>
                     </select>
+                </p>
+                <p>
+                    <label class="propertytext">Color:</label>
+                    <button style="float:left;" dojoType="dijit.form.DropDownButton" dojoAttachPoint="chartcolorbutton" iconClass="noteIcon" value="color">
+                        <span>Color</span>
+                        <div id="${id}_chartcolor" name="chartcolor" dojoAttachPoint="chartcolor" dojoType="dijit.ColorPalette" id="colorPalette" style="display: none" palette="7x10"></div>
+                    </button>                    
                 </p>
             </fieldset>                
         </div>

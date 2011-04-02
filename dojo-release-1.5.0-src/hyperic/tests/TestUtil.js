@@ -26,3 +26,8 @@ hyperic.tests.TestUtil.selectLayoutDialog = function() {
     }
     hyperic.tests.TestUtil.layoutDlg.show();  
 };
+
+hyperic.tests.TestUtil.logLayoutJSON = function() {
+	var json = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();
+	console.log(json);
+};

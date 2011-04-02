@@ -32,9 +32,8 @@ dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.charting.Chart2D");
 dojo.require("dojox.charting.plot2d.Lines");
 dojo.require("hyperic.charting.plot2d.Columns");
-dojo.require("dojox.charting.themes.Julie");
-dojo.require("dojox.charting.themes.ThreeD");
-dojo.require("dojox.charting.themes.CubanShirts");
+dojo.require("hyperic.charting.themes.Glossy");
+dojo.require("dojox.charting.Theme");
 
 (function(){
 	
@@ -43,13 +42,6 @@ dojo.require("dojox.charting.themes.CubanShirts");
 		Lines: dojo.getObject('dojox.charting.plot2d.Lines'),
         Bars: dojo.getObject('hyperic.charting.plot2d.Columns')
 	};
-
-    // Abstraction of supported chart themes
-    var themes = {
-        ThreeD: dojo.getObject('dojox.charting.themes.ThreeD'),
-        Julie: dojo.getObject('dojox.charting.themes.Julie'),
-        CubanShirts: dojo.getObject('dojox.charting.themes.CubanShirts')
-    };
 
     // Abstraction of supported chart time scales
     var timeScales = {
@@ -142,8 +134,17 @@ dojo.require("dojox.charting.themes.CubanShirts");
         _addTheme: function(chart){
             // summary:
             //     xxx
-        
-            chart.setTheme(themes[this.chartTheme]);
+            var _cArray = this.chartColors;
+            var _theme;
+            if(this.chartTheme == 'glossy') {
+            	var defaultFill = {type: "linear", space: "shape", x1: 0, y1: 0, x2: 100, y2: 0};
+                _theme = new hyperic.charting.themes.Glossy(
+                    {colors:_cArray,
+                     seriesThemes: dojox.charting.themes.gradientGenerator.generateMiniTheme(_cArray, defaultFill, 90, 40, 25)});            	
+            } else {
+                _theme = new dojox.charting.Theme({colors:_cArray});            	
+            }
+            chart.setTheme(_theme);
         },
 
         setSerie: function(serie) {
@@ -158,6 +159,7 @@ dojo.require("dojox.charting.themes.CubanShirts");
             //     xxx
         
         	this.chartTheme = theme;
+        	
         },
     
         _getSeries: function(){
@@ -167,7 +169,7 @@ dojo.require("dojox.charting.themes.CubanShirts");
             if(typeof(this._serie) === 'undefined') return []; 
         	return this._serie;
         },
-
+        
         storeCallback: function(arg) {
             // summary:
             //     Store callback to listen series updates from metric store.
@@ -227,6 +229,7 @@ dojo.require("dojox.charting.themes.CubanShirts");
             var paramObj = this.inherited(arguments);
             paramObj['chartType'] = this.getChartType();
             paramObj['chartTheme'] = this.getChartTheme();
+            paramObj['chartColors'] = this.getChartColors();
             paramObj['chartTimeScale'] = this.getChartTimeScale();
             return paramObj;
         }

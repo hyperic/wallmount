@@ -179,6 +179,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             if(item.chartTimeScale) {
                 args['chartTimeScale'] = item.chartTimeScale;               
             }       
+            if(item.chartColors) {
+                args['chartColors'] = item.chartColors;               
+            }       
         	dojo["require"](item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);

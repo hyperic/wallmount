@@ -115,7 +115,8 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
                 supportLegends: witem.supportLegends,
                 chartType: witem.chartType,
                 chartTheme: witem.chartTheme,
-                chartTimeScale: witem.chartTimeScale
+                chartTimeScale: witem.chartTimeScale,
+                chartColors: witem.chartColors
             	}]);    		
     	}
         

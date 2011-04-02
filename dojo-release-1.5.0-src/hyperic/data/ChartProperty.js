@@ -40,8 +40,13 @@ dojo.declare("hyperic.data.ChartProperty",null,{
     //     Defines chart time window. One of 1h, 8h, 1d, 1w, 1m, 1y
     chartTimeScale: "8h",
 
+    // chartColors: Array
+    //     Defines chart main colors
+    chartColors: null,
+
 
     constructor: function(){
+    	this.chartColors = ['#ff00ff'];
     },
     
     getChartType: function(){
@@ -66,7 +71,14 @@ dojo.declare("hyperic.data.ChartProperty",null,{
     
     _setChartTimeScaleAttr: function(value){
         this.chartTimeScale = value;
-    }
+    },
 
+    getChartColors: function(){
+        return this.chartColors;
+    },
+    
+    _setChartColorsAttr: function(value){
+        this.chartColors = value;
+    }
     
 });

@@ -94,6 +94,19 @@
         
     }
     
+    var updateColor = function() {
+        var picker = dijit.byId(dijit.byId("chartcolor"));
+        if(picker.value) {
+            var pickerbutton = dijit.byId(dijit.byId("chartcolorbutton"));
+            dojo.style(pickerbutton.containerNode, "color", picker.value);
+            dojo.style(pickerbutton.containerNode, "backgroundColor", picker.value);
+        }
+        console.log("color: " + picker.value);        
+        var s = dijit.byId("chart");
+        s.setChartColors([picker.value]);
+        s.reset();
+    }
+    
 </script>
 
 
@@ -102,35 +115,20 @@
     dojo.require("hyperic.widget.Spinner");
     dojo.require("dijit.form.NumberSpinner");
     dojo.require("dijit.form.Select");
+    dojo.require("dijit.ColorPalette");
+    dojo.require("dijit.form.DropDownButton");
     dojo.require("hyperic.tests.TestData");
     
     
     
     dojo.addOnLoad(function(){
 
-    var epoch = new Date().getTime();    
-    var serie = [];
-    
-serie.push({ x: 1300318800000, y: 0.527});
-serie.push({ x: 1300318500000, y: 0.21});
-serie.push({ x: 1300318200000, y: 0.523});
-serie.push({ x: 1300317900000, y: 0.221});
-serie.push({ x: 1300317600000, y: 0.514});
-serie.push({ x: 1300317300000, y: 0.203});
-//serie.push({ x: 1300317000000, y: 0.514});
-serie.push({ x: 1300316700000, y: 0.22});
-serie.push({ x: 1300316400000, y: 0.513});
-serie.push({ x: 1300316100000, y: 0.193});
-serie.push({ x: 1300315800000, y: 0.542});
-serie.push({ x: 1300315500000, y: 0.21});
-    
-    
     
     var s = dojo.byId("chart");
     s = new hyperic.widget.chart.Chart({width:400, height:200},s);
-//    s.setSerie(serie);
-    s.setSerie([]);
+    s.setSerie(hyperic.tests.TestData.data1h5min);
     s.startup();
+    
     
     });
 </script>
@@ -191,9 +189,8 @@ serie.push({ x: 1300315500000, y: 0.21});
         class="textbox"
         intermediateChanges="true"
         onChange="theme">
-    <option value="Julie">Julie</option>
-    <option value="ThreeD">ThreeD</option>
-    <option value="CubanShirts">CubanShirts</option>
+    <option value="simple">Simple</option>
+    <option value="glossy">Glossy</option>
 </select>
 
 <label for="theme">Unit</label>
@@ -241,6 +238,15 @@ serie.push({ x: 1300315500000, y: 0.21});
     <option value="1000000000">1000000000x</option>
 </select>
 
+</br>
+<div dojoType="dijit.form.DropDownButton" id="chartcolorbutton">
+  <span>Color</span>
+  <div dojoType="dijit.ColorPalette"
+       id="chartcolor"
+       style="display: none"
+       palette="3x4"
+       onChange="updateColor"></div>
+</div>
 
 </br>
 </br>

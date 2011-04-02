@@ -109,6 +109,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         dojo.connect(this.fullcolor,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.legend0color,'onChange',dojo.hitch(this,"handleValues"));
         dojo.connect(this.legend2color,'onChange',dojo.hitch(this,"handleValues"));
+        dojo.connect(this.chartcolor,'onChange',dojo.hitch(this,"handleValues"));
     },
     
     _onMessage: function(arg){
@@ -354,9 +355,12 @@ dojo.declare("hyperic.layout.PropertiesPane",
         	this._selected.set("chartType", this.elementValue("charttype"));
             this._selected.set("chartTimeScale", this.elementValue("charttimescale"));
             this._selected.set("chartTheme", this.elementValue("charttheme"));
-//            this._selected.setChartType(this.elementValue("charttype"))
-//            this._selected.setChartTimeScale(this.elementValue("charttimescale"))
-//            this._selected.setChartTheme(this.elementValue("charttheme"))
+            var chartpicker = dijit.byId(this.chartcolor);
+            if(chartpicker.value){
+                dojo.style(this.chartcolorbutton.containerNode, "color", chartpicker.value);
+                dojo.style(this.chartcolorbutton.containerNode, "backgroundColor", chartpicker.value);
+                this._selected.set("chartColors",[chartpicker.value]);
+            }
         }
         
         this._selected.reset();
@@ -619,7 +623,13 @@ dojo.declare("hyperic.layout.PropertiesPane",
         timescale.set('value', this._selected.getChartTimeScale());
 
         var theme = dijit.byId(this.charttheme);
-        theme.set('value', this._selected.getChartTheme());        
+        theme.set('value', this._selected.getChartTheme());
+        
+        var chartpicker = dijit.byId(this.chartcolor);
+        var _c = this._selected.getChartColors()[0];
+        chartpicker.value = _c
+        dojo.style(this.chartcolorbutton.containerNode, "color", _c);
+        dojo.style(this.chartcolorbutton.containerNode, "backgroundColor", _c);
     }
     
 
