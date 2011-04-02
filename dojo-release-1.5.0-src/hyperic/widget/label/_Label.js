@@ -46,7 +46,7 @@ dojo.declare("hyperic.widget.label._Label",
         
         this._cacheColor();
         
-        var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format);        
+        var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});        
         
         // ok, for now just take 10% off from the width and scale by rect
         // seem to get pretty good result
