@@ -34,7 +34,7 @@ dojo.declare("hyperic.data.ChartProperty",null,{
     
     // theme: String
     //     Used chart theme.
-    chartTheme: "Julie",
+    chartTheme: "simple",
     
     // timeScale: String
     //     Defines chart time window. One of 1h, 8h, 1d, 1w, 1m, 1y
@@ -46,7 +46,7 @@ dojo.declare("hyperic.data.ChartProperty",null,{
 
 
     constructor: function(){
-    	this.chartColors = ['#ff00ff'];
+    	this.chartColors = ['#228b22'];
     },
     
     getChartType: function(){
