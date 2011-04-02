@@ -212,7 +212,7 @@ dojo.require("dojox.charting.Theme");
             // summary:
             //     Labeling for y-axis
         
-            return hyperic.unit.UnitsConvert.convert(val, this.format);
+            return hyperic.unit.UnitsConvert.convert(val, this.format, {places:'0,2'});
         },
     
         reset: function(){
