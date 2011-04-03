@@ -183,8 +183,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
                 args['chartColors'] = item.chartColors;               
             }       
         	dojo["require"](item.type);
+        	
+            var internalProps = this.registry.getPluginInternal(item.type);
             var clazz = dojo.getObject(item.type);
             w = new clazz(args);
+            // mixin internal props from registry 
+            dojo.mixin(w,internalProps);
         } else {
         	var _pluginName = this.registry.getPluginName(item);
         	dojo["require"](_pluginName);
@@ -201,6 +205,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             }
             w = new clazz(props);                           
         }
+        
         
         if(s) {
         	w.setStore(s);

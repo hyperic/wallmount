@@ -185,16 +185,11 @@ dojo.declare("hyperic.util.LayoutTestWindow", null, {
         // Cache contains a string because we need to do property replacement
         // do the property replacement
         return dojo.string.substitute(tmpl, this, function(value, key){
-            if(key.charAt(0) == '!'){ value = dojo.getObject(key.substr(1), false, _this); }
-            if(typeof value == "undefined"){ throw new Error(className+" template:"+key); } // a debugging aide
+        	// if substitute kay begins with !, discard substitution process
+        	// let it pass without modifications. 
+            if(key.charAt(0) == '!'){ value = '${' + key.substr(1) + '}' }
             if(value == null){ return ""; }
-            // Substitution keys beginning with ! will skip the transform step,
-            // in case a user wishes to insert unescaped markup, e.g. ${!foo}
-            return value;
-            
-            // No substitution for now...
-            //return key.charAt(0) == "!" ? value :
-            //value.toString().replace(/"/g,"&quot;");
+            return value;            
         }, this);
     }
     

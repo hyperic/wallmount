@@ -48,11 +48,20 @@ dojo.declare("hyperic.widget.EllipseLabel",[hyperic.widget.label._Label],{
         this.surface.clear();
         
         var size = this.getMinSize();
-        var url = this.baseImgUrl + "ellipse-green.png";
+
+        var width = dojo.number.round(this.width);
+        var height = dojo.number.round(this.height);
         
+        // check if registry is giving us new URI for bg image
+        var url;
+        if(typeof(this.bgImageURI) === 'undefined') {
+        	url = this.baseImgUrl + "ellipse-green.png";
+        } else {
+        	// keys ${bgImageWidth} ${bgImageHeight}
+        	url = dojo.string.substitute(this.bgImageURI,{bgImageWidth:width, bgImageHeight:height});
+        }
 
-
-        this.surface.createImage({x:0,y:0,width:this.width, height:this.height, src: url});        	
+        this.surface.createImage({x:0,y:0,width:width, height:height, src: url});        	
 
         this.drawMetric();
     },

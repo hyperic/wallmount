@@ -28,6 +28,14 @@
         
   </head>
   <body class="claro">
+    <div dojoType="hyperic.wallmount.Registry"
+         id="registry"
+         jsId="hyperic.wallmount.Registry._registry"
+         plugins="[
+             {plugin: 'hyperic.widget.EllipseLabel', internal:{bgImageURI:'/hqu/wmvisualizer/image/getScaledImage.hqu?path=js/hyperic/widget/label/resources/ellipse-green.png&w=${!bgImageWidth}&h=${!bgImageHeight}'}},
+             {plugin: 'hyperic.widget.AvailText', internal:{bgImageURI:'/hqu/wmvisualizer/image/getScaledImage.hqu?path=js/hyperic/widget/avail/resources/${!bgImageStatus}-ellipse.png&w=${!bgImageWidth}&h=${!bgImageHeight}'}},
+             {plugin: 'hyperic.widget.AvailIcon', internal:{bgImageURI:'/hqu/wmvisualizer/image/getScaledImage.hqu?path=js/hyperic/widget/avail/resources/${!bgImageStatus}-${!bgImageRes}.png&w=${!bgImageWidth}&h=${!bgImageHeight}'}}
+         ]"></div>
     <div id="wallmountpane"></div>
   </body>
 </html>

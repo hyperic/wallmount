@@ -63,6 +63,7 @@ hyperic.wallmount.WindowUtil.newItemFloater = function(args) {
     var c = dojo.create("div", null, node);
     
     var source = new hyperic.dnd.SingleSource(c, {accept: ['treeNode','text']});
+    source.setRegistry(hyperic.wallmount.Registry.registry());
     dojo.addClass(c,"singlecontainer");
         
     var tmp = new hyperic.layout.MoveablePane({

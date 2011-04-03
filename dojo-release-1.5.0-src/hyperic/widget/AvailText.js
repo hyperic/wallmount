@@ -28,6 +28,7 @@ dojo.provide("hyperic.widget.AvailText");
 
 dojo.require("hyperic.widget.avail._Availability");
 dojo.require("hyperic.util.Util");
+dojo.require("dojo.number");
 
 dojo.declare("hyperic.widget.AvailText",
     [ hyperic.widget.avail._Availability ],{
@@ -56,10 +57,18 @@ dojo.declare("hyperic.widget.AvailText",
         var x = insets.left;
         var y = insets.top;
         
-        var url = this.baseImgUrl + status + "-ellipse.png";
                 
-        var width = this.width - insets.right - insets.left;
-        var height = this.height - insets.top - insets.bottom;
+        var width = dojo.number.round(this.width - insets.right - insets.left);
+        var height = dojo.number.round(this.height - insets.top - insets.bottom);
+
+        var url;
+        if(typeof(this.bgImageURI) === 'undefined') {
+            url = this.baseImgUrl + status + "-ellipse.png";
+        } else {
+            // keys ${bgImageStatus} ${bgImageWidth} ${bgImageHeight}
+            url = dojo.string.substitute(this.bgImageURI,{bgImageStatus:status, bgImageWidth:width, bgImageHeight:height});
+        }
+
         this.surface.createImage({x:x,y:y,width:width, height:height, src: url});
         
         // don't even try to draw legends if those are

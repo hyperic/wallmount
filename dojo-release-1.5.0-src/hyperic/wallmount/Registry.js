@@ -195,6 +195,18 @@ dojo.declare("hyperic.wallmount.Registry",null,{
     	}
     	props = props || {};
     	return props;
+    },
+    
+    getPluginInternal: function(/*String*/pluginName){
+        var props;
+        for(var i = 0; i<this.plugins.length; i++) {
+            if(this.plugins[i].plugin === pluginName) {
+                props = (this.plugins[i].internal ? this.plugins[i].internal : {});
+                break;
+            }
+        }
+        props = props || {};
+        return props;    	
     }
 
 });
