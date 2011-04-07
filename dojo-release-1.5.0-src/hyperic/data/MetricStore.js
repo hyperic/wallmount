@@ -117,8 +117,8 @@ dojo.declare("hyperic.data.MetricStore", null, {
         if(args && "urlPreventCache" in args){
             this.urlPreventCache = args.urlPreventCache?true:false;
         }
-        var t = args.syncTime || 3000;
-        this._timer = timer = new dojox.timing.Timer(6000);
+        var t = args.syncTime || 60000;
+        this._timer = timer = new dojox.timing.Timer(t);
         dojo.connect(timer, "onTick", dojo.hitch(this, "updateStore"));
         
     },
