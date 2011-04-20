@@ -25,7 +25,7 @@
         
         hyperic.wallmount.base.metricStore.sync(true);
         
-        var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=${useLayout}";
+        var url = "/hqu/wmvisualizer/wmvisualizer/getLayout.hqu?layout=${useLayout}";
         hyperic.wallmount.Player.loadLayout(url,true);
       }); 
       

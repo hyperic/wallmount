@@ -85,7 +85,7 @@ hyperic.wallmount.LayoutUtil.saveLayout = function(name) {
     contentObject['layoutdata'] = data;
     contentObject['layoutname'] = name;
     dojo.xhrPost({
-        url: '/hqu/wmvisualizer/wallmount/saveLayout.hqu',
+        url: '/hqu/wmvisualizer/wmvisualizer/saveLayout.hqu',
         handleAs: "json-comment-filtered",
         timeout: 5000,
         content: contentObject,
@@ -108,7 +108,7 @@ hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
 	if(!hyperic.wallmount.LayoutUtil.layoutDlg) {
         hyperic.wallmount.LayoutUtil.layoutDlg = new hyperic.dialog.LoadLayoutDialog({
             title: "Select Layout",
-            layoutsUrl: "/hqu/wmvisualizer/wallmount/getLayouts.hqu",
+            layoutsUrl: "/hqu/wmvisualizer/wmvisualizer/getLayouts.hqu",
             widgetsInTemplate: true,
             style: "width: 300px"
         });		

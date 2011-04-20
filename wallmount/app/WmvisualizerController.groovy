@@ -30,12 +30,12 @@ import org.json.JSONObject
 /**
  * Base controller for this plugin.
  */
-class WallmountController extends BaseWallmountController {
+class WmvisualizerController extends BaseWallmountController {
 		
 	/**
 	 * Constructor
 	 */
-	def WallmountController() {
+	def WmvisualizerController() {
         setJSONMethods(['saveLayout'])
 	}
 	

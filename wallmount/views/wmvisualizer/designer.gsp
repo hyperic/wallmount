@@ -18,7 +18,7 @@
 
       dojo.addOnLoad(function(){
           dojo.subscribe("/hyperic/layout/new", function(data){
-              var url = "/hqu/wmvisualizer/wallmount/getLayout.hqu?layout=" + data[0];
+              var url = "/hqu/wmvisualizer/wmvisualizer/getLayout.hqu?layout=" + data[0];
               hyperic.wallmount.Designer.loadLayout(url);
           });      
       }); 

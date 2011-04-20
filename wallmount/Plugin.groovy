@@ -1,11 +1,11 @@
 import org.hyperic.hq.hqu.rendit.HQUPlugin
 
-import WallmountController
+import WmvisualizerController
 import ImageController
 
 class Plugin extends HQUPlugin {
 	Plugin() {
-        addMastheadView(true, '/wallmount/index.hqu', 'Wall Mount Visualizer', 'tracker')
+        addMastheadView(true, '/wmvisualizer/index.hqu', 'Wall Mount Visualizer', 'tracker')
     }         
 }
 
