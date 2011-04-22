@@ -85,39 +85,7 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
         
     	for(var j = 0; j<items[i].items.length; j++){
     		var witem = items[i].items[j];
-            source.insertNodes(false, [{
-            	type:witem.type,
-                titlePosition: witem.titlePosition,
-            	title: witem.title,
-            	mid:witem.mid,
-            	eid:witem.eid,
-            	size:witem.size,
-            	format:witem.format,
-                width:witem.width,
-                height:witem.height,
-                arrowCount: witem.arrowCount,
-                arrowWidth: witem.arrowWidth,
-                arrowGap: witem.arrowGap,
-                arrowHeadLength: witem.arrowHeadLength,
-                reverse: witem.reverse,
-                color: witem.color,
-                arrowColor: witem.arrowColor,
-                labelColor: witem.labelColor,
-                minRange: witem.minRange,
-                maxRange: witem.maxRange,
-                speedTime: witem.speedTime,
-                ranges: witem.ranges,
-                legends: witem.legends,
-                emptyColor: witem.emptyColor,
-                fullColor: witem.fullColor,
-                lowRange: witem.lowRange,
-                highRange: witem.highRange,
-                supportLegends: witem.supportLegends,
-                chartType: witem.chartType,
-                chartTheme: witem.chartTheme,
-                chartTimeScale: witem.chartTimeScale,
-                chartColors: witem.chartColors
-            	}]);    		
+    		source.insertNodes(false, [witem]);
     	}
         
     }

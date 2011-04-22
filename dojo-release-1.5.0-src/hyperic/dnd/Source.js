@@ -98,98 +98,32 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         // object which is passed forward. (makes a wrong reference later)        
         var item = dojo.mixin({}, _item);
         
-        var s = hyperic.wallmount.base.metricStore;
-        
-        
-        
         var w;
         if(item.type){
+        	// here if new component created from layout
         	
-        	var args = {};
-        	if(item.size) {
-                args['size'] = item.size;        		
-        	} else {
-                if(item.width) {
-                    args['width'] = item.width;
-                }
-                if(item.height) {
-                    args['height'] = item.height;
-                }        		
-        	}
-            if(item.arrowCount) {
-                args['arrowCount'] = item.arrowCount;               
-            }
-            if(item.reverse) {
-                args['reverse'] = item.reverse;               
-            }   	
-            if(item.arrowColor) {
-                args['arrowColor'] = item.arrowColor;               
-            }       
-            if(item.arrowGap) {
-                args['arrowGap'] = item.arrowGap;               
-            }       
-            if(item.arrowWidth) {
-                args['arrowWidth'] = item.arrowWidth;               
-            }       
-            if(item.arrowHeadLength) {
-                args['arrowHeadLength'] = item.arrowHeadLength;               
-            }       
-            if(item.color) {
-                args['color'] = item.color;               
-            }       
-            if(item.format) {
-                args['format'] = item.format;               
-            }       
-            if(item.labelColor) {
-                args['labelColor'] = item.labelColor;               
-            }       
-            if(item.format) {
-                args['format'] = item.format;               
-            }       
-            if(item.minRange) {
-                args['minRange'] = item.minRange;               
-            }       
-            if(item.maxRange) {
-                args['maxRange'] = item.maxRange;               
-            }       
-            if(item.speedTime) {
-                args['speedTime'] = item.speedTime;               
-            }       
-            if(item.emptyColor) {
-                args['emptyColor'] = item.emptyColor;               
-            }       
-            if(item.fullColor) {
-                args['fullColor'] = item.fullColor;               
-            }       
-            if(item.lowRange) {
-                args['lowRange'] = item.lowRange;               
-            }       
-            if(item.highRange) {
-                args['highRange'] = item.highRange;               
-            }       
-            if(item.supportLegends) {
-                args['supportLegends'] = item.supportLegends;               
-            }       
-            if(item.chartType) {
-                args['chartType'] = item.chartType;               
-            }       
-            if(item.chartTheme) {
-                args['chartTheme'] = item.chartTheme;               
-            }       
-            if(item.chartTimeScale) {
-                args['chartTimeScale'] = item.chartTimeScale;               
-            }       
-            if(item.chartColors) {
-                args['chartColors'] = item.chartColors;               
-            }       
         	dojo["require"](item.type);
         	
             var internalProps = this.registry.getPluginInternal(item.type);
             var clazz = dojo.getObject(item.type);
+
+            // copy parameters and remove some which
+            // needs to be set after widget is created.
+            var args = dojo.mixin({}, item);
+            delete args.mid;
+            delete args.format;
+            delete args.eid;
+            delete args.ranges;
+            delete args.legends;
+            delete args.title;
+            delete args.titlePosition;
+            
             w = new clazz(args);
+            
             // mixin internal props from registry 
             dojo.mixin(w,internalProps);
         } else {
+        	// here when dnd from tree or between containers
         	var _pluginName = this.registry.getPluginName(item);
         	dojo["require"](_pluginName);
             var clazz = dojo.getObject(_pluginName);
@@ -206,7 +140,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             w = new clazz(props);                           
         }
         
-        
+        var s = hyperic.wallmount.base.metricStore;        
         if(s) {
         	w.setStore(s);
         }
