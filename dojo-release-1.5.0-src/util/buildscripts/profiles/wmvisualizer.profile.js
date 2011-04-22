@@ -1,7 +1,7 @@
 dependencies = {
     layers: [
         {
-            name: "wmvisualizer.js",
+            name: "dojo.js",
             dependencies: [
                 "hyperic.wallmount.base",
                 "hyperic.wallmount.Designer",
