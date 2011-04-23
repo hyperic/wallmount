@@ -29,8 +29,12 @@ dojo.provide("hyperic.dnd.Source");
 dojo.require("dojo.dnd.Source");
 
 dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
-// summary:
-//     Provides customized dnd source functionalities.
+    // summary:
+    //     Provides customized dnd source functionalities.
+	//
+	// description:
+	//     
+	//
 
     registry:null,
 
@@ -52,7 +56,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         var _subscribeId = obj.subscribeId; 
         var _format = obj.format; 
     	
-        var parent = dojo.byId(item).parentNode;
+        var parent = dojo.byId(item).parentNode;        
+        
     	dojo._destroyElement(dojo.byId(item));
     	
     	// dojo.require(...) brakes the build system
@@ -74,6 +79,10 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w._buildContextMenu();
         w.placeAt(parent);
         w.startup();
+        
+        // replace widget ref to stored dnd data
+        var oldData = this.getItem(parent.id);
+        oldData.data.wmwidget = w;
     },
     
     _nodeCreator:function(item_in,hint){
@@ -82,15 +91,14 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         //      or created programmatically to container.
         
         // TODO: redesign this creator when all needed functionalities are in place
+    	
+    	if(hint === 'avatar')
+    		return this._avatarNodeCreator(item_in);
+    	else if(item_in === "DropMe")
+    		return this._emptyFloaderNodeCreator(item_in);
 
         var node = dojo.create("div");
         node.id = dojo.dnd.getUniqueId();
-        
-        // hard code empty floater initial content
-        if(item_in === "DropMe") {
-            node.innerHTML = "Drop </br>Something"
-            return {node: node, data: item, type: ["text"]};
-        }
         
         var _item = item_in.item || item_in;
 
@@ -116,7 +124,6 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             delete args.ranges;
             delete args.legends;
             delete args.title;
-//            delete args.titlePosition;
             
             w = new clazz(args);
             
@@ -124,7 +131,12 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             dojo.mixin(w,internalProps);
         } else {
         	// here when dnd from tree or between containers
-        	var _pluginName = this.registry.getPluginName(item);
+        	var _pluginName;
+        	if(typeof item.wmwidget != 'undefined')
+        		_pluginName = item.wmwidget.declaredClass;
+        	else
+        	    _pluginName = this.registry.getPluginName(item);
+        	
         	dojo["require"](_pluginName);
             var clazz = dojo.getObject(_pluginName);
             
@@ -141,31 +153,14 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         }
         
         var s = hyperic.wallmount.base.metricStore;        
-        if(s) {
-        	w.setStore(s);
-        }
-        
-        if(item.mid){
-        	w.setMetric(item.mid);
-        }
-        
-        if(item.format){
-            w.format = item.format;
-        }
+        if(s) w.setStore(s);
 
-        if(item.eid){
-            w.setEid(item.eid);
-        }
+        if(item.mid) w.setMetric(item.mid);
+        if(item.format) w.format = item.format;
+        if(item.eid) w.setEid(item.eid);
+        if(item.ranges) w.addRanges(item.ranges);
+        if(item.legends) w.addLegends(item.legends);
 
-        if(item.ranges){
-            w.addRanges(item.ranges);
-        }
-
-        if(item.legends){
-            w.addLegends(item.legends);
-        }
-
-        // TODO: this title stuff is too complex like this, redesign...
         var titlePosition = w.getTitlePosition() || item.titlePosition || "top";
         w.set("titlePosition", titlePosition);
         
@@ -178,10 +173,62 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w._buildContextMenu();
         w.placeAt(node);
         w.startup();
-        // testing if we can store widget to data
-        // it may be passed through dnd operations!!!
+        
         item['wmwidget'] = w;
         return {node: node, data: item, type: ["text"]};
+    }, 
+    
+    _avatarNodeCreator:function(item) {
+    	// summary:
+    	//     Creates shown avatar during DnD operation.
+    	//
+    	// description:
+    	//     We only need to create enough material to show
+    	//     what's being transferred. Avatar doesn't transfer any
+    	//     information, DnD is getting that from origin object
+    	//     when DnD drop is handled.
+    	
+        var node = dojo.create("div");
+        node.id = dojo.dnd.getUniqueId();
+        
+    	var _pluginName = item.wmwidget.declaredClass;
+    	
+    	dojo["require"](_pluginName);
+        var clazz = dojo.getObject(_pluginName);
+
+    	var props = item.wmwidget.asParams(); 
+
+    	// don't need title for avatar
+    	delete props.title;
+    	
+    	// tweak avatar size
+    	if(props.size) {
+    		props.size = 60;
+    	} else {
+    		var _ratio = props.height / props.width; 
+    		if(_ratio > 1) {
+    			props.height = 60;
+    			props.width = props.height / _ratio;
+    		} else {
+    			props.width = 60;
+    			props.height = props.width * _ratio;    			
+    		}
+    	}
+    	
+    	var w = new clazz(props);
+        w.source = this;
+        w.placeAt(node);
+        w.startup();
+        
+    	return {node: node, data: item, type: ["text"]};
+    },
+
+    _emptyFloaderNodeCreator:function(item) {
+        var node = dojo.create("div");
+        node.id = dojo.dnd.getUniqueId();
+        node.innerHTML = "Drop </br>Something"
+        return {node: node, data: item, type: ["text"]};
     }
+
 
 });

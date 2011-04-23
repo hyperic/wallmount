@@ -116,19 +116,9 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         }
                 
     },
-    
-//    getTitle: function(){
-//    	return this.titleText.value;
-//    },
-    
-    _onClick: function(event){
-    	console.log("mouse:"+event);
-    },
-    
+        
     postCreate: function(){
     	this.inherited(arguments);
-//        if(this.contextmenu)
-//            this._buildContextMenu();    	
     },
     
     reset: function(){
@@ -221,7 +211,6 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     },
     
     _switch: function(/*String*/widget){
-    	console.log("switching to " + widget);
     	this.source.replaceWidget(this.domNode.id, widget);
     },
     
