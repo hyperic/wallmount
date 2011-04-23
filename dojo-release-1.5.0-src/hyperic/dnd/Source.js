@@ -116,7 +116,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             delete args.ranges;
             delete args.legends;
             delete args.title;
-            delete args.titlePosition;
+//            delete args.titlePosition;
             
             w = new clazz(args);
             
@@ -166,8 +166,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         }
 
         // TODO: this title stuff is too complex like this, redesign...
-        var titlePosition = item.titlePosition || "top";
+        var titlePosition = w.getTitlePosition() || item.titlePosition || "top";
         w.set("titlePosition", titlePosition);
+        
         var title = w.getTitle() || item.name || item.title;
         if(title && title.length > 0){
             w.setTitle(title);

@@ -285,7 +285,7 @@ dojo.declare("hyperic.layout.PropertiesPane",
         }
         
         if(this._selected.isInstanceOf(hyperic.data.TitleProperty)) {
-            this._selected.titlePosition.value = this.elementValue("titleposition");
+        	this._selected._setTitlePositionAttr(this.elementValue("titleposition"));
             this._selected.setTitle(this.elementValue("titletext"))
         }
 
@@ -486,10 +486,10 @@ dojo.declare("hyperic.layout.PropertiesPane",
         this.show(["titleProperties"]);
 
         var title = dijit.byId(this.titletext);
-        title.set('value', this._selected.titleText.value);
+        title.set('value', this._selected.getTitle());
         
         var titleposition = dijit.byId(this.titleposition);
-        titleposition.set('value', this._selected.titlePosition.value);
+        titleposition.set('value', this._selected.getTitlePosition());
         
     },
 

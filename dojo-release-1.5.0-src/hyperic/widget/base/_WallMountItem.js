@@ -83,7 +83,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     },
     
     setTitle: function(t) {
-    	this.titleText.value = t;
+    	this.titleTextObj.value = t;
 
         dojo.style(this.wallMountItemTop, {display: "none"});
         this.wallMountItemTop.innerHTML = "";
@@ -95,13 +95,13 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         this.wallMountItemRight.innerHTML = "";
         
         var div;
-        if(this.titlePosition.value === "top") {        	
+        if(this.titlePositionObj.value === "top") {        	
             div = this.wallMountItemTop;
-        } else if(this.titlePosition.value === "bottom") {
+        } else if(this.titlePositionObj.value === "bottom") {
             div = this.wallMountItemBottom;
-        } else if(this.titlePosition.value === "right") {
+        } else if(this.titlePositionObj.value === "right") {
             div = this.wallMountItemRight;
-        } else if(this.titlePosition.value === "left") {        	
+        } else if(this.titlePositionObj.value === "left") {        	
             div = this.wallMountItemLeft;
         } else {
             div = this.wallMountItemTop;        	
@@ -290,7 +290,6 @@ dojo.declare("hyperic.widget.base._WallMountItem",
             jsonObj['mid'] = this.subscribeId;
     		jsonObj['format'] = this.format;
     	}    	
-    	if(this.titleText.value) jsonObj['title'] = this.titleText.value;
     	return jsonObj;
     }, 
     

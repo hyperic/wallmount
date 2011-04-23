@@ -37,8 +37,8 @@ dojo.declare("hyperic.data.TitleProperty",null,{
     // list: possible position values
     
     constructor: function(){
-        this.titleText = {value:""};
-        this.titlePosition = {value:"top", list:["top","bottom","left","right"]};
+        this.titleTextObj = {value:""};
+        this.titlePositionObj = {value:"top", list:["top","bottom","left","right"]};
     },
 
     _setTitleAttr: function(title){
@@ -46,15 +46,15 @@ dojo.declare("hyperic.data.TitleProperty",null,{
     },
 
     _setTitlePositionAttr: function(pos){
-        this.titlePosition.value = pos;
+        this.titlePositionObj.value = pos;
     },
 
     getTitle: function(){
-        return this.titleText.value;
+        return this.titleTextObj.value;
     },
 
     getTitlePosition: function(){
-        return this.titlePosition.value;
+        return this.titlePositionObj.value;
     }
     
 });
