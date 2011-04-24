@@ -11,7 +11,7 @@ fieldSet {
 }
 .hypericPropertiesHeader {
     background-color: #E6E6E7;
-    background-image: url("../js/hyperic/layout/resources/images/commonHighlight.png");
+    background-image: url("../../layout/resources/images/commonHighlight.png");
     color: black;
     padding: 5px 9px;
     border-top: 1px solid #B5BCC7;
