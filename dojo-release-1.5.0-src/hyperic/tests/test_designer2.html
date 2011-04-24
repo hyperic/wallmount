@@ -3,17 +3,19 @@
   <head>
     <title>Wallmount Designer Test 2 - against release</title>
 
-    <link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css" title="Basic"
           href="../../release/dojo/hyperic/wallmount/resources/DesignerCombined.css" />
-    
+          
+    <link rel="alternate stylesheet" type="text/css" title="Night"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombinedNight.css" />    
+
+    <link rel="alternate stylesheet" type="text/css" title="Matrix"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombinedMatrix.css" />    
   
     <script type="text/javascript"
             src="../../release/dojo/dojo/dojo.js.uncompressed.js"
             djConfig="parseOnLoad: true, isDebug: true",
             gfxRenderer: 'canvas'></script>
-
-    <script type="text/javascript"
-            src="../../release/dojo/dojo/wmvisualizer.js.uncompressed.js"></script>
 
     <script type="text/javascript"
             src="../../hyperic/tests/TestUtil.js"></script>
@@ -69,7 +71,7 @@
                  onClick="hyperic.tests.TestUtil.selectLayoutDialog();">Open...</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuLogLayout"
-                 onClick="hyperic.wallmount.LayoutUtil.getLayoutAsJSON();">Log layout</div>
+                 onClick="hyperic.tests.TestUtil.logLayoutJSON();">Log layout</div>
             <div dojoType="dijit.MenuItem"
                  id="fileMenuSave"
                  onClick="hyperic.wallmount.LayoutUtil.saveCurrentLayout();">Save</div>
@@ -95,6 +97,23 @@
             <div dojoType="dijit.MenuItem"
                  id="settingsDashboardSize"
                  onClick="hyperic.wallmount.LayoutUtil.dashboardSizeDialog();">Dashboard Size...</div>
+                 
+            <div dojoType="dijit.PopupMenuItem">
+              <span>Themes</span>
+              <div dojoType="dijit.Menu" id="themeMenu">
+                <div dojoType="dijit.MenuItem"
+                     id="themeBasic"
+                     onClick="hyperic.wallmount.LayoutUtil.changeCSSTheme('Basic');">Basic</div>
+                <div dojoType="dijit.MenuItem"
+                     id="themeNight"
+                     onClick="hyperic.wallmount.LayoutUtil.changeCSSTheme('Night');">Night</div>
+                <div dojoType="dijit.MenuItem"
+                     id="themeMatrix"
+                     onClick="hyperic.wallmount.LayoutUtil.changeCSSTheme('Matrix');">Matrix</div>          
+              </div>
+            </div>
+                 
+                 
             <div dojoType="dijit.MenuItem"
                  id="settingsTest"
                  onClick="hyperic.tests.TestUtil.newLayoutTestWindow();">Test this configuration</div>

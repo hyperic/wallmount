@@ -239,3 +239,15 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
 	return dojo.toJson(obj);
 };
 
+hyperic.wallmount.LayoutUtil.changeCSSTheme = function(/*css stylesheet name*/theme) {
+	// summary:
+	//     Changing css linked stylesheet to active
+
+    var linkTags = document.getElementsByTagName("link");
+    for (var i = 0; i < linkTags.length; i++) {
+        if ((linkTags[i].rel.indexOf("stylesheet") != -1) && linkTags[i].title) {
+        	linkTags[i].disabled = true;
+            if (linkTags[i].title == theme) linkTags[i].disabled = false;
+	    }
+	}
+};
