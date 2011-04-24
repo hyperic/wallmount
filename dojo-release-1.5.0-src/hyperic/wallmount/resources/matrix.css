@@ -2,6 +2,10 @@
     background-color: black;
 }
 
+.container:empty {
+    background: none repeat scroll 0 0 transparent;
+}
+
 .dijitContentPane {
     padding: 2px 2px 20px !important;	
 }
@@ -31,6 +35,14 @@
 
 .dojoxFloatingPaneCanvas {
     background-color: transparent;
+}
+
+.hypericMoveablePane {
+	background: none repeat scroll 0 0 transparent;
+}
+
+.dojoDndItem {
+	color: white;
 }
 
 .wallmountItemTitle {
