@@ -89,7 +89,15 @@ dojo.declare("hyperic.data.MetricStore", null, {
     //      Prefix to topic to be used
     _baseTopic: "/hyperic/",
     _timer: null,
+    _interval: 60000,
     
+    // flag telling there's new subscribe which
+    // request hasn't been processed. Update loop
+    // can do immediate request if this is true.
+    _subscribeRequestPending: false,
+    
+    // flag telling if normal interval is in use
+    _normalInterval: true,
 
     constructor: function(/*Object*/args){
         // summary:
@@ -117,8 +125,8 @@ dojo.declare("hyperic.data.MetricStore", null, {
         if(args && "urlPreventCache" in args){
             this.urlPreventCache = args.urlPreventCache?true:false;
         }
-        var t = args.syncTime || 60000;
-        this._timer = timer = new dojox.timing.Timer(t);
+        this._interval = args.syncTime || 60000;
+        this._timer = timer = new dojox.timing.Timer(this._interval);
         dojo.connect(timer, "onTick", dojo.hitch(this, "updateStore"));
         
     },
@@ -175,7 +183,7 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	// summary:
     	//     Updates status of all items currently
     	//     handled by this store.
-    	
+
     	for(var i in this._clients){
             var val = this._clients[i];
             
@@ -184,9 +192,21 @@ dojo.declare("hyperic.data.MetricStore", null, {
             var d = id.lastIndexOf('/');
             var scope = id.substring(0, d+1);
             
+            // TODO: combine to single request.
             if(val > 0)
-                this.loadItem({id: id, scope: scope});        
+                this.loadItem({id: id, scope: scope});
+            
+            // marking that there's not requests pending.
+            // subscriber may set it true during this for loop
+        	this._subscribeRequestPending = false;
         }
+    	
+    	// handle timer kicking and restoring to normal interval
+    	if(this._subscribeRequestPending) {
+    		this._kickTimer();
+    	} else if(!this._normalInterval) {
+    		this._restoreTimer();
+    	}
     },
 
     fetch: function(/* Object */ keywordArgs){
@@ -202,6 +222,8 @@ dojo.declare("hyperic.data.MetricStore", null, {
         // summary:
         //     Subscribes client to a specific topic
         
+    	// TODO: request almost immediate update to store. Give small amount of time to wait bulk of subscribe requests.
+    	
     	var _topic = this._baseTopic + topic;
     	var hdl = dojo.subscribe(_topic, scope, method);
     	if(acceptNull || this._current[_topic]){
@@ -210,6 +232,11 @@ dojo.declare("hyperic.data.MetricStore", null, {
     		scope[method].call(scope, arg);
     	}
     	this._updateInterests(hdl, true);
+    	
+    	// try to kick timer if it's needed
+    	this._subscribeRequestPending = true;
+		this._kickTimer();
+		
     	return hdl;
     },
 
@@ -233,6 +260,8 @@ dojo.declare("hyperic.data.MetricStore", null, {
     
     _getUrl: function(id){
         // summary:
+    	//     Handles spesial url handling. This method is here
+    	//     mostly to make it easier to do tests offline.
         
     	if(!id)
            return this.url;
@@ -261,13 +290,38 @@ dojo.declare("hyperic.data.MetricStore", null, {
     
     _processResult: function(data, request){
         // summary:
+    	//     Callback from xhr request. Does a simple publish
+    	//     to subscribers.
         
         for(var i = 0; i<data.length; i++) {
-        	//console.log("_processResult:" + request.scope + " " + data[i].id + " " + data[i].last)
             this.publish(request.scope + data[i].id, [data[i]]);        	
         }
     	
     	
+    },
+    
+    _kickTimer: function() {
+    	// summary:
+    	//     Kicks timer to execute after 3 secs if
+    	//     there are pending requests and if timer is 
+    	//     not under normal interval.
+    	
+    	if(this._subscribeRequestPending && this._normalInterval) {
+        	this._timer.stop();
+        	this._timer.setInterval(3000);
+        	this._timer.start();
+        	this._normalInterval = false;
+    	}
+    },
+
+    _restoreTimer: function() {
+    	// summary:
+    	//     Restoring timer to its original interval
+    	
+    	this._timer.stop();
+    	this._timer.setInterval(this._interval);
+    	this._timer.start();    	
+    	this._normalInterval = true;
     }
-	
+
 });
