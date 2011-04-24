@@ -33,9 +33,13 @@ dojo.declare("hyperic.layout.LayoutName",
     [ dijit._Widget,
       dijit._Templated ], {
     // summary:
-    //     Component which makes it easier to store current layout name. 	
+    //     Component which makes it easier to store current layout
+	//     and theme names.
     
     layoutName: "",
+    
+    // Need to set default name to Basic
+    themeName: "Basic",
 
     templateString: dojo.cache("hyperic.layout","resources/LayoutName.html"),
     
@@ -54,11 +58,20 @@ dojo.declare("hyperic.layout.LayoutName",
     
     setLayoutName: function(layoutName){
     	this.layoutName = layoutName;
-        this.containerNode.innerHTML = this._compileName(layoutName);
+        this.containerNode.innerHTML = this._compileName();
+    },
+
+    getThemeName: function(){
+        return this.themeName;	
     },
     
-    _compileName: function(layoutName){
-    	return "Layout Name:[" + layoutName + "]";
+    setThemeName: function(themeName){
+    	this.themeName = themeName;
+        this.containerNode.innerHTML = this._compileName();
+    },
+
+    _compileName: function(){
+    	return "Layout Name:[" + this.layoutName + "] Theme:[" + this.themeName + "]";
     }
     	
 });

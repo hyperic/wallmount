@@ -59,6 +59,7 @@ hyperic.wallmount.Designer.loadLayout = function(/*String*/url) {
 hyperic.wallmount.Designer.createLayout = function(data) {
 	
     hyperic.wallmount.LayoutUtil.setLayoutName(data.name);
+    if(data.theme) hyperic.wallmount.LayoutUtil.setCSSTheme(data.theme);
     
     var wallmountPane = dojo.byId('wallmountpane');
     dojo.style(wallmountPane,'width',data.w);

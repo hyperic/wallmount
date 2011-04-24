@@ -146,6 +146,22 @@ hyperic.wallmount.LayoutUtil.getLayoutName = function() {
     return layoutName.getLayoutName();
 };
 
+hyperic.wallmount.LayoutUtil.setThemeName = function(name) {
+	// summary:
+	//     Helper method to set current layout theme in UI
+	
+	var layoutName = dijit.byId("layoutName");
+	layoutName.setThemeName(name);
+};
+
+hyperic.wallmount.LayoutUtil.getThemeName = function() {
+    // summary:
+    //     Helper method to get current used layout theme
+    
+    var layoutName = dijit.byId("layoutName");
+    return layoutName.getThemeName();
+};
+
 hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	// summary:
 	//     Builds a json representation of current layout.
@@ -219,6 +235,7 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	
 	// get layout name
     layout['name'] = hyperic.wallmount.LayoutUtil.getLayoutName();
+    layout['theme'] = hyperic.wallmount.LayoutUtil.getThemeName();
   
     // get layout size
     var wallmountPane = dojo.byId('wallmountpane');
@@ -239,15 +256,32 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSON = function() {
 	return dojo.toJson(obj);
 };
 
+hyperic.wallmount.LayoutUtil.setCSSTheme = function(/*css stylesheet name*/theme) {
+	// summary:
+	//     Changing css theme. This method also sets theme name in ui
+	var ok = hyperic.wallmount.LayoutUtil.changeCSSTheme(theme);
+	if(ok) {
+		hyperic.wallmount.LayoutUtil.setThemeName(theme);
+	} else {
+		// set default name if we were unable to set the theme
+		hyperic.wallmount.LayoutUtil.setThemeName("Basic");
+	}
+};
+
 hyperic.wallmount.LayoutUtil.changeCSSTheme = function(/*css stylesheet name*/theme) {
 	// summary:
 	//     Changing css linked stylesheet to active
 
+	var found = false;
     var linkTags = document.getElementsByTagName("link");
     for (var i = 0; i < linkTags.length; i++) {
         if ((linkTags[i].rel.indexOf("stylesheet") != -1) && linkTags[i].title) {
         	linkTags[i].disabled = true;
-            if (linkTags[i].title == theme) linkTags[i].disabled = false;
+            if (linkTags[i].title == theme) {
+            	linkTags[i].disabled = false;
+            	found = true;
+            }
 	    }
 	}
+    return found;
 };

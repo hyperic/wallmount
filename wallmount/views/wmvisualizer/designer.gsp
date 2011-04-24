@@ -3,8 +3,14 @@
   <head>
     <title>Wallmount Dashboard Designer</title>
     
-    <link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css" title="Basic"
           href="../public/js/hyperic/wallmount/resources/DesignerCombined.css" />
+
+    <link rel="alternate stylesheet" type="text/css" title="Night"
+          href="../public/js/hyperic/wallmount/resources/DesignerCombinedNight.css" />
+
+    <link rel="alternate stylesheet" type="text/css" title="Matrix"
+          href="../public/js/hyperic/wallmount/resources/DesignerCombinedMatrix.css" />
       
     <script type="text/javascript"
             src="../public/js/dojo/dojo.js"
@@ -86,6 +92,20 @@
             <div dojoType="dijit.MenuItem"
                  id="settingsDashboardSize"
                  onClick="hyperic.wallmount.LayoutUtil.dashboardSizeDialog();">Dashboard Size...</div>
+            <div dojoType="dijit.PopupMenuItem">
+              <span>Themes</span>
+              <div dojoType="dijit.Menu" id="themeMenu">
+                <div dojoType="dijit.MenuItem"
+                     id="themeBasic"
+                     onClick="hyperic.wallmount.LayoutUtil.setCSSTheme('Basic');">Basic</div>
+                <div dojoType="dijit.MenuItem"
+                     id="themeNight"
+                     onClick="hyperic.wallmount.LayoutUtil.setCSSTheme('Night');">Night</div>
+                <div dojoType="dijit.MenuItem"
+                     id="themeMatrix"
+                     onClick="hyperic.wallmount.LayoutUtil.setCSSTheme('Matrix');">Matrix</div>          
+              </div>
+            </div>
             <div dojoType="dijit.MenuItem"
                  id="settingsTest"
                  onClick="hyperic.wallmount.WindowUtil.newLayoutTestWindow();">Test this configuration</div>

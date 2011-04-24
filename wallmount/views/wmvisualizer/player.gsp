@@ -4,8 +4,14 @@
     <meta http-equiv="content-script-type" content="text/javascript">
     <title>Wallmount Player - ${useLayout}</title>
 
-    <link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css" title="Basic"
           href="../public/js/hyperic/wallmount/resources/PlayerCombined.css" />
+
+    <link rel="alternate stylesheet" type="text/css" title="Night"
+          href="../public/js/hyperic/wallmount/resources/PlayerCombinedNight.css" />
+
+    <link rel="alternate stylesheet" type="text/css" title="Matrix"
+          href="../public/js/hyperic/wallmount/resources/PlayerCombinedMatrix.css" />
       
     <script type="text/javascript"
             src="../public/js/dojo/dojo.js"

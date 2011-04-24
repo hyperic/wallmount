@@ -61,6 +61,8 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
 	// summary:
 	//
 	
+	if(data.theme) hyperic.wallmount.LayoutUtil.changeCSSTheme(data.theme);
+	
 	// if size is not in layout, just make it big enough
 	var wallmountPane = dojo.byId('wallmountpane');
     dojo.style(wallmountPane,'width',data.w||9999);
