@@ -222,8 +222,6 @@ dojo.declare("hyperic.data.MetricStore", null, {
         // summary:
         //     Subscribes client to a specific topic
         
-    	// TODO: request almost immediate update to store. Give small amount of time to wait bulk of subscribe requests.
-    	
     	var _topic = this._baseTopic + topic;
     	var hdl = dojo.subscribe(_topic, scope, method);
     	if(acceptNull || this._current[_topic]){
