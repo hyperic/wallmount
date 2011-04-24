@@ -1,0 +1,29 @@
+
+#wallmountpane {
+    background-color: black;
+}
+
+.dojoxFloatingPane {
+    background-color: transparent;	
+}
+
+.dojoxFloatingPaneContent {
+    background-color: transparent;	
+}
+
+.dojoxFloatingPaneCanvas {
+	background-color: transparent;
+}
+
+.wallmountItemTitle {
+	color: white;
+}
+
+.dojoxFloatingPaneTitle {
+    color: white;	
+    background-color: transparent;  
+}
+
+.claro .dijitInlineEditBoxDisplayMode {
+    background-color: transparent;	
+}
