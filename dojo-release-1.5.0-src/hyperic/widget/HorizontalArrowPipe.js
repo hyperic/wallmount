@@ -103,7 +103,7 @@ dojo.declare("hyperic.widget.HorizontalArrowPipe",
         if(this._text) {
             this._text.setShape({text: sVal});
         } else {
-            this._text = this.drawText(sVal, this.width/2, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});
+            this._text = this.drawText(sVal, this.width/2, this.height, "end", this.getLabelColor(), {family:"Helvetica",weight:"bold",size:fMax+'px'});
         }
         this.inherited(arguments);
     } 

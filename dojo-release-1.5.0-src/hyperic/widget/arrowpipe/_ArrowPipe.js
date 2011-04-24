@@ -38,7 +38,8 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
       hyperic.widget.base._Animatable,
       hyperic.data.ArrowPipeProperty,
       hyperic.data.RangeSpeedProperty,
-      hyperic.data.RangesProperty ],{
+      hyperic.data.RangesProperty,
+      hyperic.data.LabelProperty ],{
     // summary:
     //      xxx
     //
@@ -218,6 +219,7 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         paramObj['arrowColor'] = this.arrowColor;    
         paramObj['reverse'] = this.reverse;    
         paramObj['ranges'] = this.asRangesParams();    
+        paramObj['labelColor'] = this.getLabelColor();
         return paramObj;
     }
         
