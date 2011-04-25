@@ -174,6 +174,15 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 	
 	var windowNodeList = [];
 	
+	// need this to tweak window size
+	// XXX: this is a temporary hack
+	var themeName = hyperic.wallmount.LayoutUtil.getThemeName();
+	var ow = 6, oh = 4;
+	if(themeName == "Matrix") {
+		ow = 24;
+		oh = 16;
+	}
+	
 	for(var i = 0; i < windowNodes.length; i++){
 		var wn = windowNodes[i];
 		var entriesList = []; 
@@ -182,8 +191,8 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
 		// actual offset is +6 for width and +4 for height.
 		// for now just substract it.
 		// TODO: check how to calculate offset accurately
-		windowSettings['w'] = wn.offsetWidth - 6;
-        windowSettings['h'] = wn.offsetHeight - 4;
+		windowSettings['w'] = wn.offsetWidth - ow;
+        windowSettings['h'] = wn.offsetHeight - oh;
         windowSettings['y'] = wn.offsetTop;
         windowSettings['x'] = wn.offsetLeft;
         windowSettings['type'] = "multi";
@@ -193,7 +202,7 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
         
         // this should find only child of dnd item.
         // this child is supposed to be wallmount component
-        var wallmountItemInWindowQuery = 'div#' + wn.id + ' div.dojoDndItem >';
+        var wallmountItemInWindowQuery = 'div#' + wn.id + ' div.dojoDndItem >';	
         var dnds = dojo.query(wallmountItemInWindowQuery);
         for(var j = 0; j < dnds.length; j++){
             var wmObj = dijit.byId(dnds[j].id);
