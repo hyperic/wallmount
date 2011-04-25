@@ -37,7 +37,8 @@ dojo.declare("hyperic.widget.ProgressTube",
     [ hyperic.widget.base._WallMountItem,
       hyperic.data.EmptyFullColorProperty,
       hyperic.data.RangesProperty,
-      hyperic.data.RangeProperty ],{
+      hyperic.data.RangeProperty,
+      hyperic.data.LabelProperty ],{
     // summary:
     //      xxx
     //
@@ -144,8 +145,8 @@ dojo.declare("hyperic.widget.ProgressTube",
         var sMax = hyperic.unit.UnitsConvert.convert(max, this.format, {places:'0,2'});
         
         var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sMax, this.width, height);
-        this.drawText(sMax, this.width, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});
-        this.drawText(sVal, this.width/2, this.height, "end", "black", {family:"Helvetica",weight:"bold",size:fMax+'px'});
+        this.drawText(sMax, this.width, this.height, "end", this.getLabelColor(), {family:"Helvetica",weight:"bold",size:fMax+'px'});
+        this.drawText(sVal, this.width/2, this.height, "end", this.getLabelColor(), {family:"Helvetica",weight:"bold",size:fMax+'px'});
     },
     
     asParams: function(){
@@ -157,6 +158,7 @@ dojo.declare("hyperic.widget.ProgressTube",
         paramObj['lowRange'] = this.getLowRange();
         paramObj['highRange'] = this.getHighRange();
         paramObj['ranges'] = this.asRangesParams();    
+        paramObj['labelColor'] = this.getLabelColor();
         return paramObj;
     }
 
