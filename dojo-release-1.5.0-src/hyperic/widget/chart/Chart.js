@@ -52,10 +52,14 @@ dojo.require("dojox.charting.Theme");
         '1m': 43200,
         '1y': 525600
     };
+    
+    // transparent color
+    var tC = new dojo.Color({ r:1, g:1, b:1, a:0 });
 
     dojo.declare("hyperic.widget.chart.Chart",
         [ hyperic.widget.base._WallMountItem,
-          hyperic.data.ChartProperty ],{
+          hyperic.data.ChartProperty,
+          hyperic.data.LabelProperty ],{
         // summary:
         //     Base chart implementation to bring all needed
         //     functionality under same roof.
@@ -78,7 +82,7 @@ dojo.require("dojox.charting.Theme");
     	
     	    dojo.style(this.wallMountItemContent, { width: this.width+"px", height: this.height+"px" });
     	
-        	this._chart = new hyperic.charting.Chart2D(this.wallMountItemContent, null, this.width, this.height);
+        	this._chart = new hyperic.charting.Chart2D(this.wallMountItemContent, {fill:tC}, this.width, this.height);
         	this._addPlot(this._chart);
     	    this._addTheme(this._chart);
             this._addXAxis(this._chart);
@@ -140,9 +144,14 @@ dojo.require("dojox.charting.Theme");
             	var defaultFill = {type: "linear", space: "shape", x1: 0, y1: 0, x2: 100, y2: 0};
                 _theme = new hyperic.charting.themes.Glossy(
                     {colors:_cArray,
+                     plotarea:{fill:tC},
+                     axis:{stroke:{color:this.getLabelColor(),width:1},tick:{color:this.getLabelColor(),position:"center",font:"normal normal normal 7pt Helvetica, Arial, sans-serif",fontColor:this.getLabelColor()}},
                      seriesThemes: dojox.charting.themes.gradientGenerator.generateMiniTheme(_cArray, defaultFill, 90, 40, 25)});            	
             } else {
-                _theme = new dojox.charting.Theme({colors:_cArray});            	
+                _theme = new dojox.charting.Theme(
+                	{colors:_cArray,
+                     axis:{stroke:{color:this.getLabelColor(),width:1},tick:{color:this.getLabelColor(),position:"center",font:"normal normal normal 7pt Helvetica, Arial, sans-serif",fontColor:this.getLabelColor()}},
+                	 plotarea:{fill:tC}});            	
             }
             chart.setTheme(_theme);
         },
@@ -231,6 +240,7 @@ dojo.require("dojox.charting.Theme");
             paramObj['chartTheme'] = this.getChartTheme();
             paramObj['chartColors'] = this.getChartColors();
             paramObj['chartTimeScale'] = this.getChartTimeScale();
+            paramObj['labelColor'] = this.getLabelColor();
             return paramObj;
         }
 
