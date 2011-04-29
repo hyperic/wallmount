@@ -58,37 +58,52 @@ class MetricstoreController extends BaseJSONController {
         
         if(scopes[0] == 'metric') {
             def scaleId = scopes[1] as int
-            def m = measurementManager.getMeasurement(scopes[2] as int)
-            def lastData = m.lastDataPoint
+            def ms
+            def tids = scopes[2].split('[|]')
+            def tid = tids[0] as int;
+            if (tids.size() > 1) {
+              def eid = new AppdefEntityID(tids[1])
+              if (eid.group) {
+                def res = resourceManager.findResource(eid)
+                def ress = resourceGroupManager.getMembers(resourceGroupManager.getResourceGroupByResource(res));
+                ms = measurementManager.findMeasurements(user, tid, ress.collect { new AppdefEntityID(it.resourceType.appdefType, it.getInstanceId())} as AppdefEntityID[])
+              }
+            } else {
+              ms = [measurementManager.getMeasurement(tid)]
+            }
+            def lastData = ms.collect { it.lastDataPoint.value }
             if(scaleId == 0) {
-                array.put(id: scopes[2], last: lastData.value)
+                array.put(id: scopes[2], last: lastData.sum()/lastData.size())
             } else {
                 def timeScale = scaleId * 60 * 1000.0 as long
-                def histData = getHistoricalData(m, timeScale)
+                def histData = getHistoricalData(ms, timeScale)
                 def data = []
                 histData.each{
                     data.push(x:it.timestamp, y:it.value)
                 }
-                array.put(id: scopes[2], last: lastData.value, serie:data)
+                array.put(id: scopes[2], last: lastData.sum()/lastData.size(), serie:data)
             }
         } else if(scopes[0] == 'ravail') {
             def eid = new AppdefEntityID(scopes[1])
             def res = resourceManager.findResource(eid)
-            def mea = availabilityManager.getAvailMeasurement(res)
+            def ress;
+            if (eid.group) {
+              ress = resourceGroupManager.getMembers(resourceGroupManager.getResourceGroupByResource(res));
+            } else {
+              ress = [res];
+            }
+            def last = ress.collect { availabilityManager.getAvailMeasurement(it).lastDataPoint.value }.min()
             
             def resAlertCount = resourcesWithUnfixedAlerts()
-            def alertCount = 0
-            if(resAlertCount.containsKey(eid.toString()))
-                alertCount = resAlertCount[eid.toString()]
+            resAlertCount.keySet().retainAll(ress)
+            def alertCount = resAlertCount.values().sum()
 
             def resEscCount = resourcesWithRunningEscalation()
-            def escCount = 0
-            if(resEscCount.containsKey(eid.toString()))
-                escCount = resEscCount[eid.toString()]
-    
-            array.put(id: scopes[1], last: mea.lastDataPoint.value, alerts:alertCount, escalations:escCount)
+            resEscCount.keySet().retainAll(ress)
+            def escCount = resEscCount.values().sum();
+
+            array.put(id: scopes[1], last: last, alerts:alertCount, escalations:escCount)
         }
-        
         
         render(inline:"${array}", contentType:'text/json-comment-filtered')
     }
@@ -96,9 +111,9 @@ class MetricstoreController extends BaseJSONController {
     /**
      * 
      */
-    protected getHistoricalData(Measurement m, long timeScale) {
+    protected getHistoricalData(List<Measurement> ms, long timeScale) {
         def now = System.currentTimeMillis()        
-        return dataManager.getHistoricalData(m, now - timeScale , now, PageControl.PAGE_ALL)
+        return dataManager.getHistoricalData(ms, now - timeScale , now, (timeScale / 100) as long, 0, false, PageControl.PAGE_ALL)
     }
     
     /**

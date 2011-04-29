@@ -38,6 +38,8 @@ import org.hyperic.hq.auth.shared.SessionManager
 import org.hyperic.hq.escalation.shared.EscalationManager
 import org.hyperic.hq.events.shared.AlertDefinitionManager
 import org.hyperic.hq.measurement.shared.DataManager
+import org.hyperic.hq.authz.shared.ResourceGroupManager
+import org.hyperic.hq.measurement.shared.TemplateManager
 
 /**
  * Base class for all wallmount controllers.
@@ -57,7 +59,9 @@ abstract class BaseWallmountController extends BaseController {
     private EscalationManager escalationManager
     private AlertDefinitionManager alertDefinitionManager
     private DataManager dataManager
-    
+    private ResourceGroupManager resourceGroupManager;
+    private TemplateManager templateManager;
+
     def getPlatformManager() {
         if(platformManager == null) platformManager = Bootstrap.getBean(PlatformManager.class)
         platformManager
@@ -106,6 +110,16 @@ abstract class BaseWallmountController extends BaseController {
     def getDataManager() {
         if(dataManager == null) dataManager = Bootstrap.getBean(DataManager.class)
         dataManager
+    }
+
+    def getResourceGroupManager() {
+        if(resourceGroupManager == null) resourceGroupManager = Bootstrap.getBean(ResourceGroupManager.class)
+        resourceGroupManager
+    }
+
+    def getTemplateManager() {
+        if(templateManager == null) templateManager = Bootstrap.getBean(TemplateManager.class)
+        templateManager
     }
 
     /**
