@@ -1,0 +1,4 @@
+[   
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/groupmixed', name: 'Mixed', children: true},
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/groupcompatible', name: 'Compatible', children: true}
+]

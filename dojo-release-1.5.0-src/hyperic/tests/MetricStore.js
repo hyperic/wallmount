@@ -232,6 +232,12 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                         alerts: 12,
                         escalations: 0
                     };                                      
+                } else if(data[i].id === '5:10100'){
+                    dd = {
+                        last: 1,
+                        alerts: 12,
+                        escalations: 1
+                    };                                      
                 } else if(data[i].id === '1:10303'){
                     dd = {
                         last: 1,

@@ -1,0 +1,4 @@
+{ $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/groupcombatib', name: 'Compatible', children: [
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/dgroup/10100', eid: '5:10100', name: 'All Agents' }
+]
+}
