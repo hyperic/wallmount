@@ -26,8 +26,7 @@
       dojo.require("hyperic.wallmount.Designer");
       dojo.require("hyperic.wallmount.Registry");
       dojo.require("hyperic.tests.TestUtil");
-      dojo.require("hyperic.tests.GroupsStoreModel");
-      dojo.require("hyperic.tests.PlatformsStoreModel");
+      dojo.require("hyperic.tests.ResourceStoreModel");
       
       function init(){
           dojo.subscribe("/hyperic/layout/new", function(data){
@@ -144,7 +143,7 @@
             <div dojoType="dijit.layout.ContentPane"
                  title="Metrics & Resources">
                    
-              <div dojoType="hyperic.tests.PlatformsStoreModel" 
+              <div dojoType="hyperic.tests.ResourceStoreModel" 
                    jsId="metricModel"
                    store="metricStore"
                    deferItemLoadingUntilExpand="true"
@@ -152,15 +151,16 @@
               <div dojoType="hyperic.data.ResourceTree"
                    id="metricTree"
                    dndController="hyperic.data.TreeDndSource"
-                   label="Platforms"
                    persist="false"
                    deferItemLoadingUntilExpand="true" 
                    model="metricModel" 
+                   showRoot="false"
                    labelAttr="name"></div>
 
               
             </div>
 
+<!--
 
             <div dojoType="dijit.layout.ContentPane"
                  title="Groups">
@@ -179,7 +179,6 @@
                    model="groupModel" 
                    labelAttr="name"></div>
             </div>
-<!--
 
             <div dojoType="dijit.layout.ContentPane"
                  title="Applications">

@@ -24,17 +24,17 @@
  *
  */
 
-dojo.provide("hyperic.tests.PlatformsStoreModel");
+dojo.provide("hyperic.tests.ResourceStoreModel");
 
 dojo.require("dijit.tree.ForestStoreModel");
 
-dojo.declare("hyperic.tests.PlatformsStoreModel", dijit.tree.ForestStoreModel, {
+dojo.declare("hyperic.tests.ResourceStoreModel", dijit.tree.ForestStoreModel, {
     // summary:
 	//     Store model for tests to be able to use offline files.
 	//     We don't need this when real rest backend is in place. 
 	
     constructor: function(/* object */ keywordParameters){
-        this.query = "platform";
+        this.query = "root";
     }
 
 });

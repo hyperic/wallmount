@@ -146,7 +146,7 @@
                
             <div dojoType="dojox.data.JsonRestStore" 
                  jsId="metricStore" 
-                 target="/dojo-release-1.5.0-src/hyperic/tests/data/platform"
+                 target="/dojo-release-1.5.0-src/hyperic/tests/data/root"
                  allowNoTrailingSlash="true" 
                  labelAttribute="name"></div>
                
@@ -162,10 +162,10 @@
               <div dojoType="hyperic.data.ResourceTree"
                    id="metricTree"
                    dndController="hyperic.data.TreeDndSource"
-                   label="Platforms"
                    persist="false"
                    deferItemLoadingUntilExpand="true" 
                    model="metricModel" 
+                   showRoot="false"
                    labelAttr="name"></div>
 
               

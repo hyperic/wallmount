@@ -1,3 +1,5 @@
-[   
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/platform', name:'Platforms', children: [
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/10303', eid: '1:10303', name: 'bear.intranet.hyperic.net', proto: 'Win32', children: true}
-]
+  ]
+}
+

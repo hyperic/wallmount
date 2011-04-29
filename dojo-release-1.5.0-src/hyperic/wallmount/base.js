@@ -38,8 +38,6 @@ dojo.require("dijit.MenuSeparator");
 dojo.require("dijit.ColorPalette");
 dojo.require("hyperic.data.ResourceTree"); 
 dojo.require("hyperic.layout.MoveablePane");
-dojo.require("hyperic.data.ForestStoreModel");
-dojo.require("hyperic.data.GroupsStoreModel");
 dojo.require("hyperic.data.TreeDndSource");
 dojo.require("hyperic.dnd.Source");
 dojo.require("hyperic.dnd.SingleSource");
