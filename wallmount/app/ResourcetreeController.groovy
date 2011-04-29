@@ -40,6 +40,8 @@ import org.hyperic.hq.context.Bootstrap
 import org.hyperic.hq.hqu.rendit.util.HQUtil
 import org.hyperic.hq.hqu.rendit.helpers.ResourceHelper
 import org.hyperic.hq.auth.shared.SessionManager
+import org.hyperic.hq.bizapp.shared.MeasurementBoss
+import org.hyperic.hq.appdef.shared.AppdefEntityValue
 
 /**
  * Resources services for various widgets.
@@ -49,7 +51,8 @@ import org.hyperic.hq.auth.shared.SessionManager
 class ResourcetreeController extends BaseJSONController {
 	    
     private static String baseUrl = '/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path='
-		
+    private static measBoss = Bootstrap.getBean(MeasurementBoss.class)
+
     /**
      * 
      */
@@ -60,21 +63,27 @@ class ResourcetreeController extends BaseJSONController {
         def paths = path.split('/')
         log.info("paths:" + paths);
         
-        if(paths.size() == 2) {
+        if(paths.size() <= 1) {
+            allRoots()
+        } else if(paths.size() == 2) {
             if(paths[1] == 'platform') allPlatforms()
+            if(paths[1] == 'group') allGroups()
         } else if(paths.size() == 3) {
             if(paths[1] == 'platform') {
                 byPlatform(paths[2] as int)
+            } else if (paths[1] == 'group') {
+                byGroup(paths[2] as int)
             } else if (paths[1] == 'server') {
                 metricsByServer(paths[2] as int)
             } else if (paths[1] == 'service') {
                 metricsByService(paths[2] as int)
             }            
         } else if(paths.size() == 5) {
+            def typenum = paths[1] == 'platform' ? 1 : 5
             if(paths[3] == 'server' && paths[4] == 'proto') {
-                serverprotos(paths[2] as int)
+                serverprotos(paths[1], typenum, paths[2] as int)
             } else if (paths[3] == 'service' && paths[4] == 'proto') {
-                serviceprotos(paths[2] as int)
+                serviceprotos(paths[1], typenum, paths[2] as int)
             }
         } else if(paths.size() == 6) {
             if(paths[1] == 'platform' && paths[3] == 'server') {
@@ -252,14 +261,14 @@ class ResourcetreeController extends BaseJSONController {
     /**
      * 
      */
-    def serviceprotos(eid) {
+    def serviceprotos(tp, typenum, eid) {
         JSONObject obj = new JSONObject()
 
-        obj.put("id", baseUrl + "/platform/${eid}/service/proto")
+        obj.put("id", baseUrl + "/${tp}/${eid}/service/proto")
         obj.put("name","Platform Services")
 
         
-        def aeid = new AppdefEntityID("1:$eid")
+        def aeid = new AppdefEntityID("$typenum:$eid")
         def resource = resourceManager.findResource(aeid)
 
         
@@ -272,7 +281,7 @@ class ResourcetreeController extends BaseJSONController {
         }
         types.each{ key, value ->
             JSONObject o = new JSONObject()
-            o.put('$ref', baseUrl + "/platform/${eid}/service/proto/${key}")
+            o.put('$ref', baseUrl + "/${tp}/${eid}/service/proto/${key}")
             o.put("name", value)
             o.put("children", true)
             child.put(o)
@@ -287,14 +296,14 @@ class ResourcetreeController extends BaseJSONController {
     /**
      * 
      */
-    def serverprotos(eid) {
+    def serverprotos(tp, typenum, eid) {
         JSONObject obj = new JSONObject()
 
-        obj.put("id", baseUrl + "/platform/${eid}/server/proto")
+        obj.put("id", baseUrl + "/${tp}/${eid}/server/proto")
         obj.put("name","Servers")
 
         
-        def aeid = new AppdefEntityID("1:$eid")
+        def aeid = new AppdefEntityID("$typenum:$eid")
         def resource = resourceManager.findResource(aeid)
 
         
@@ -309,7 +318,7 @@ class ResourcetreeController extends BaseJSONController {
         }
         types.each{ key, value ->
             JSONObject o = new JSONObject()
-            o.put('$ref', baseUrl + "/platform/${eid}/server/proto/${key}")
+            o.put('$ref', baseUrl + "/${tp}/${eid}/server/proto/${key}")
             o.put("name", value)
             o.put("children", true)
             child.put(o)
@@ -323,11 +332,29 @@ class ResourcetreeController extends BaseJSONController {
 	/**
 	 * 
 	 */
+    def allRoots() {
+        log.info("Returning roots");
+        JSONArray roots = new JSONArray()
+        roots.put($ref : baseUrl + '/platform', eid: '1', name: 'Platforms', children: true);
+        roots.put($ref : baseUrl + '/group', eid: '5', name: 'Groups', children: true);
+        def ret = roots.toString()
+        render(inline:"${ret}", contentType:'text/json-comment-filtered')
+    }
+
+    /**
+     *
+     */
     def allPlatforms() {
+        log.info("Loading platform list")
+        JSONObject platformList = new JSONObject()
+
+        platformList.put("id", baseUrl + '/platform')
+        platformList.put("eid",'1')
+        platformList.put("name","Platforms")
 
         JSONArray array = new JSONArray()
-        
-		def platforms = resourceHelper.findAllPlatforms()
+
+        def platforms = resourceHelper.findAllPlatforms()
         platforms.each{
             array.put($ref: baseUrl + '/platform/' + it.instanceId,
                       eid: '1:' + it.instanceId,
@@ -335,8 +362,36 @@ class ResourcetreeController extends BaseJSONController {
                       name: it.name,
                       children: true)
         }
-        def ret = array.toString()
-        render(inline:"${ret}", contentType:'text/json-comment-filtered')
+        platformList.put("children",array);
+        renderJSONObj(platformList);
+    }
+
+    /**
+     *
+     */
+    def allGroups() {
+        log.info("Loading group list")
+
+        JSONObject groupList = new JSONObject()
+
+        groupList.put("id", baseUrl + '/group')
+        groupList.put("eid",'1')
+        groupList.put("name","Groups")
+
+        JSONArray array = new JSONArray()
+
+        def groups = resourceHelper.findViewableGroups()
+        groups.each{
+            if (!it.mixed) {
+              array.put($ref: baseUrl + '/group/' + it.id,
+                        eid: '5:' + it.id,
+                        //proto: it.prototype.name,
+                        name: it.name,
+                        children: true)
+            }
+        }
+        groupList.put("children",array);
+        renderJSONObj(groupList);
     }
 
     /**
@@ -376,5 +431,41 @@ class ResourcetreeController extends BaseJSONController {
         renderJSONObj(platform)
     }
     
+    /**
+     *
+     */
+    def byGroup(eid) {
+
+        def aeid = new AppdefEntityID("5:$eid")
+        def g = resourceHelper.findGroup(eid);
+        def r = g.resourcePrototype;
+        log.info("Resource: " + r.id);
+
+        JSONObject group = new JSONObject()
+
+        group.put("id", baseUrl + '/group/' + eid)
+        group.put("eid",'5:'+eid)
+        group.put("proto",r.prototype.name)
+        group.put("name",g.name)
+
+        JSONArray child = new JSONArray()
+
+        AppdefEntityValue value = new AppdefEntityValue(aeid, user);
+        def metrics = templateManager.findTemplates(value.typeName, null, null, PageControl.PAGE_ALL);
+        log.info("metrics: " + metrics);
+
+        metrics.each { m ->
+            JSONObject met = new JSONObject()
+            met.put("id", baseUrl + "/group/${eid}/metric/" + m.id)
+            met.put("mid", m.id + '|5:'+eid)
+            met.put("name", m.name)
+            met.put("format", m.units)
+            child.put(met)
+        }
+
+
+        group.put("children", child)
+        renderJSONObj(group)
+    }
 
 }

@@ -138,7 +138,7 @@
                
             <div dojoType="dojox.data.JsonRestStore" 
                  jsId="metricStore" 
-                 target="/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path=/platform"
+                 target="/hqu/wmvisualizer/resourcetree/resourcetree.hqu?path=/"
                  allowNoTrailingSlash="true" 
                  labelAttribute="name"></div>
                
@@ -154,7 +154,7 @@
               <div dojoType="hyperic.data.ResourceTree"
                    id="metricTree"
                    dndController="hyperic.data.TreeDndSource"
-                   label="Platforms"
+                   label="Metrics & resources"
                    persist="false"
                    deferItemLoadingUntilExpand="true" 
                    model="metricModel" 
