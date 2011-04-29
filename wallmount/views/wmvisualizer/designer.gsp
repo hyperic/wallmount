@@ -154,10 +154,10 @@
               <div dojoType="hyperic.data.ResourceTree"
                    id="metricTree"
                    dndController="hyperic.data.TreeDndSource"
-                   label="Metrics & resources"
                    persist="false"
                    deferItemLoadingUntilExpand="true" 
                    model="metricModel" 
+                   showRoot="false"
                    labelAttr="name"></div>
 
               
