@@ -335,8 +335,8 @@ class ResourcetreeController extends BaseJSONController {
     def allRoots() {
         log.info("Returning roots");
         JSONArray roots = new JSONArray()
-        roots.put($ref : baseUrl + '/platform', eid: '1', name: 'Platforms', children: true);
-        roots.put($ref : baseUrl + '/group', eid: '5', name: 'Groups', children: true);
+        roots.put($ref : baseUrl + '/platform', name: 'Platforms', children: true);
+        roots.put($ref : baseUrl + '/group', name: 'Groups', children: true);
         def ret = roots.toString()
         render(inline:"${ret}", contentType:'text/json-comment-filtered')
     }
@@ -349,7 +349,6 @@ class ResourcetreeController extends BaseJSONController {
         JSONObject platformList = new JSONObject()
 
         platformList.put("id", baseUrl + '/platform')
-        platformList.put("eid",'1')
         platformList.put("name","Platforms")
 
         JSONArray array = new JSONArray()
@@ -375,7 +374,6 @@ class ResourcetreeController extends BaseJSONController {
         JSONObject groupList = new JSONObject()
 
         groupList.put("id", baseUrl + '/group')
-        groupList.put("eid",'1')
         groupList.put("name","Groups")
 
         JSONArray array = new JSONArray()
