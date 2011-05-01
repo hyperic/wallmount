@@ -28,6 +28,7 @@ dojo.provide("hyperic.widget.chart.Chart");
 
 dojo.require("hyperic.widget.base._WallMountItem");
 dojo.require("hyperic.data.ChartProperty");
+dojo.require("hyperic.data.LabelProperty");
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.charting.Chart2D");
 dojo.require("dojox.charting.plot2d.Lines");
@@ -74,7 +75,6 @@ dojo.require("dojox.charting.Theme");
 
         // internal data
         _chart: null,
-        _subscribeHandle:null,
 
         createSurface: function(){
         	// summary:
@@ -183,6 +183,7 @@ dojo.require("dojox.charting.Theme");
             // summary:
             //     Store callback to listen series updates from metric store.
         
+        	this.setSerie(arg.serie);
             this._chart.updateSeries("series", arg.serie);
             this._chart.render();
         },
@@ -193,8 +194,8 @@ dojo.require("dojox.charting.Theme");
         
             this.subscribeId = m;
             if(this.store) {
-            	if(this._subscribeHandle != null) this.store.unsubscribe(this._subscribeHandle);
-                this._subscribeHandle = this.store.subscribe("metric/" + timeScales[this.chartTimeScale] + "/" + m, this, "storeCallback");        	
+            	if(this._storeSubsHdl) this.store.unsubscribe(this._storeSubsHdl);
+                this._storeSubsHdl = this.store.subscribe("metric/" + timeScales[this.chartTimeScale] + "/" + m, this, "storeCallback");        	
             }
         },
     
@@ -228,8 +229,10 @@ dojo.require("dojox.charting.Theme");
             // summary:
             //     Simple reset just destroys the chart and re-creates it.
         
+            if(this.store && this._storeSubsHdl) this.store.unsubscribe(this._storeSubsHdl);
         	this._chart.destroy();
         	this.createSurface();
+            if(this.store) this._storeSubsHdl = this.store.subscribe("metric/" + timeScales[this.chartTimeScale] + "/" + this.subscribeId, this, "storeCallback");
         },
         
         asParams: function(){
