@@ -62,6 +62,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     // internal data
     templateString: dojo.cache("hyperic.widget.base", "_WallMountItem.html"),
     _backgroundDefault: {color: 'green'},
+    _storeSubsHdl: null,
     
     startup: function(){
     	
@@ -156,7 +157,10 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     setMetric: function(m) {
         // summary:
     	this.subscribeId = m;
-    	if(this.store) this.store.subscribe("metric/0/" + m, this, "storeCallback");
+    	if(this.store) {
+    		// catch handle so we can unsubscribe
+    		this._storeSubsHdl = this.store.subscribe("metric/0/" + m, this, "storeCallback");
+    	}
     },
     
     storeCallback: function(arg) {
@@ -213,27 +217,24 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     _switch: function(/*String*/widget){
     	this.source.replaceWidget(this.domNode.id, widget);
     },
+
+    destroy: function(){
+    	if(this.store && this._storeSubsHdl) this.store.unsubscribe(this._storeSubsHdl);    	
+    	this.inherited(arguments);
+    },
     
     _removeMe: function(){
-    	console.log('removeme');    	
         // fetch a node by its name
         var name = this.domNode.parentNode.id;
         var node = dojo.byId(name);
-        if(node){
-        	
-        	// XXX why these are null?
-        	
-            // remove it from the selection map
-//            delete this.source.selected[name];
-            // make sure it is not the anchor
-//            if(this.source.anchor == node){
-//                this.source.anchor = null;
-//            }
-            // remove it from the master map
+        this.destroy();
+        
+        // we're wrapped by parent, also remove that node
+        if(node) {    	
             this.source.delItem(name);
-            // remove the node itself
             dojo._destroyElement(node);
         }
+        
     },
     
     drawText: function(/*String*/txt, /*Number*/x, /*Number*/y, /*String?*/align, /*String?*/color, /*Object?*/font){

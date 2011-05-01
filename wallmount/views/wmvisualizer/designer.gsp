@@ -20,6 +20,10 @@
     <script type="text/javascript">
 
       dojo.addOnLoad(function(){
+          hyperic.wallmount.base.metricStore = new hyperic.data.MetricStore(
+              {url: "/hqu/wmvisualizer/metricstore/getMetrics.hqu",
+               idToBaseUrl: false}
+          );
           dojo.subscribe("/hyperic/layout/new", function(data){
               var url = "/hqu/wmvisualizer/wmvisualizer/getLayout.hqu?layout=" + data[0];
               hyperic.wallmount.Designer.loadLayout(url);
@@ -49,7 +53,7 @@
              {plugin: 'hyperic.widget.Spinner', attach:[{type:'metric'}], defaults:[{type:'metric', filter:'name', include:'Load Average 5 Minutes'}], properties:{size:120}},
              {plugin: 'hyperic.widget.AvailText', attach:[{type:'resourcetype'}], defaults:[{type:'metric', filter:'name', include:'availability'}], properties:{size:90}},
              {plugin: 'hyperic.widget.AvailIcon', attach:[{type:'resourcetype'}], defaults:[{type:'resourcetype', filter:'eid', include:'*'}], properties:{size:80}},
-             {plugin: 'hyperic.widget.label.Label', attach:[{type:'metric'},{type:'resourcetype'}], properties:{width:200,height:80}},
+             {plugin: 'hyperic.widget.label.Label', attach:[{type:'metric'}], properties:{width:200,height:80}},
              {plugin: 'hyperic.widget.chart.Chart', attach:[{type:'metric'}], properties:{width:200,height:120}}
          ]"></div>
     <div id="main"

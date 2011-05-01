@@ -112,7 +112,9 @@ dojo.declare("hyperic.widget.avail._Availability",
     setEid: function(m) {
         // summary:
         this.eid = m;
-        if(this.store) this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
+        if(this.store) {
+        	this._storeSubsHdl = this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
+        }
     },
 
     storeAvailCallback: function(arg) {

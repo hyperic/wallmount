@@ -57,7 +57,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         var _format = obj.format; 
     	
         var parent = dojo.byId(item).parentNode;        
-        
+
+        // destroy old widget
+        obj.destroy();
     	dojo._destroyElement(dojo.byId(item));
     	
     	// dojo.require(...) brakes the build system
@@ -71,15 +73,19 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         
         w.setTitle(_title);
         w._setTitlePositionAttr(_titlePosition);
-        w.subscribeId = _subscribeId;
-        w.eid = _eid;
         w.format = _format;
         
         w.source = this;
-        w._buildContextMenu();
         w.placeAt(parent);
         w.startup();
+
+        var s = hyperic.wallmount.base.metricStore;        
+        if(s) w.setStore(s);
+        if(_subscribeId) w.setMetric(_subscribeId);
+        if(_eid) w.setEid(_eid);
         
+        w._buildContextMenu();
+
         // replace widget ref to stored dnd data
         var oldData = this.getItem(parent.id);
         oldData.data.wmwidget = w;
@@ -152,12 +158,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
             w = new clazz(props);                           
         }
         
-        var s = hyperic.wallmount.base.metricStore;        
-        if(s) w.setStore(s);
 
-        if(item.mid) w.setMetric(item.mid);
         if(item.format) w.format = item.format;
-        if(item.eid) w.setEid(item.eid);
         if(item.ranges) w.addRanges(item.ranges);
         if(item.legends) w.addLegends(item.legends);
 
@@ -170,10 +172,16 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         }
         
         w.source = this;
-        w._buildContextMenu();
         w.placeAt(node);
         w.startup();
-        
+
+        var s = hyperic.wallmount.base.metricStore;        
+        if(s) w.setStore(s);
+        if(item.mid) w.setMetric(item.mid);
+        if(item.eid) w.setEid(item.eid);
+
+        w._buildContextMenu();
+
         item['wmwidget'] = w;
         return {node: node, data: item, type: ["text"]};
     }, 
