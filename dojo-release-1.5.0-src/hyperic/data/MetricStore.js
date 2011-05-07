@@ -53,22 +53,28 @@ dojo.declare("hyperic.data.MetricStore", null, {
 	//        If not, there's no need to sync
 	//
 	// topic definitions:
-	//     metric: last, time frame
+	//     last metric value:
     //     /hyperic/metric/0/12345
+	//     {
+	//       status: integer (0=requestok, 1=requesterror)
+	//       id: integer (metric id)
+	//       last: number (raw metric value)
+	//     }
+	//
     //     /hyperic/metric/60/12345
     //     /hyperic/metric/480/12345
     //
 	//     resource:  availability
-    //     /hyperic/ravail/1-12345 (platform)
-    //     /hyperic/ravail/2-12345 (server)
-    //     /hyperic/ravail/3-12345 (service)
-    //     /hyperic/ravail/4-12345 (application)
-    //     /hyperic/ravail/5-12345 (group)
+    //     /hyperic/ravail/1:12345 (platform)
+    //     /hyperic/ravail/2:12345 (server)
+    //     /hyperic/ravail/3:12345 (service)
+    //     /hyperic/ravail/4:12345 (application)
+    //     /hyperic/ravail/5:12345 (group)
     //
     //     resource type: availability
-    //     /hyperic/tavail/1-12345 (platform)
-    //     /hyperic/tavail/2-12345 (server)
-    //     /hyperic/tavail/3-12345 (service)
+    //     /hyperic/tavail/1:12345 (platform)
+    //     /hyperic/tavail/2:12345 (server)
+    //     /hyperic/tavail/3:12345 (service)
 	//
 
     // url: String
@@ -156,8 +162,9 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	var self = this;
     	var reqParams = {};
     	
-    	if(request.id){    
-            reqParams.scope = request.id;    		
+    	if(request.resId){    
+            reqParams.scope = request.scope + request.resId;
+            reqParams.id = request.resId;
     	}
     	
         var getArgs = {
@@ -168,15 +175,10 @@ dojo.declare("hyperic.data.MetricStore", null, {
             content: reqParams
         };
 
-
         var deferred = dojo.xhrGet(getArgs);
 
         deferred.addCallback(function(data){self._processResult(data, request);});
-        deferred.addErrback(function(error){
-            if(request.onError){
-                request.onError.call(scope, error, request);
-            }
-        });
+        deferred.addErrback(function(error){self._processError(error, request);});
     },
     
     updateStore: function(){
@@ -193,8 +195,13 @@ dojo.declare("hyperic.data.MetricStore", null, {
             var scope = id.substring(0, d+1);
             
             // TODO: combine to single request.
+            // id: "ravail/1:10303" "metric/0/10522"
+            // scope: "ravail/" "metric/0/"
+            
+            // resId: either metric id or eid
+            var resId = id.substring(scope.length);
             if(val > 0)
-                this.loadItem({id: id, scope: scope});
+                this.loadItem({resId: resId, scope: scope});
             
             // marking that there's not requests pending.
             // subscriber may set it true during this for loop
@@ -292,10 +299,19 @@ dojo.declare("hyperic.data.MetricStore", null, {
     	//     to subscribers.
         
         for(var i = 0; i<data.length; i++) {
-            this.publish(request.scope + data[i].id, [data[i]]);        	
+            this.publish(request.scope + data[i].id, [dojo.mixin({status:0},data[i])]);        	
         }
+    	  	
+    },
+    
+    _processError: function(error, request){
+        // summary:
+    	//     Processing request error and notifying 
+    	//     topic of it. Listener can then show that
+    	//     data has become stale e.g.
     	
-    	
+    	// post error status to topic
+    	this.publish(request.scope + request.resId, [{status:1,id:request.resId}]);
     },
     
     _kickTimer: function() {

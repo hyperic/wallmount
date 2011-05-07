@@ -98,6 +98,9 @@ class ResourcetreeController extends BaseJSONController {
         }
     }
 
+    /**
+     * 
+     */
     def servicesByProtoAndServer(proto,eid) {
         JSONObject obj = new JSONObject()
         

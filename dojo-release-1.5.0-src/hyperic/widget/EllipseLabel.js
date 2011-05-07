@@ -64,7 +64,9 @@ dojo.declare("hyperic.widget.EllipseLabel",[hyperic.widget.label._Label],{
         this.surface.createImage({x:0,y:0,width:width, height:height, src: url});        	
 
         this.drawMetric();
-    },
+        
+        this.handleOverlay();    
+   },
         
     _setSizeAttr: function(size){
     	this.aspectSize = size;

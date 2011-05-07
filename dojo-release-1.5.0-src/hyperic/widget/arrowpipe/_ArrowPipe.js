@@ -31,6 +31,7 @@ dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.RangeSpeedProperty");
 dojo.require("hyperic.data.RangesProperty");
+dojo.require("hyperic.data.LabelProperty");
 
 
 dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
@@ -80,8 +81,8 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     
     startup: function(){
         // summary:
-        this.plays = 0; // for testing fops
-        this.playstime = 0; // for testing fops
+//        this.plays = 0; // for testing fops
+//        this.playstime = 0; // for testing fops
 
         this.inherited(arguments);
         this.draw();
@@ -102,6 +103,7 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
     	this._cacheColor();
        	this._drawAxis(20);
        	this.setUpArrowColors();
+        this.handleOverlay();
     },
 
     _cacheColor: function(){
@@ -140,6 +142,7 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         if(this._arrows === null)
             this._createArrows();
         this._drawAxis(20);
+        this.handleOverlay();    
     },
     
     _createArrowPoints: function(rotation){
@@ -181,11 +184,11 @@ dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
         var _diff = _now - this._lastTimeStamp;
 
 
-        if((++this.plays % 200) == 0){
-            var fops = 200 / ((_now - this.playstime) / 1000);
-            console.log("arrow fops: " + _diff + "/" + fops);         
-            this.playstime = _now;
-        }
+//        if((++this.plays % 200) == 0){
+//            var fops = 200 / ((_now - this.playstime) / 1000);
+//            console.log("arrow fops: " + _diff + "/" + fops);         
+//            this.playstime = _now;
+//        }
 
 
 

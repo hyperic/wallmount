@@ -119,7 +119,7 @@ dojo.declare("hyperic.widget.avail._Availability",
 
     storeAvailCallback: function(arg) {
         // summary:
-        this.value = arg.last;
+    	this.setValue(arg.last);
         this.reset();
     },
     

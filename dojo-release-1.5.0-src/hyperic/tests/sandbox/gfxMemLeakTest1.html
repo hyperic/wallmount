@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<title>GFX Mem Leak Test 1</title>
+
+<style type="text/css">
+    @import "../../../dojo/resources/dojo.css";
+    @import "../../../dijit/tests/css/dijitTests.css";
+
+    body .bigFont {
+        font-size: larger; /* help test widget sizing */
+    }
+
+</style>
+
+<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+
+
+<script type="text/javascript">
+    djConfig = {
+        parseOnLoad: true,
+        isDebug: true
+    };
+</script>
+
+<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    dojo.require("dijit.form.Button");
+    dojo.require("dojox.gfx.matrix");
+</script>
+
+<script type="text/javascript">
+    var doLeak = function() {
+    	var rotation = 109.234234234;
+        var width = 10.3;
+        var height = 10.3;
+    	
+    	console.log("doleak:" + typeof(rotation));
+    	for(var i = 0; i < 5000; i++) {
+    		var foo = dojox.gfx.matrix.rotategAt(-rotation, width/2, height/2);
+            console.log("Do leak");
+    	}
+    	
+    }
+    
+</script>
+
+</head>
+<body class="claro">
+
+
+<button dojoType="dijit.form.Button"
+                onClick="doLeak"
+                name="leak"
+                id="leak">Do Leak</button>
+
+
+</body>
+</html>

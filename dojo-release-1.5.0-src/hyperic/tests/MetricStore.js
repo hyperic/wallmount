@@ -194,7 +194,7 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                 } else {
                     dd = data[i].last * rand;				
     			}
-                this.publish(request.scope + data[i].id, [{id:data[i].id, last:dd}]);            
+                this.publish(request.scope + data[i].id, [{status:0, id:data[i].id, last:dd}]);            
             } else if(request.scope.indexOf("ravail") != -1){
             	if(data[i].id === '1-10000'){
                     dd = {
@@ -249,7 +249,7 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                 	dd = data[i];
                 }
                                 
-                this.publish(request.scope + data[i].id, [dd]);                        	
+                this.publish(request.scope + data[i].id, [dojo.mixin({status:0},dd)]);                        	
             }
         }
 	},

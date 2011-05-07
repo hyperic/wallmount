@@ -72,9 +72,12 @@ dojo.declare("hyperic.widget.AvailText",
         this.surface.createImage({x:x,y:y,width:width, height:height, src: url});
         
         // don't even try to draw legends if those are
-        // not marked as supported
-        if(this.supportLegends)
+        // not marked as supported. also check if value
+        // state is ok
+        if(this.supportLegends && this.isValueStateOk())
             this.drawLegends();
+        
+        this.handleOverlay();    
     },
 
     storeAvailCallback: function(arg) {

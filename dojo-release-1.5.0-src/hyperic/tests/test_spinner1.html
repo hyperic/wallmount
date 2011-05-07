@@ -39,14 +39,15 @@
         s.width = size;
         s.height = size;
 //        s.numOfArrows = dijit.byId("numOfArrows").get('value');
-        s.arrowCount.value = dijit.byId("numOfArrows").get('value');
+        s.arrowCountObj.value = dijit.byId("numOfArrows").get('value');
         s.arrowWidth = dijit.byId("arrowWidth").get('value');
         s.arrowGap = dijit.byId("arrowGap").get('value');
         s.arrowHeadLength = dijit.byId("arrowHeadLength").get('value');
         s.rotationTime = dijit.byId("rotationTime").get('value');
         
         val = dijit.byId("value").get('value');
-        s.value = val;
+        s.setValue(val);      
+//        s.value = val;
         
         if(val != s.value) {
             s.resetValue();        
@@ -59,6 +60,16 @@
         var cb = dijit.byId("animate");
         var status = cb.get('checked');
         s.animate(status);    
+    }
+    var invaliddata = function() {
+        var s = dijit.byId("spinner");
+        var invalid = dijit.byId("invaliddata").get("checked");
+        if(invalid) {
+        	s.setValue(null);
+        } else {
+            s.setValue(dijit.byId("value").get('value'));
+        }
+        s.reset();
     }
 </script>
 
@@ -141,6 +152,9 @@
 <label for="animate">animate</label>
 <input name="animate" id="animate" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="animate">
 
+</br>
+<label for="invaliddata">invalid data</label>
+<input name="invaliddata" id="invaliddata" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="invaliddata">
 
                 
 
@@ -151,7 +165,6 @@
      value="20" 
      width="200" 
      height="200"
-     ranges="[{low: 30, high: 50, color: 'yellow'},{low: 49, high: 80, color: 'red'}]" 
      autoStart="true"></div>
 
 </body>

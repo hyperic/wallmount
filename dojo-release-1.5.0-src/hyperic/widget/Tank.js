@@ -138,20 +138,24 @@ dojo.declare("hyperic.widget.Tank",
             
     	view.render();
     	
-        var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});
-        var fS = hyperic.util.FontUtil.findGoodSizeFontByRect(fV, this.width-(this.width/10), this.height/10);
-    	
-    	var valPos;
-    	if (this.value < min){
-            valPos = this.height - _y1;    		
-    	} else if(this.value > max){
-            valPos = this.height - _y1 - _height + _cylextraspace + _cylextraspace + fS;
-        } else if(this.value > ((max-min)/2 + min)){
-            valPos = this.height - _y2 + _cylextraspace + fS;    		
-    	} else {
-            valPos = this.height - _y2;
+    	if(this.isValueStateOk()) {
+            var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});
+            var fS = hyperic.util.FontUtil.findGoodSizeFontByRect(fV, this.width-(this.width/10), this.height/10);
+        	
+        	var valPos;
+        	if (this.value < min){
+                valPos = this.height - _y1;    		
+        	} else if(this.value > max){
+                valPos = this.height - _y1 - _height + _cylextraspace + _cylextraspace + fS;
+            } else if(this.value > ((max-min)/2 + min)){
+                valPos = this.height - _y2 + _cylextraspace + fS;    		
+        	} else {
+                valPos = this.height - _y2;
+        	}
+            this.drawText(fV, this.width/2, valPos , "middle", "whitesmoke", {family:"Helvetica",weight:"bold",size:fS+'px'});    		
     	}
-        this.drawText(fV, this.width/2, valPos , "middle", "whitesmoke", {family:"Helvetica",weight:"bold",size:fS+'px'});
+
+        this.handleOverlay();    
     },
     
     asParams: function(){

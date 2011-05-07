@@ -48,7 +48,7 @@
         s.rotationTime = dijit.byId("rotationTime").get('value');
         
         val = dijit.byId("value").get('value');
-        s.value = val;
+        s.setValue(val);
         
 //        if(val != s.value) {
 //            s.resetValue();        
@@ -60,7 +60,7 @@
     var updatevalue = function() {
         var s = dijit.byId("spinner");
         var val = dijit.byId("value").get('value');
-        s.value = val;
+        s.setValue(val);
         s.resetValue();            
     }
     var animate = function() {
@@ -84,22 +84,31 @@
             s.resetValue();            
         }
     }
+    var invaliddata = function() {
+        var s = dijit.byId("spinner");
+        var invalid = dijit.byId("invaliddata").get("checked");
+        if(invalid) {
+            s.setValue(null);
+        } else {
+            s.setValue(dijit.byId("value").get('value'));
+        }
+        s.reset();
+    }
     
     var spinner;
     function init() {
         spinner = dojo.byId("spinner");
         spinner = new hyperic.widget.Spinner({
             id: "spinner",
-            width: 200,
-            height: 200,
+            size: 200,
             arrowCount: 3,
             arrowWidth: 25,
             format: "percent",
         },spinner);
         
-        spinner.addRange({value:30, comparator:"&lt;", color:"red"});
-        spinner.addRange({value:21, comparator:"&lt;", color:"purple"});
-        spinner.addRange({value:11, comparator:"&gt;", color:"yellow"});
+        spinner.addRange({value:35, comparator:"&gt;", color:"red"});
+        spinner.addRange({value:25, comparator:"&gt;", color:"yellow"});
+//        spinner.addRange({value:21, comparator:"&lt;", color:"purple"});
 
         spinner.startup();
     
@@ -187,6 +196,10 @@
 </br>
 <label for="animate">animate</label>
 <input name="animate" id="animate" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="animate">
+
+</br>
+<label for="invaliddata">invalid data</label>
+<input name="invaliddata" id="invaliddata" type="checkbox" value="false" dojoType="dijit.form.CheckBox" onClick="invaliddata">
 
 </br>
 <button dojoType="dijit.form.Button"

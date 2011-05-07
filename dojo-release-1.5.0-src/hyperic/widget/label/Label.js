@@ -39,6 +39,7 @@ dojo.declare("hyperic.widget.label.Label",[hyperic.widget.label._Label],{
     draw: function(){
         this.surface.clear();
         this.drawMetric();
+        this.handleOverlay();    
     }
         
 

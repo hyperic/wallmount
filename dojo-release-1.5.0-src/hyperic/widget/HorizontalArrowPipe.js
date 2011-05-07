@@ -97,15 +97,19 @@ dojo.declare("hyperic.widget.HorizontalArrowPipe",
     },
    
     _drawAxis: function(height){
-	
-        var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format);
-        var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sVal, this.width, height);
-        if(this._text) {
-            this._text.setShape({text: sVal});
-        } else {
-            this._text = this.drawText(sVal, this.width/2, this.height, "end", this.getLabelColor(), {family:"Helvetica",weight:"bold",size:fMax+'px'});
-        }
-        this.inherited(arguments);
+    	
+    	if(this.isValueStateOk()) {    		
+            var sVal = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});
+            var fMax = hyperic.util.FontUtil.findGoodSizeFontByRect(sVal, this.width, height);
+            if(this._text) {
+                this._text.setShape({text: sVal});
+            } else {
+                this._text = this.drawText(sVal, this.width/2, this.height, "end", this.getLabelColor(), {family:"Helvetica",weight:"bold",size:fMax+'px'});
+            }    
+    	} else {
+            if(this._text)
+                this._text.setShape({text: ""});    		
+    	}
     } 
     
     

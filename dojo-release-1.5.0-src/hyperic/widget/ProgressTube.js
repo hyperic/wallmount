@@ -132,7 +132,9 @@ dojo.declare("hyperic.widget.ProgressTube",
         view.applyCameraTransform(camera);
             
         view.render();
-        this.drawAxis(axisH);
+        if(this.isValueStateOk())
+        	this.drawAxis(axisH);
+        this.handleOverlay();    
     },
     
     drawAxis: function(height){

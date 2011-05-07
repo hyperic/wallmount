@@ -75,11 +75,10 @@ dojo.declare("hyperic.widget.Spinner",
     },
 
     startup: function(){
-        this.plays = 0; // for testing fops
-        this.playstime = 0; // for testing fops
+//        this.plays = 0; // for testing fops
+//        this.playstime = 0; // for testing fops
         this.inherited(arguments);
         this.draw();
-       
     },
 
     reset: function(){
@@ -93,6 +92,7 @@ dojo.declare("hyperic.widget.Spinner",
         this._cacheColor();
         this.drawMetric();
         this.setUpArrowColors();
+        this.handleOverlay();
     },
 
     draw: function(){
@@ -103,6 +103,8 @@ dojo.declare("hyperic.widget.Spinner",
         if(this._arrows === null)
             this._createArrows();
         this.drawMetric();
+
+        this.handleOverlay();    
     },
     
     _cacheColor: function(){
@@ -237,8 +239,12 @@ dojo.declare("hyperic.widget.Spinner",
         //      Before the shifting operation can do any visible changes,
         //      somebody needs to re-calculate the degree which is usually
         //      done from the play function.
-    	var rotation = this._degree;
-    	var arrowAreaAngle = 360 / this.getArrowCount();
+    	
+    	// without rounding we're getting a lot of memory leaks
+    	// which is something what I don't understand.
+    	var rotation = dojo.number.round(this._degree);
+    	var arrowAreaAngle = dojo.number.round(360 / this.getArrowCount());
+    	
     	for(var i = 0; i < this._arrows.length; i++) {
     		this._arrows[i].setTransform([dojox.gfx.matrix.rotategAt(-rotation, this.width/2, this.height/2)]);
     		rotation += arrowAreaAngle; 		
@@ -291,8 +297,12 @@ dojo.declare("hyperic.widget.Spinner",
     	
     	var _radI = this.width / 2 - this.getArrowWidth();
     	
-    	var fV = hyperic.unit.UnitsConvert.convert(this.value, this.format);
-    	
+    	var fV;
+    	if(this.isValueStateOk())
+    		fV = hyperic.unit.UnitsConvert.convert(this.value, this.format, {places:'0,2'});
+    	else
+    		fV = "---";
+    		
     	var fS = hyperic.util.FontUtil.findGoodSizeFontByCircle(fV, _radI);
 	
         if(this._text) {
@@ -318,6 +328,8 @@ dojo.declare("hyperic.widget.Spinner",
     	// summary:
     	//     callback to handle animation
     	
+    	if(!this.isValueStateOk())return;
+    	
     	//basic baseline speed is calculated using scale settings,
     	//we should get value 0..1
         var _baseSpeed;
@@ -334,11 +346,11 @@ dojo.declare("hyperic.widget.Spinner",
     	var _now = new Date().getTime();
     	var _diff = _now - this._lastTimeStamp;
     	
-    	if((++this.plays % 200) == 0){
-    		var fops = 200 / ((_now - this.playstime) / 1000);
-            console.log("spinner fops: " + _diff + "/" + fops);         
-    		this.playstime = _now;
-    	}
+//    	if((++this.plays % 200) == 0){
+//    		var fops = 200 / ((_now - this.playstime) / 1000);
+//            console.log("spinner fops: " + _diff + "/" + fops);         
+//    		this.playstime = _now;
+//    	}
     	
     	var _toRotateBase = 360 / (this.getSpeedTime() / _diff);
     	

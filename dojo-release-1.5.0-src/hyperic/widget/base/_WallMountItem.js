@@ -57,6 +57,21 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     //      Id used to subscribe to metric store
     subscribeId: null,
     
+    // overlay: boolean
+    //     Flag telling if overlay should be used. Basically
+    //     changing div's opacity value in case value status is
+    //     stale.
+    overlay: true,
+    
+    // valueState: int; -1,0,1,2
+    //     Widget state telling status of representing value and its
+    //     relation to metric store and backend.
+    //     -1: unknown - basically initial status, no info received from metric store
+    //      0: ok - sync with metric store, no errors received from metric updates
+    //      1: error - received error from store telling we're unable to get value
+    //      2: noauth - we're able to access the backend resource but access is denied
+    valueState: -1,
+    
     color: "green",
     
     // internal data
@@ -165,7 +180,8 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     
     storeCallback: function(arg) {
         // summary:
-        this.value = arg.last;
+    	
+    	this.setValue(arg.last);
         this.resetValue();        	
     },
     
@@ -262,6 +278,39 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         //      aspect ratio.
         this.width = size;
         this.height = size;	
+    },
+    
+    handleOverlay: function() {
+    	// summary:
+    	//     Handles opacity overlay for widget.
+    	
+    	if(!this.isValueStateOk() && this.overlay)
+            dojo.style(this.wallMountItemParent, {opacity: 0.3});
+    	else
+            dojo.style(this.wallMountItemParent, {opacity: 1});
+    },
+    
+    isValueStateOk: function() {
+    	// summary:
+    	//     Simply returns true if storeState is zero,
+    	//     false otherwise.
+    	return this.valueState == 0;
+    },
+    
+    setValue: function(value) {
+    	// summary:
+    	//     Setting value and handling value state.
+    	
+    	// when value is explicitly set through this
+    	// method we also assume state to be ok unless given
+    	// value is undefined or null.
+    	if((typeof(value) === 'undefined') || value == null) {
+    		this.value = null;
+        	this.valueState = 1;    		
+    	} else {
+        	this.value = value;
+        	this.valueState = 0;    		
+    	}
     },
     
     asJSON: function(){
