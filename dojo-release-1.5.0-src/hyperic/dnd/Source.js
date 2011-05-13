@@ -100,8 +100,6 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     	
     	if(hint === 'avatar')
     		return this._avatarNodeCreator(item_in);
-    	else if(item_in === "DropMe")
-    		return this._emptyFloaderNodeCreator(item_in);
 
         var node = dojo.create("div");
         node.id = dojo.dnd.getUniqueId();
@@ -229,14 +227,6 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         w.startup();
         
     	return {node: node, data: item, type: ["text"]};
-    },
-
-    _emptyFloaderNodeCreator:function(item) {
-        var node = dojo.create("div");
-        node.id = dojo.dnd.getUniqueId();
-        node.innerHTML = "Drop </br>Something"
-        return {node: node, data: item, type: ["text"]};
     }
-
-
+    
 });

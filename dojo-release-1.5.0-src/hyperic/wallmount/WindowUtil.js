@@ -41,9 +41,11 @@ hyperic.wallmount.WindowUtil.newSingleItemFloater = function() {
     c1.setRegistry(hyperic.wallmount.Registry.registry());
     dojo.addClass(c,"singlecontainer");
     
-    c1.insertNodes(false, ["DropMe"]);
+	var emptyMsgDiv = dojo.create("div", null, c);
+	emptyMsgDiv.innerHTML = "Empty, </br>drop here";
+    dojo.addClass(emptyMsgDiv,"emptyMsg");
 
-    var style = "position: absolute; " + 
+    var style = "position: absolute; " +
         "top: 100px;" +
         "left: 100px;";   
         
@@ -104,7 +106,11 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
     source.setRegistry(hyperic.wallmount.Registry.registry());
     
     dojo.addClass(c,"container");
-        
+
+	var emptyMsgDiv = dojo.create("div", null, c);
+	emptyMsgDiv.innerHTML = "Empty, drop here";
+    dojo.addClass(emptyMsgDiv,"emptyMsg");
+	
     var pane = new hyperic.layout.FloatingPane({
         title: title,
         maxable: false,

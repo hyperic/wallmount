@@ -243,14 +243,22 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         // fetch a node by its name
         var name = this.domNode.parentNode.id;
         var node = dojo.byId(name);
-        this.destroy();
         
         // we're wrapped by parent, also remove that node
         if(node) {    	
             this.source.delItem(name);
             dojo._destroyElement(node);
         }
+        this.destroy();
         
+        // XXX: temporary hack.
+        // chrome doesnt seem to handle emptyMsgDiv size correctly
+        // if widget removed from here.
+        // removing and setting class seems to do the trick
+        dojo.query(".emptyMsg").forEach(function(node, index, arr){
+        	dojo.removeClass(node,"emptyMsg");
+        	dojo.addClass(node,"emptyMsg");
+        });
     },
     
     drawText: function(/*String*/txt, /*Number*/x, /*Number*/y, /*String?*/align, /*String?*/color, /*Object?*/font){
