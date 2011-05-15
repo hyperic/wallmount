@@ -75,9 +75,17 @@
 }
 
 .emptyMsg:only-child {
-    display: block;
+    display: none !important;
 }
 
+.hypericDndTable {
+    border: hidden !important;
+    border-collapse:collapse;
+}
+
+.hypericDndTableCell {
+    border: hidden !important;
+}
 
 html, body { height: 100%; width: 100%; padding: 0; border: 0; }
 #main { height: 100%; width: 100%; border: 0; }

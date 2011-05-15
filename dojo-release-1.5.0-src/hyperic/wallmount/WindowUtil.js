@@ -29,6 +29,7 @@ dojo.provide("hyperic.wallmount.WindowUtil");
 dojo.require("dojo.dnd.Moveable");
 dojo.require("hyperic.layout.FloatingPane");
 dojo.require("hyperic.util.LayoutTestWindow");
+dojo.require("hyperic.dialog.TableWindowDialog");
 
 hyperic.wallmount.WindowUtil.newSingleItemFloater = function() {
     // summary:
@@ -123,10 +124,95 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
 	return source;
 };
 
+hyperic.wallmount.WindowUtil.newEmptyTableWindow = function() {
+    // summary:
+    //      Just a wrapper function to pass no content
+    //      resulting empty table window.
+	hyperic.wallmount.WindowUtil.newTableWindow({});
+};
+
+hyperic.wallmount.WindowUtil.newTableWindow = function(/*Object*/params) {
+    // summary:
+	//     Creates window containing table of dnd containers
+    
+    var args = params || {};
+	
+    var w = (typeof args.w != 'undefined') ? args.w : 300;
+    var h = (typeof args.h != 'undefined') ? args.h : 400;
+    var x = ((typeof args.x != 'undefined') ? args.x : 10) + 1;
+    var y = ((typeof args.y != 'undefined') ? args.y : 10) + 1;
+    var rows = (typeof args.rows != 'undefined') ? args.rows : 2;
+    var cols = (typeof args.cols != 'undefined') ? args.cols : 2;
+    var title = (args && args.title) ? args.title : "New Window";
+   	
+   	var style = "position: absolute; " + 
+        "width: " + w + "px;" +
+        "height: " + h + "px;" +
+        "top: " + y + "px;" +
+        "left: " + x + "px;"; 	
+   	
+	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
+	
+    var table = dojo.create("table", null, node);
+    dojo.addClass(table, "hypericDndTable");
+    
+    
+    var sources = [];
+    
+    for(var r = 0; r<rows; r++) {
+        var row = dojo.create("tr", {id:dijit.getUniqueId("hypericDndRow")}, table);
+        var _sources = [];
+        for(var c = 0; c<cols; c++) {
+            var cell = dojo.create("td", {id:dijit.getUniqueId("hypericDndCol")}, row);
+            dojo.addClass(cell, "hypericDndTableCell");
+            
+            var container = dojo.create("div", null, cell);
+            var source = new hyperic.dnd.Source(container, {accept: ['treeNode','text']});
+            
+            source.setRegistry(hyperic.wallmount.Registry.registry());
+            
+            _sources.push(source);
+            
+            dojo.addClass(container,"container");
+
+        	var emptyMsgDiv = dojo.create("div", null, container);
+        	emptyMsgDiv.innerHTML = "Empty, drop here";
+            dojo.addClass(emptyMsgDiv,"emptyMsg");
+            
+        }    	
+        sources.push(_sources);
+    }
+
+    var pane = new hyperic.layout.FloatingPane({
+        title: title,
+        maxable: false,
+        closable: true,
+        resizable: true,
+        style: style
+        },node);
+    pane.startup();
+    pane.bringToTop();
+	return sources;
+};
+
 hyperic.wallmount.WindowUtil.newLayoutTestWindow = function() {
     var templateString = dojo.cache("hyperic.wallmount","TestLayoutContent.html");
     var layoutObj = hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj();  
     var layout = dojo.toJson(layoutObj);
     var testWin = new hyperic.util.LayoutTestWindow({content:templateString, layoutJson:layout, w:layoutObj.w, h:layoutObj.h});
     testWin.open();
+};
+
+hyperic.wallmount.WindowUtil.tableWindowDialog = function() {
+	// summary:
+	//     Opens a dialog to setup new table type window
+	
+    if(!hyperic.wallmount.WindowUtil.tableWindowDlg) {
+        hyperic.wallmount.WindowUtil.tableWindowDlg = new hyperic.dialog.TableWindowDialog({
+            title: "New Table Window",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });     
+    }
+    hyperic.wallmount.WindowUtil.tableWindowDlg.show();  
 };

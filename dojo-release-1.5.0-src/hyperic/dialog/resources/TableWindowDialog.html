@@ -1,0 +1,26 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+    <div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+    <span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+    <span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel" title="${buttonCancel}">
+        <span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span>
+    </span>
+    </div>
+    <div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+                
+        <fieldset>
+            <p>
+                <label class="propertytext">Rows:</label>
+                <input style="float:left;" id="tw_rows" name="tw_rows" dojoAttachPoint="tw_rows" class="textbox" dojoType="dijit.form.NumberSpinner" value="1" constraints="{max:10,min:1}"></input>
+            </p>
+            <p>
+                <label class="propertytext">Colums:</label>
+                <input style="float:left;" id="tw_cols" name="tw_cols" dojoAttachPoint="tw_cols" class="textbox" dojoType="dijit.form.NumberSpinner" value="1"  constraints="{max:10,min:1}"></input>
+            </p>
+        </fieldset>                
+        
+        <div class="dijitDialogPaneActionBar">
+            <button dojoType="dijit.form.Button" type="button" id="twCancelDialogButton">Cancel</button>
+            <button dojoType="dijit.form.Button" type="submit" id="twOkDialogButton">OK</button>
+        </div>
+    </div>
+</div>

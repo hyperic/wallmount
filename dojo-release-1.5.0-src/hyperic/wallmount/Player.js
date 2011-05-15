@@ -77,18 +77,37 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
             h: items[i].h,
             title: items[i].title
     	};
-    	
-        var source;
-        if(items[i].type === "single"){
-            source = hyperic.wallmount.WindowUtil.newItemFloater(args);          
+
+        if(items[i].type === "table"){
+        	var rows = items[i].table.cells.length;
+        	var cols = items[i].table.cells[0].length;
+        	var sources = hyperic.wallmount.WindowUtil.newTableWindow(dojo.mixin({rows:rows,cols:cols},args));
+        	
+        	for(var rr=0;rr<rows;rr++) {
+            	for(var cc=0;cc<cols;cc++) {
+
+                    for(var j = 0; j<items[i].table.cells[rr][cc].items.length; j++){
+                        var witem = items[i].table.cells[rr][cc].items[j];
+                          sources[rr][cc].insertNodes(false, [witem]);
+                    }        	
+            		
+            	}
+        	}
+        	
+        	
         } else {
-            source = hyperic.wallmount.WindowUtil.newWindow(args);        	
+            var source;
+            if(items[i].type === "single"){
+                source = hyperic.wallmount.WindowUtil.newItemFloater(args);          
+            } else {
+                source = hyperic.wallmount.WindowUtil.newWindow(args);          
+            }
+            
+            for(var j = 0; j<items[i].items.length; j++){
+                var witem = items[i].items[j];
+                  source.insertNodes(false, [witem]);
+            }        	
         }
-        
-    	for(var j = 0; j<items[i].items.length; j++){
-    		var witem = items[i].items[j];
-    		source.insertNodes(false, [witem]);
-    	}
-        
+
     }
 };

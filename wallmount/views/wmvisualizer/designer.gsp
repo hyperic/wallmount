@@ -88,6 +88,9 @@
             <div dojoType="dijit.MenuItem"
                  id="newWindow2"
                  onClick="hyperic.wallmount.WindowUtil.newSingleItemFloater();">New Single Floater</div>
+            <div dojoType="dijit.MenuItem"
+                 id="newWindow3"
+                 onClick="hyperic.wallmount.WindowUtil.tableWindowDialog();">New Table Window...</div>
           </div>
         </div>
         <div dojoType="dijit.PopupMenuBarItem" id="settings">

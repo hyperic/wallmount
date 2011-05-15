@@ -39,3 +39,12 @@
 .dojoDndItem {
     color: white;
 }
+
+.hypericDndTable {
+    border: 1px solid white;
+    border-collapse:collapse;
+}
+
+.hypericDndTableCell {
+    border: 1px solid white;
+}

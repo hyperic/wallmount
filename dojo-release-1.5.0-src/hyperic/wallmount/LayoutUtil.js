@@ -195,21 +195,49 @@ hyperic.wallmount.LayoutUtil.getLayoutAsJSONObj = function() {
         windowSettings['h'] = wn.offsetHeight - oh;
         windowSettings['y'] = wn.offsetTop;
         windowSettings['x'] = wn.offsetLeft;
-        windowSettings['type'] = "multi";
         windowSettings['title'] = dijit.byId(wn.id).title;
         
-        var items = []
-        
-        // this should find only child of dnd item.
-        // this child is supposed to be wallmount component
-        var wallmountItemInWindowQuery = 'div#' + wn.id + ' div.dojoDndItem >';	
-        var dnds = dojo.query(wallmountItemInWindowQuery);
-        for(var j = 0; j < dnds.length; j++){
-            var wmObj = dijit.byId(dnds[j].id);
-            items.push(wmObj.asJSON());
+        // if we find table rows (tableRows is not empty list),
+        // type of this window is table
+        var tableRowsQuery = 'div#' + wn.id + ' table.hypericDndTable >';
+        var tableRows = dojo.query(tableRowsQuery);
+  
+        if(tableRows.length > 0) {
+            windowSettings['type'] = "table";
+            var table = {};
+            var cells = [];
+        	for(var tr = 0; tr < tableRows.length; tr++) {
+                var row = [];
+                var tableRowColsQuery = 'tr#' + tableRows[tr].id + ' >';
+                var tableRowCols = dojo.query(tableRowColsQuery);
+        		for(var td = 0; td < tableRowCols.length; td++) {
+                    var dnds = dojo.query('td#' + tableRowCols[td].id + ' div.dojoDndItem >');
+                    var items = []
+                    for(var j = 0; j < dnds.length; j++){
+                        var wmObj = dijit.byId(dnds[j].id);
+                        items.push(wmObj.asJSON());
+                    }          
+                    var col = {items:items};
+        			row.push(col);
+        		}
+        		cells.push(row);
+        	}
+            table['cells'] = cells;
+            windowSettings['table'] = table;             
+        } else {
+            windowSettings['type'] = "multi";
+            var items = []
+          
+            // this should find only child of dnd item.
+            // this child is supposed to be wallmount component
+            var wallmountItemInWindowQuery = 'div#' + wn.id + ' div.dojoDndItem >';	
+            var dnds = dojo.query(wallmountItemInWindowQuery);
+            for(var j = 0; j < dnds.length; j++){
+                var wmObj = dijit.byId(dnds[j].id);
+                items.push(wmObj.asJSON());
+            }          
+            windowSettings['items'] = items;
         }
-        
-        windowSettings['items'] = items;
                 
         windowNodeList.push(windowSettings);
 	}
