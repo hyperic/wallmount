@@ -275,10 +275,10 @@ dojo.declare("hyperic.layout.PropertiesPane",
                 this._selected.supportLegends = true;
                 var legends = [];
                 if(l0val !== 'none') {
-                	legends.push({position:0,type:l0val,value:1,color:legend0colorpicker.value});
+                	legends.push({position:0,type:l0val,value:'-',color:legend0colorpicker.value});
                 }
                 if(l2val !== 'none') {
-                    legends.push({position:2,type:l2val,value:1,color:legend2colorpicker.value});
+                    legends.push({position:2,type:l2val,value:'-',color:legend2colorpicker.value});
                 }
                 this._selected.addLegends(legends);
             }

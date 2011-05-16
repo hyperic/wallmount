@@ -87,21 +87,27 @@ class MetricstoreController extends BaseJSONController {
             def eid = new AppdefEntityID(scopes[1])
             def res = resourceManager.findResource(eid)
             def ress;
+            def lress;
             if (eid.group) {
-              ress = resourceGroupManager.getMembers(resourceGroupManager.getResourceGroupByResource(res));
+                ress = []
+                resourceGroupManager.getMembers(resourceGroupManager.getResourceGroupByResource(res)).each{
+                    ress << it.resourceType.appdefType + ":" + it.instanceId
+                }
+              lress = resourceGroupManager.getMembers(resourceGroupManager.getResourceGroupByResource(res));
             } else {
-              ress = [res];
+              ress = [eid.toString()];
+              lress = [res];
             }
-            def last = ress.collect { availabilityManager.getAvailMeasurement(it).lastDataPoint.value }.min()
+            def last = lress.collect { availabilityManager.getAvailMeasurement(it).lastDataPoint.value }.min()
             
             def resAlertCount = resourcesWithUnfixedAlerts()
             resAlertCount.keySet().retainAll(ress)
-            def alertCount = resAlertCount.values().sum()
-
+            def alertCount = resAlertCount.values().size() > 0 ? resAlertCount.values().sum() : 0
+            
             def resEscCount = resourcesWithRunningEscalation()
             resEscCount.keySet().retainAll(ress)
-            def escCount = resEscCount.values().sum();
-
+            def escCount = resEscCount.values().size() > 0 ? resEscCount.values().sum() : 0 
+            
             array.put(id: scopes[1], last: last, alerts:alertCount, escalations:escCount)
         }
         
