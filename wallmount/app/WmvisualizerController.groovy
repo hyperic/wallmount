@@ -60,7 +60,7 @@ class WmvisualizerController extends BaseWallmountController {
 	 * Constructor
 	 */
 	def WmvisualizerController() {
-        setJSONMethods(['saveLayout','getSingleTemplates','getMultiTemplates'])
+        setJSONMethods(['saveLayout','getSingleTemplates','getMultiTemplates','encodeUrl'])
 	}
     
     /** Returns data for single layout table. */
@@ -145,5 +145,9 @@ class WmvisualizerController extends BaseWallmountController {
         file.write("${data}")
         [status: 'ok']
     }
-    
+
+    def encodeUrl(params) {
+        def url = urlFor(action:params.getOne("action"), encodeUrl:true)
+        [url:url]
+    }    
 }
