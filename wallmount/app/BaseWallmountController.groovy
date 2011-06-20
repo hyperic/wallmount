@@ -134,7 +134,21 @@ abstract class BaseWallmountController extends BaseController {
         }
         return templateResource.getFile();
     }
-    
+
+    /**
+     * Returns template directory for multi layouts
+     */
+    protected def getMultiTemplateDir() {
+        templateDir // just make sure base dir exists
+        Resource templateResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates/multi");
+        if(!templateResource.exists()) {
+            def dir = templateResource.file
+            dir.mkdir()
+            return dir;
+        }
+        return templateResource.getFile();
+    }
+                
     /**
      * Returns list of stored template names.
      */
@@ -149,7 +163,22 @@ abstract class BaseWallmountController extends BaseController {
         log.debug("Found files: " + res)
         res.sort()
     }
-        
+
+    /**
+    * Returns list of stored multi template names.
+    */
+   protected def getMultitemplates() {
+       def res = []
+       for (f in multiTemplateDir.listFiles()) {
+           if (!f.name.endsWith('.json'))
+               continue
+           def fname = f.name[0..-6]
+           res << fname
+       }
+       log.debug("Found files: " + res)
+       res.sort()
+   }
+
     protected sendError() {
         invokeArgs.response.sendError(404)
     }

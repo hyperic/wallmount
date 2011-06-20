@@ -24,6 +24,8 @@
  *
  */
 
+import org.hyperic.hq.hqu.rendit.html.DojoUtil
+ 
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -31,21 +33,53 @@ import org.json.JSONObject
  * Base controller for this plugin.
  */
 class WmvisualizerController extends BaseWallmountController {
-		
+    
+    /** Table schema for single layouts. */
+    private final SINGLE_LAYOUT_SCHEMA = [
+        getData: {pageInfo, params -> templates},
+        rowId: {it -> 0},
+        defaultSort: null,
+        defaultSortOrder: 0,  // descending
+        columns: [
+            [field:[getValue:{'Layout Name'}, description:'layout name', sortable:false], width:'100%', label:{linkTo(it, [action:'player', layout:it])}]
+        ]
+    ]
+
+    /** Table schema for multi layouts. */
+    private final MULTI_LAYOUT_SCHEMA = [        
+        getData: {pageInfo, params -> multitemplates},
+        rowId: {it -> 0},
+        defaultSort: null,
+        defaultSortOrder: 0,  // descending
+        columns: [
+            [field:[getValue:{'Layout Name'}, description:'layout name', sortable:false], width:'100%', label:{linkTo(it, [action:'multiplayer', layout:it])}]
+        ]
+    ]
+
 	/**
 	 * Constructor
 	 */
 	def WmvisualizerController() {
-        setJSONMethods(['saveLayout'])
+        setJSONMethods(['saveLayout','getSingleTemplates','getMultiTemplates'])
 	}
-	
+    
+    /** Returns data for single layout table. */
+    def getSingleTemplates(params) {
+        DojoUtil.processTableRequest(SINGLE_LAYOUT_SCHEMA, params)
+    }
+
+    /** Returns data for multi layout table. */
+    def getMultiTemplates(params) {
+        DojoUtil.processTableRequest(MULTI_LAYOUT_SCHEMA, params)
+    }
+
 	/**
 	 * Local renderer.
 	 * 
 	 * @param params Request parameters.
 	 */
 	def index(params) {
-		render(locals:[templates:templates])
+		render(locals:[singleLayoutsSchema:SINGLE_LAYOUT_SCHEMA])
 	}
 
     def designer(params) {
