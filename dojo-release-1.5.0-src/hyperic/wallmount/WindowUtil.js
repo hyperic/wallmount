@@ -31,6 +31,15 @@ dojo.require("hyperic.layout.FloatingPane");
 dojo.require("hyperic.util.LayoutTestWindow");
 dojo.require("hyperic.dialog.TableWindowDialog");
 
+hyperic.wallmount.WindowUtil.getWallmountPane = function(/*DOM|String*/pane) {
+	var _pane = pane || 'wallmountpane';
+	var wallmountPane = dojo.byId(_pane);
+	if(!wallmountPane) {
+		wallmountPane = dojo.create("div", {id:_pane}, dojo.body());	
+	}
+	return wallmountPane;
+};
+
 hyperic.wallmount.WindowUtil.newSingleItemFloater = function() {
     // summary:
     //     This function create a new special floater which is
@@ -76,14 +85,14 @@ hyperic.wallmount.WindowUtil.newItemFloater = function(args) {
     
 };
 
-hyperic.wallmount.WindowUtil.newEmptyWindow = function() {
+hyperic.wallmount.WindowUtil.newEmptyWindow = function(/*DOM|String*/pane) {
     // summary:
     //      Just a wrapper function to pass no content
     //      resulting empty window.
-	hyperic.wallmount.WindowUtil.newWindow({});
+	hyperic.wallmount.WindowUtil.newWindow({}, pane);
 };
 
-hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
+hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params, /*DOM|String*/pane) {
     // summary:
     
     var args = params || {};
@@ -94,13 +103,14 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
     var y = ((typeof args.y != 'undefined') ? args.y : 10) + 1;
     var title = (args && args.title) ? args.title : "New Window";
    	
-   	var style = "position: absolute; " + 
-        "width: " + w + "px;" +
-        "height: " + h + "px;" +
-        "top: " + y + "px;" +
-        "left: " + x + "px;"; 	
+//   	var style = "position: absolute; " + 
+//        "width: " + w + "px;" +
+//        "height: " + h + "px;" +
+//        "top: " + y + "px;" +
+//        "left: " + x + "px;"; 	
    	
-	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
+//	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
+	var node = dojo.create("div", null, hyperic.wallmount.WindowUtil.getWallmountPane(pane));
     var c = dojo.create("div", null, node);
     var source = new hyperic.dnd.Source(c, {accept: ['treeNode','text']});
     
@@ -117,9 +127,10 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params) {
         maxable: false,
         closable: true,
         resizable: true,
-        style: style
+//        style: style
         },node);
     pane.startup();
+    pane.resize({t:y, l:x, w:w, h:h});
     pane.bringToTop();
 	return source;
 };

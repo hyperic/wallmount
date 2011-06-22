@@ -29,7 +29,7 @@ dojo.provide("hyperic.wallmount.Player");
 dojo.require("hyperic.wallmount.WindowUtil");
 dojo.require("hyperic.data.MetricStore");
 
-hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAnim) {
+hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAnim, /*String*/node) {
     // summary:
     //
 	
@@ -39,7 +39,7 @@ hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAn
         timeout: 5000,
         preventCache: true,
         load: function(response, ioArgs) {
-            hyperic.wallmount.Player.createLayout(response);
+            hyperic.wallmount.Player.createLayout(response, node);
             if(sendAnim)
                 dojo.publish("/hyperic/anim/start", [this]);
             return response;
@@ -52,19 +52,35 @@ hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAn
 	
 };
 
+hyperic.wallmount.Player.loadLayouts = function(/*Array*/urls, /*Boolean*/ sendAnim) {
+	for (var i=0; i<urls.length; i++) {
+		var node = 'wallmountpane' + i;
+		hyperic.wallmount.Player.loadLayout(urls[i], sendAnim, node);
+	}
+};
+
 hyperic.wallmount.Player.useLayout = function(/*String*/json, /*Boolean*/ sendAnim) {
     hyperic.wallmount.Player.createLayout(json);
     if(sendAnim) dojo.publish("/hyperic/anim/start", [this]);	
 };
 
-hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
+hyperic.wallmount.Player.createLayout = function(/*jsondata*/data, /*String*/node) {
 	// summary:
 	//
+	//
+	// data:
+	//     Layout data in json format
+	//
+	// node:
+	//     Node where layout items are created. If doesn't exist,
+	//     node is created to root level.
 	
 	if(data.theme) hyperic.wallmount.LayoutUtil.changeCSSTheme(data.theme);
 	
+	
+	var wallmountPane = hyperic.wallmount.WindowUtil.getWallmountPane(node);
+	
 	// if size is not in layout, just make it big enough
-	var wallmountPane = dojo.byId('wallmountpane');
     dojo.style(wallmountPane,'width',data.w||9999);
     dojo.style(wallmountPane,'height',data.h||9999);
 	
@@ -100,7 +116,7 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data) {
             if(items[i].type === "single"){
                 source = hyperic.wallmount.WindowUtil.newItemFloater(args);          
             } else {
-                source = hyperic.wallmount.WindowUtil.newWindow(args);          
+                source = hyperic.wallmount.WindowUtil.newWindow(args, wallmountPane);          
             }
             
             for(var j = 0; j<items[i].items.length; j++){

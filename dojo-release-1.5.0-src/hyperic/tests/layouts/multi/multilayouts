@@ -1,0 +1,6 @@
+{
+    items: [
+        {name:'multilayout1'},
+        {name:'multilayout2'}
+    ]
+}

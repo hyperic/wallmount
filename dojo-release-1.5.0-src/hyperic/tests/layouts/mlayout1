@@ -1,0 +1,32 @@
+{
+    name: 'mlayout1',
+    w: 400,
+    h: 400,
+    items: [
+        {
+            title: "window XXXX",
+            x: 40,
+            y: 40,
+            w: 250,
+            h: 300,
+            type: "multi",
+            items: [
+                {   type: "hyperic.widget.AvailIcon",
+                    eid: "1-10002",
+                    width: 74,
+                    height: 74,
+                    title: "machine-1"
+                },
+                {
+                    type: "hyperic.widget.Spinner",
+                    mid: 10300,
+                    units: "none",
+                    size: 120,
+                    numOfArrows: 3,
+                    arrowWidth: 18,
+                    title: "my spin 1"
+                }
+            ]
+        }
+    ]
+}
