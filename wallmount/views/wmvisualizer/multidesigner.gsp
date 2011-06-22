@@ -92,12 +92,12 @@
            <div>
              <div style="float: left; margin: 5px;">
                <h3>Layout sources</h3>
-               <div dojoType="dojo.dnd.Source" jsId="srclayouts" class="container"></div>
+               <div dojoType="hyperic.dnd.MoveOnlySource" jsId="srclayouts" class="container"></div>
              </div>
 
              <div style="float: left; margin: 5px;">
                <h3>Layout targets</h3>
-               <div dojoType="dojo.dnd.Source" jsId="targetlayouts" class="container"></div>
+               <div dojoType="hyperic.dnd.MoveOnlySource" jsId="targetlayouts" class="container"></div>
              </div>
            </div>
          

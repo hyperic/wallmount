@@ -22,6 +22,7 @@
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.MultiDesigner");
       dojo.require("hyperic.tests.TestUtil");
+      dojo.require("hyperic.dnd.MoveOnlySource");
       
       function init(){
     	  
@@ -30,6 +31,9 @@
               var url = "/dojo-release-1.5.0-src/hyperic/tests/layouts/multi/combi" + data[0];
               hyperic.wallmount.MultiDesigner.loadLayout(url);
           });
+          
+          srclayouts.insertNodes(false, ["test1"]);
+          srclayouts.insertNodes(false, ["test2"]);
       }    
       dojo.addOnLoad(init);      
     </script>
@@ -103,12 +107,12 @@
            <div>
              <div style="float: left; margin: 5px;">
                <h3>Layout sources</h3>
-               <div dojoType="dojo.dnd.Source" jsId="srclayouts" class="container"></div>
+               <div dojoType="hyperic.dnd.MoveOnlySource" jsId="srclayouts" class="container"></div>
              </div>
 
              <div style="float: left; margin: 5px;">
                <h3>Layout targets</h3>
-               <div dojoType="dojo.dnd.Source" jsId="targetlayouts" class="container"></div>
+               <div dojoType="hyperic.dnd.MoveOnlySource" jsId="targetlayouts" class="container"></div>
              </div>
            </div>
          

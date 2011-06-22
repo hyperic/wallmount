@@ -29,6 +29,7 @@ dojo.provide("hyperic.wallmount.MultiDesigner");
 dojo.require("hyperic.wallmount.WindowUtil");
 dojo.require("hyperic.wallmount.LayoutUtil");
 dojo.require("hyperic.layout.MultiLayoutName");
+dojo.require("hyperic.dnd.MoveOnlySource");
 dojo.require("dijit.form.RadioButton");
 dojo.require("dojox.widget.Toaster");
 dojo.require("dojo.parser");
