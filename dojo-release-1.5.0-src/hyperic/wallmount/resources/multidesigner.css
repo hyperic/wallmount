@@ -1,0 +1,37 @@
+.container {
+    cursor: default;
+    display: block;
+    width: 100px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #CCCCCC;
+    padding: 1em 3em;
+}
+
+.dojoDndItem {
+    padding: 3px;
+}
+
+#hypericSelectLayoutGrid { 
+    border: 1px solid gray;
+    width: auto;
+    height: 200px;
+}
+
+label.propertytext {
+    width: 90px;
+    float: left;
+}
+
+fieldset p {
+    clear: both;
+    padding: 3px;
+    margin-top: 0;
+}
+
+
+html, body { height: 100%; width: 100%; padding: 0; border: 0; }
+#main { height: 100%; width: 100%; border: 0; }
+#header { margin: 0px; }
+#leftAccordion { width: 25%; }
+#bottomTabs { height: 40%; }
+#wallmountpane { width: 100%; border:none;}

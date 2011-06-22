@@ -27,7 +27,25 @@ hyperic.tests.TestUtil.selectLayoutDialog = function() {
     hyperic.tests.TestUtil.layoutDlg.show();  
 };
 
+hyperic.tests.TestUtil.selectMultiLayoutDialog = function() {
+    console.log("selectMultiLayoutDialog");
+    if(!hyperic.tests.TestUtil.multiLayoutDlg) {
+        hyperic.tests.TestUtil.multiLayoutDlg = new hyperic.dialog.LoadLayoutDialog({
+            title: "Select Multi-layout",
+            layoutsUrl: "/dojo-release-1.5.0-src/hyperic/tests/layouts/multi/multilayouts",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });     
+    }
+    hyperic.tests.TestUtil.multiLayoutDlg.show();  
+};
+
 hyperic.tests.TestUtil.logLayoutJSON = function() {
 	var json = hyperic.wallmount.LayoutUtil.getLayoutAsJSON();
+	console.log(json);
+};
+
+hyperic.tests.TestUtil.logMultiLayoutJSON = function() {
+	var json = hyperic.wallmount.LayoutUtil.getMultiLayoutAsJSON();
 	console.log(json);
 };

@@ -1,0 +1,13 @@
+{
+    name: 'multilayout1',
+    transition: 'fade',
+    duration: 10,
+    layouts: [
+        {
+            name: 'mlayout1'
+        },
+        {
+            name: 'mlayout2'
+        }
+    ]
+}

@@ -5,7 +5,9 @@ dependencies = {
             dependencies: [
                 "hyperic.wallmount.base",
                 "hyperic.wallmount.Designer",
+                "hyperic.wallmount.MultiDesigner",
                 "hyperic.wallmount.Player",
+                "hyperic.wallmount.MultiPlayer",
                 "hyperic.widget.base"
             ]
         }

@@ -70,7 +70,6 @@ dojo.declare("hyperic.dialog.LoadLayoutDialog",
     _requestLayout: function() {
     	var selection = this._grid.selection.getSelected();
     	var lName = selection[0].name;
-    	console.log("l name:" + lName);
     	dojo.publish("/hyperic/layout/new", [lName]);
     },
     

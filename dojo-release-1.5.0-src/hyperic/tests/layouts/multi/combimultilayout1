@@ -1,0 +1,22 @@
+{
+    source:[
+        'test1',
+        'test2',
+        'test3',
+        'test4',
+        'test5'
+    ],
+    target:{
+        name: 'multilayout1',
+        transition: 'pan',
+        duration: 10,
+        layouts: [
+            {
+                name: 'mlayout1'
+            },
+            {
+                name: 'mlayout2'
+            }
+        ]    
+    }
+}
