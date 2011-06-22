@@ -54,6 +54,13 @@ hyperic.wallmount.MultiDesigner.loadLayout = function(/*String*/url) {
 
 hyperic.wallmount.MultiDesigner.createLayout = function(data) {
 
+	
+	srclayouts.selectAll();
+	srclayouts.deleteSelectedNodes();
+
+	targetlayouts.selectAll();
+	targetlayouts.deleteSelectedNodes();
+
     var source = data.source;
     for(var i=0; i<source.length; i++) {
     	  srclayouts.insertNodes(false, [source[i]]);

@@ -181,7 +181,7 @@ hyperic.wallmount.LayoutUtil.saveMultiLayout = function(name) {
                 timeout: 5000,
                 content: contentObject,
                 load: function(response, ioArgs) {
-                	hyperic.wallmount.LayoutUtil.setMultiLayoutName(name);
+                	hyperic.wallmount.LayoutUtil.setLayoutName(name);
                     hyperic.wallmount.Designer.sendUserMessage("Succesfully saved layout with name " + name);
                     return response;
                 },
@@ -211,6 +211,21 @@ hyperic.wallmount.LayoutUtil.selectLayoutDialog = function() {
         });		
 	}
     hyperic.wallmount.LayoutUtil.layoutDlg.show();	
+};
+
+hyperic.wallmount.LayoutUtil.selectMultiLayoutDialog = function() {
+    // summary:
+    //     Opens a dialog to restore stored layout
+    
+	if(!hyperic.wallmount.LayoutUtil.multiLayoutDlg) {
+        hyperic.wallmount.LayoutUtil.multiLayoutDlg = new hyperic.dialog.LoadLayoutDialog({
+            title: "Select Multi-layout",
+            layoutsUrl: "/hqu/wmvisualizer/wmvisualizer/getMultiLayouts.hqu",
+            widgetsInTemplate: true,
+            style: "width: 300px"
+        });		
+	}
+    hyperic.wallmount.LayoutUtil.multiLayoutDlg.show();	
 };
 
 hyperic.wallmount.LayoutUtil.dashboardSizeDialog = function() {
