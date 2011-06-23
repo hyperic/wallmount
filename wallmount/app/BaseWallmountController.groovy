@@ -43,7 +43,7 @@ import org.hyperic.hq.measurement.shared.TemplateManager
 
 import org.json.JSONArray
 import org.json.JSONObject
-
+import org.json.JSONException
 
 /**
  * Base class for all wallmount controllers.
@@ -202,6 +202,26 @@ abstract class BaseWallmountController extends BaseController {
         }
         obj
     }
+    
+    protected def writeJsonToFile(fileName, fileData, isSingle) {
+        if(fileName == null || fileName.length() < 1) {
+            'error'
+        }
+            
+        if(fileData == null || fileData.length() < 1) {
+            'error'
+        }
+
+        def parseOk = false
+        try {
+            new JSONObject(fileData)
+            def file = new File((isSingle ? templateDir : multiTemplateDir), fileName + ".json")
+            file.write("${fileData}")
+            parseOk = true
+        } catch (Exception e) {} 
+        
+        parseOk ? 'ok' : 'error'
+    }    
 
     protected sendError() {
         invokeArgs.response.sendError(404)

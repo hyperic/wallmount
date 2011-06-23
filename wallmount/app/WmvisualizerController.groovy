@@ -211,23 +211,13 @@ class WmvisualizerController extends BaseWallmountController {
     def saveLayout(params) {
         def data = params.getOne("layoutdata")
         def name = params.getOne("layoutname")
-       
-        def file = new File(templateDir, name + ".json")
-        log.debug("Saving template ${name}")
-        //file.write("/* ${data} */")
-        file.write("${data}")
-        [status: 'ok']
+        [status: writeJsonToFile(name, data, true)]
     }
 
     def saveMultiLayout(params) {
         def data = params.getOne("layoutdata")
         def name = params.getOne("layoutname")
-       
-        def file = new File(multiTemplateDir, name + ".json")
-        log.debug("Saving template ${name}")
-        
-        file.write("${data}")
-        [status: 'ok']
+        [status: writeJsonToFile(name, data, false)]
     }
 
     def encodeUrl(params) {
