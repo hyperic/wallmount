@@ -26,6 +26,8 @@
       dojo.require("dojox.widget.AutoRotator");
       dojo.require("dojox.widget.rotator.Fade");
       dojo.require("dojox.widget.rotator.Pan");
+      dojo.require("dojox.widget.rotator.Slide");
+      dojo.require("dojox.widget.rotator.Wipe");
 
       function createrotator(){
           rotator = new dojox.widget.AutoRotator({
@@ -75,9 +77,9 @@
          id="rotatorpane"
          jsId="rotator"
          autoStart="true"
-         style="z-index:50;"
+         style="z-index:50;width:400px;height:400px;overflow:hidden;"
          duration="1500"
-         transition="dojox.widget.rotator.pan">
+         transition="dojox.widget.rotator.slideDown">
       <div id="wallmountpane0" style="position:absolute;"></div>
       <div id="wallmountpane1" style="position:absolute;"></div>
     </div>

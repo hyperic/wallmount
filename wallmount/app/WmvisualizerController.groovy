@@ -100,33 +100,42 @@ class WmvisualizerController extends BaseWallmountController {
         render(locals:[useLayout: useLayout])
     }
 
+    /**
+     * Controller method for multiplayer.hqu which pass properties
+     * to multiplayer.gsp template.
+     */
     def multiplayer(params) {
-        def layout = params.getOne("layout")
-        def useLayout = null
-        multitemplates.each{
-            if(layout == it)
-            useLayout = layout
-        }
         
-        JSONObject objMulti
-        if (multitemplates.contains(layout)) {
-            new File(multiTemplateDir, "${layout}.json").withReader { r ->
-                objMulti = new JSONObject(r.text)
-            }
-        }
+        def layout = params.getOne("layout")
+        
+        // make sure we have the one
+        def useLayout = layoutExists(layout, false)
+        
+        def objMulti = readAsJSONObject(layout, false)
 
+        // h and w wrapping transition div's
+        def width = 1
+        def height = 1
+        
         def layouts = []
         // combine and reduce
         JSONArray jsonlayouts = objMulti.getJSONArray("layouts")
         for(def i=0; i<jsonlayouts.length(); i++) {
             def name = jsonlayouts.getJSONObject(i).getString("name")
             layouts << name
+            
+            // calculate max height and width from single layouts
+            def layoutObj = readAsJSONObject(name, true)
+            def w = layoutObj.getInt("w")
+            def h = layoutObj.getInt("h")
+            width = ( w > width ? w : width)
+            height = ( h > height ? h : height)
         }
         
         def transition = "dojox.widget.rotator." + objMulti.getString("transition")
         def duration = objMulti.getString("duration")
         
-        render(locals:[useLayout: useLayout, layouts:layouts, duration:duration, transition:transition])
+        render(locals:[useLayout: useLayout, layouts:layouts, duration:duration, transition:transition, width:width, height:height])
     }
 
     /**
@@ -136,8 +145,6 @@ class WmvisualizerController extends BaseWallmountController {
     def getLayouts(params) {
         JSONObject obj = new JSONObject()
         
-        obj.put('identifier', 'name')
-        obj.put('label', 'name')
         JSONArray items = new JSONArray()
         
         templates.each{

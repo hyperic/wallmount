@@ -41,6 +41,10 @@ import org.hyperic.hq.measurement.shared.DataManager
 import org.hyperic.hq.authz.shared.ResourceGroupManager
 import org.hyperic.hq.measurement.shared.TemplateManager
 
+import org.json.JSONArray
+import org.json.JSONObject
+
+
 /**
  * Base class for all wallmount controllers.
  * 
@@ -178,6 +182,26 @@ abstract class BaseWallmountController extends BaseController {
        log.debug("Found files: " + res)
        res.sort()
    }
+   
+    /**
+     * 
+     */
+    protected def layoutExists(fileName, isSingle) {
+        (isSingle ? templates : multitemplates).find{it == fileName}
+    }
+    
+    /**
+     * 
+     */
+    protected def readAsJSONObject(fileName, isSingle) {
+        def obj
+        if (layoutExists(fileName, isSingle) != null) {
+            new File((isSingle ? templateDir : multiTemplateDir), "${fileName}.json").withReader { r ->
+                obj = new JSONObject(r.text)
+            }
+        }
+        obj
+    }
 
     protected sendError() {
         invokeArgs.response.sendError(404)

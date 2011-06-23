@@ -29,4 +29,4 @@ dojo.provide("hyperic.wallmount.MultiPlayer");
 dojo.require("dojox.widget.AutoRotator");
 dojo.require("dojox.widget.rotator.Fade");
 dojo.require("dojox.widget.rotator.Pan");
-
+dojo.require("dojox.widget.rotator.Slide");

@@ -47,7 +47,7 @@
          id="rotatorpane"
          jsId="rotator"
          autoStart="true"
-         style="z-index:50;"
+         style="z-index:50;width:${width};height:${height};overflow:hidden;"
          duration="${duration}"
          transition="${transition}">
 

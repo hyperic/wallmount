@@ -75,7 +75,9 @@
                    <option value="5000">5 seconds</option>
                    <option value="10000">10 seconds</option>
                    <option value="20000">20 seconds</option>
+                   <option value="30000">30 seconds</option>
                    <option value="60000">1 minute</option>
+                   <option value="120000">2 minutes</option>
              </select>
 
              <label for="transition">Transition:</label>
@@ -83,8 +85,18 @@
                    id="transition"
                    dojoAttachPoint="transition"
                    class="textbox">
+                   <option value="swap">Swap</option>
                    <option value="fade">Fade</option>
+                   <option value="crossFade">Cross Fade</option>
                    <option value="pan">Pan</option>
+                   <option value="panDown">Pan Down</option>
+                   <option value="panRight">Pan Right</option>
+                   <option value="panUp">Pan Up</option>
+                   <option value="panLeft">Pan Left</option>
+                   <option value="slideDown">Slide Down</option>
+                   <option value="slideRight">Slide Right</option>
+                   <option value="slideUp">Slide Up</option>
+                   <option value="slideLeft">Slide Left</option>
              </select>
 
            </div>
