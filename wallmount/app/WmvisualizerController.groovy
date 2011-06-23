@@ -91,12 +91,7 @@ class WmvisualizerController extends BaseWallmountController {
     }
 
     def player(params) {
-        def layout = params.getOne("layout")
-        def useLayout = null
-        templates.each{
-            if(layout == it)
-            useLayout = layout
-        }       
+        def useLayout = layoutExists(params.getOne("layout"), true)
         render(locals:[useLayout: useLayout])
     }
 
@@ -175,56 +170,28 @@ class WmvisualizerController extends BaseWallmountController {
     /**
      * 
      */
-    def getLayout(params) {
-        def layout = params.getOne("layout")
-        def layoutData = ""
-           
-        if (templates.contains(layout)) {
-            log.info("Trying to open template " + layout) 
-            new File(templateDir, "${layout}.json").withReader { r ->
-            log.debug("Reading template ${layout}")
-            layoutData = r.text
-            }
-        }
-        render(inline:"${layoutData}", contentType:'text/json-comment-filtered')
+    def getLayout(params) {        
+        def obj = readAsJSONObject(params.getOne("layout"),true)
+        render(inline:"${obj}", contentType:'text/json-comment-filtered')
     }
 
     def getMultiLayout(params) {
-        def layout = params.getOne("layout")
-        def layoutData = ""
-           
-        if (multitemplates.contains(layout)) {
-            log.info("Trying to open template " + layout)
-            new File(templateDir, "${layout}.json").withReader { r ->
-            log.debug("Reading template ${layout}")
-            layoutData = r.text
-            }
-        }
-        render(inline:"${layoutData}", contentType:'text/json-comment-filtered')
+        def obj = readAsJSONObject(params.getOne("layout"),false)
+        render(inline:"${obj}", contentType:'text/json-comment-filtered')
     }
 
     /**
      * Returns combined info for multi layout and single layouts.
      */
     def getMultiLayoutCombi(params) {
-        
-        JSONObject obj = new JSONObject()
-        
+              
         // get all single templates
-        def singles = []
-        templates.each{
-            singles << it
-        }
+        def singles = templates
         
         // get multi template
-        JSONObject objMulti
         def layout = params.getOne("layout")
-        if (multitemplates.contains(layout)) {
-            new File(multiTemplateDir, "${layout}.json").withReader { r ->
-                objMulti = new JSONObject(r.text)
-            }
-        }
-
+        def objMulti = readAsJSONObject(layout,false)
+        
         // combine and reduce
         JSONArray layouts = objMulti.getJSONArray("layouts")
         for(def i=0; i<layouts.length(); i++) {
@@ -232,10 +199,9 @@ class WmvisualizerController extends BaseWallmountController {
             singles.removeAll([name])
         }
         
-        obj.put("source", singles)
-        
-        obj.put("target", objMulti)
-        
+        def obj = new JSONObject()
+        obj.put("source", singles)        
+        obj.put("target", objMulti)        
         render(inline:"${obj}", contentType:'text/json-comment-filtered')
     }
         
@@ -259,7 +225,7 @@ class WmvisualizerController extends BaseWallmountController {
        
         def file = new File(multiTemplateDir, name + ".json")
         log.debug("Saving template ${name}")
-        //file.write("/* ${data} */")
+        
         file.write("${data}")
         [status: 'ok']
     }
