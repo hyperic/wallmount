@@ -1,1 +1,14 @@
 Project which contains Hyperic Wall Mount Visualizer HQU plug-in.
+
+To build this project, you need JDK and ANT. Default ant task builds the distribution and creates release under 'dist' directory.
+
+root@localhost:/repos/git/wallmount$ ant
+
+...
+
+dist:
+    [mkdir] Created dir: /repos/git/wallmount/dist
+      [zip] Building zip: /repos/git/wallmount/dist/hqu_wmvisualizer-1.0.zip
+
+BUILD SUCCESSFUL
+Total time: 1 minute 37 seconds
