@@ -63,11 +63,11 @@ dojo.require("dojo.number");
 	    var dval = dictionary.item(dkey);
 	    if(!dval){
     	    var size = 100;
-    	    var box = dojox.gfx._base._getTextBox(label,{fontFamily:"Helvetica",fontSize:size,fontWeight:"bold"});
+    	    var box = hyperic.util.FontUtil.getTextBox(label,{fontFamily:"Helvetica",fontSize:size,fontWeight:"bold"});
 	
             var rW = width/box.w;
             var rH = height/box.h;
-
+ 
             var scale = Math.min(rW,rH);
             var newBaseSize = size*scale;
             // scaling font size lineary doesn't give accurate results.
@@ -100,5 +100,55 @@ dojo.require("dojo.number");
         var x = radius * Math.sqrt(2);
         return hyperic.util.FontUtil.findGoodSizeFontByRect(label,x,x);
     };
+    
+    var measuringNode = null, empty = {};
+    hyperic.util.FontUtil.getTextBox = function(/*String*/ text,
+                                                /*Object*/ style,
+                                                /*String?*/ className){
+    	// description:
+    	//     This function is copied from dojox.gfx._base._getTextBox.
+    	//     There's a change that requests to that function, if done
+    	//     from multiple places will cause wrong results.
+    	//     e.g. at some point Chrome started to get wrong results.
+        var m, s, al = arguments.length;
+        if(!measuringNode){
+            m = measuringNode = dojo.doc.createElement("div");
+            s = m.style;
+            s.position = "absolute";
+            s.left = "-10000px";
+            s.top = "0";
+            dojo.body().appendChild(m);
+        }else{
+            m = measuringNode;
+            s = m.style;
+        }
+        // reset styles
+        m.className = "";
+        s.borderWidth = "0";
+        s.margin = "0";
+        s.padding = "0";
+        s.outline = "0";
+        // set new style
+        if(al > 1 && style){
+            for(var i in style){
+                if(i in empty){ continue; }
+                s[i] = style[i];
+            }
+        }
+        // set classes
+        if(al > 2 && className){
+            m.className = className;
+        }
+        // take a measure
+        m.innerHTML = text;
+
+        if(m["getBoundingClientRect"]){
+            var bcr = m.getBoundingClientRect();
+            return {l: bcr.left, t: bcr.top, w: bcr.width || (bcr.right - bcr.left), h: bcr.height || (bcr.bottom - bcr.top)};
+        }else{
+            return dojo.marginBox(m);
+        }
+    };
+    
 
 })();
