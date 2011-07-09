@@ -1,0 +1,7 @@
+import JsonGroovyBuilder
+
+def b = new JsonGroovyBuilder()
+
+@content@
+
+layout

@@ -152,7 +152,21 @@ abstract class BaseWallmountController extends BaseController {
         }
         return templateResource.getFile();
     }
-                
+
+    /**
+     * Returns template directory for dynamic layout scripts
+     */
+    protected def getDynTemplateDir() {
+        templateDir // just make sure base dir exists
+        Resource templateResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates/dyn");
+        if(!templateResource.exists()) {
+            def dir = templateResource.file
+            dir.mkdir()
+            return dir;
+        }
+        return templateResource.getFile();
+    }
+
     /**
      * Returns list of stored template names.
      */
@@ -182,14 +196,33 @@ abstract class BaseWallmountController extends BaseController {
        log.debug("Found files: " + res)
        res.sort()
    }
-   
+
+   /**
+    * Returns list of stored multi template names.
+    */
+    protected def getDyntemplates() {
+        def res = []
+        for (f in dynTemplateDir.listFiles()) {
+            if (!f.name.endsWith('.groovy'))
+                continue
+            def fname = f.name[0..-8]
+            res << fname
+        }
+        log.debug("Found files: " + res)
+        res.sort()
+    }
+
     /**
      * 
      */
     protected def layoutExists(fileName, isSingle) {
         (isSingle ? templates : multitemplates).find{it == fileName}
     }
-    
+
+    protected def dynLayoutExists(fileName) {
+        dyntemplates.find{it == fileName}
+    }
+
     /**
      * 
      */
@@ -202,7 +235,35 @@ abstract class BaseWallmountController extends BaseController {
         }
         obj
     }
+
+    /**
+     * Reads template from external location.
+     */
+    protected def readDynTemplate(fileName) {
+        def obj
+        if (dynLayoutExists(fileName) != null) {
+            new File(dynTemplateDir, "${fileName}.groovy").withReader { r ->
+                obj = r.text
+            }
+        }
+        obj
+    }
     
+    /**
+     * Builds a working groovy script based on template.
+     */
+    protected def buildDynTemplate(fileName) {
+        def obj
+        def fileResource = Bootstrap.getResource("hqu/wmvisualizer/dyn/base.template")
+        fileResource.file.withReader { r ->
+            obj = r.text
+        }
+        
+        def template = readDynTemplate(fileName)        
+        obj = obj.replaceAll("@content@",template)
+        obj
+    }
+        
     protected def writeJsonToFile(fileName, fileData, isSingle) {
         if(fileName == null || fileName.length() < 1) {
             'error'
