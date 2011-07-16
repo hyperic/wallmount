@@ -168,6 +168,14 @@ abstract class BaseWallmountController extends BaseController {
     }
 
     /**
+    * Returns template directory for internal dynamic layout scripts
+    */
+   protected def getInternalDynTemplateDir() {
+       Resource templateResource = Bootstrap.getResource("hqu/wmvisualizer/dyn");
+       return templateResource.getFile();
+   }
+
+    /**
      * Returns list of stored template names.
      */
     protected def getTemplates() {
@@ -198,11 +206,25 @@ abstract class BaseWallmountController extends BaseController {
    }
 
    /**
-    * Returns list of stored multi template names.
+    * Returns list of stored dyn template names.
     */
     protected def getDyntemplates() {
-        def res = []
+        def res = []        
+        //external
         for (f in dynTemplateDir.listFiles()) {
+            if (!f.name.endsWith('.groovy'))
+                continue
+            def fname = f.name[0..-8]
+            res << fname
+        }        
+        log.debug("Found files: " + res)
+        res.sort()
+    }
+
+    protected def getInternalDyntemplates() {
+        def res = []        
+        //internal
+        for (f in internalDynTemplateDir.listFiles()) {
             if (!f.name.endsWith('.groovy'))
                 continue
             def fname = f.name[0..-8]
@@ -221,6 +243,10 @@ abstract class BaseWallmountController extends BaseController {
 
     protected def dynLayoutExists(fileName) {
         dyntemplates.find{it == fileName}
+    }
+
+    protected def internalDynLayoutExists(fileName) {
+        internalDyntemplates.find{it == fileName}
     }
 
     /**
@@ -243,6 +269,10 @@ abstract class BaseWallmountController extends BaseController {
         def obj
         if (dynLayoutExists(fileName) != null) {
             new File(dynTemplateDir, "${fileName}.groovy").withReader { r ->
+                obj = r.text
+            }
+        } else if (internalDynLayoutExists(fileName) != null) {
+            new File(internalDynTemplateDir, "${fileName}.groovy").withReader { r ->
                 obj = r.text
             }
         }

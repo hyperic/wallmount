@@ -28,6 +28,9 @@ import java.util.Map;
 import org.hyperic.hq.product.GenericPlugin
 import org.hyperic.util.Runnee
 
+import org.json.JSONObject
+import org.json.JSONArray
+
 class DyntemplateController extends BaseWallmountController {
     
     def DyntemplateController() {
@@ -85,7 +88,7 @@ class DyntemplateController extends BaseWallmountController {
                 script = tmp.absolutePath
             }
             
-            def binding = [resourceHelper:resourceHelper] as Binding
+            def binding = [api:new WmTemplateApi(user)] as Binding
             def runnee = [run: {res = eng.run(script, binding)}] as Runnee            
             runnee.run()
             log.debug "Result: ${res}"
