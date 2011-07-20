@@ -26,7 +26,7 @@
 
 dojo.provide("hyperic.widget.Tank");
 
-dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.widget.base.MetricItem");
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.data.EmptyFullColorProperty");
@@ -34,7 +34,7 @@ dojo.require("hyperic.data.RangesProperty");
 dojo.require("hyperic.data.RangeProperty");
 
 dojo.declare("hyperic.widget.Tank",
-    [ hyperic.widget.base._WallMountItem,
+    [ hyperic.widget.base.MetricItem,
       hyperic.data.EmptyFullColorProperty,
       hyperic.data.RangesProperty,
       hyperic.data.RangeProperty ],{

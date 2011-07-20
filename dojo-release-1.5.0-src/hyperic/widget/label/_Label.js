@@ -26,16 +26,16 @@
 
 dojo.provide("hyperic.widget.label._Label");
 
-dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.widget.base.MetricItem");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
 dojo.require("hyperic.data.LabelProperty");
 dojo.require("hyperic.data.RangesProperty");
 
 dojo.declare("hyperic.widget.label._Label",
-    [ hyperic.widget.base._WallMountItem,
-     hyperic.data.LabelProperty,
-     hyperic.data.RangesProperty ],{
+    [ hyperic.widget.base.MetricItem,
+      hyperic.data.LabelProperty,
+      hyperic.data.RangesProperty ],{
      	
     // internal data
     _rcolor:null, // caching color, either from main or from ranges

@@ -26,13 +26,13 @@
 
 dojo.provide("hyperic.widget.avail._Availability");
 
-dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.widget.base.ResourceItem");
 dojo.require("hyperic.data.LegendsProperty");
 dojo.require("hyperic.util.MathUtil");
 dojo.require("hyperic.util.FontUtil");
 
 dojo.declare("hyperic.widget.avail._Availability",
-    [ hyperic.widget.base._WallMountItem,
+    [ hyperic.widget.base.ResourceItem,
       hyperic.data.LegendsProperty ],{
     // summary:
     //      This is a base class for widgets tracking resource
@@ -83,7 +83,7 @@ dojo.declare("hyperic.widget.avail._Availability",
     
     // eid:
     //      Resource entity id
-    eid: null,
+//    eid: null,
     
     startup: function(){
         this.inherited(arguments);
@@ -109,13 +109,13 @@ dojo.declare("hyperic.widget.avail._Availability",
         }
     },
 
-    setEid: function(m) {
-        // summary:
-        this.eid = m;
-        if(this.store) {
-        	this._storeSubsHdl = this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
-        }
-    },
+//    setEid: function(m) {
+//        // summary:
+//        this.eid = m;
+//        if(this.store) {
+//        	this._storeSubsHdl = this.store.subscribe("ravail/" + m, this, "storeAvailCallback");
+//        }
+//    },
 
     storeAvailCallback: function(arg) {
         // summary:

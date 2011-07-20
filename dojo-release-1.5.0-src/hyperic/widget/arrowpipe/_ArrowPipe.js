@@ -26,7 +26,7 @@
 
 dojo.provide("hyperic.widget.arrowpipe._ArrowPipe");
 
-dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.widget.base.MetricItem");
 dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.data.ArrowPipeProperty");
 dojo.require("hyperic.data.RangeSpeedProperty");
@@ -35,7 +35,7 @@ dojo.require("hyperic.data.LabelProperty");
 
 
 dojo.declare("hyperic.widget.arrowpipe._ArrowPipe",
-    [ hyperic.widget.base._WallMountItem,
+    [ hyperic.widget.base.MetricItem,
       hyperic.widget.base._Animatable,
       hyperic.data.ArrowPipeProperty,
       hyperic.data.RangeSpeedProperty,

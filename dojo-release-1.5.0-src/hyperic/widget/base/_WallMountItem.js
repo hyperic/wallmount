@@ -1,3 +1,29 @@
+/**
+ * NOTE: This copyright does *not* cover user programs that use HQ
+ * program services by normal system calls through the application
+ * program interfaces provided as part of the Hyperic Plug-in Development
+ * Kit or the Hyperic Client Development Kit - this is merely considered
+ * normal use of the program, and does *not* fall under the heading of
+ *  "derived work".
+ *
+ *  Copyright (C) [2011], VMware, Inc.
+ *  This file is part of HQ.
+ *
+ *  HQ is free software; you can redistribute it and/or modify
+ *  it under the terms version 2 of the GNU General Public License as
+ *  published by the Free Software Foundation. This program is distributed
+ *  in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ *  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ *  USA.
+ *
+ */
+
 dojo.provide("hyperic.widget.base._WallMountItem");
 
 dojo.require("dijit._Widget");
@@ -20,12 +46,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     //
     // description:
     //      xxx
-      	
-    // value: Number
-    // Main metric value attached to this component. Value is always
-    // the last raw metric.
-    value: null,
-    
+      	    
     // format: 'none', 'percentage', 'B', 'KB', 'MB', 'GB', 'TB', 'epoch-millis', 'epoch-seconds', 'ns', 'mu', 'ms', 'jiffys', 'sec', 'cents' 
     // unit formatting derived from HQ
     format: 'none',
@@ -78,6 +99,9 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     templateString: dojo.cache("hyperic.widget.base", "_WallMountItem.html"),
     _backgroundDefault: {color: 'green'},
     _storeSubsHdl: null,
+    _storeSubsHdls: null,
+    _numOfTracks: -1,
+    _numOfInitialTrackValues: 0,
     
     startup: function(){
     	
@@ -168,13 +192,84 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         // summary:
     	this.store = s;
     },
-    
-    setMetric: function(m) {
-        // summary:
-    	this.subscribeId = m;
+
+    _setTracks: function(/*Object[]*/ tracks) {
+    	// summary:
+    	//     Sets item id's to track.
+    	//
+    	// description:
+    	//     This function is used for component to subscribe one or
+    	//     more items.
+    	//
+    	// tracks: Array of objects
+    	//     Array of object containing needed information for this
+    	//     components to subscribe to metric store with correct scope
+    	//     and callback.
+    	//
+    	//     e.g. {id:'12345', scope:'metric/0/', callback:'storeCallback'}
+    	//
+    	//     Object structure:
+    	//         id:
+    	//             Id can be either metric id, resource eid or something else
+    	//             recognised by underlying store. 
+    	//         scope:
+    	//             Base scope string towards store used to subscribe id's
+    	//         callback:
+    	//             Callback used from metric store when data related to
+    	//             subscribe is updated.
+    	
+    	this._numOfTracks = tracks.length;
     	if(this.store) {
-    		// catch handle so we can unsubscribe
-    		this._storeSubsHdl = this.store.subscribe("metric/0/" + m, this, "storeCallback");
+    		for(var i=0; i<tracks.length; i++){
+    			var entry = tracks[i];
+        		var _handle = this.store.subscribe(entry.scope + entry.id, this, entry.callback);
+        		this._addSubscribeHandle(_handle);    			
+    		}
+    	}
+
+    },
+
+    setTracks: function(/*String[]*/ tracks) {
+    	// summary:
+    	//     XXX
+    	
+    	console.log("setTracks:"+tracks);
+    	var _trackObjs = new Array();
+    	dojo.forEach(tracks, function(entry, i){
+    		_trackObjs.push({id:entry, scope:'metric/0/', callback:'storeCallback'});
+    	});
+    	this._setTracks(_trackObjs);
+    },
+    
+    isTracksStale: function() {
+    	if(this._numOfInitialTrackValues >= this._numOfTracks) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    },
+    
+    _addSubscribeHandle: function(handle) {
+    	// summary:
+    	//     internal method to push new handle to internal array.
+    	
+    	if(!this._storeSubsHdls) {
+    		this._storeSubsHdls = new Array();
+    	}
+    	this._storeSubsHdls.push(handle);
+    },
+    
+    _unSubscribeHandles: function() {
+    	// summary:
+    	//     Internal method to remove all subscriptions from
+    	//     metric store.
+    	
+    	if(this.store && this._storeSubsHdls) {    		
+    		for(var i=0; i<this._storeSubsHdls.length; i++){
+    			this.store.unsubscribe(this._storeSubsHdls[i]);    			
+    		}
+    		// last clear whole array
+    		this._storeSubsHdls = [];
     	}
     },
     
@@ -303,22 +398,6 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	//     Simply returns true if storeState is zero,
     	//     false otherwise.
     	return this.valueState == 0;
-    },
-    
-    setValue: function(value) {
-    	// summary:
-    	//     Setting value and handling value state.
-    	
-    	// when value is explicitly set through this
-    	// method we also assume state to be ok unless given
-    	// value is undefined or null.
-    	if((typeof(value) === 'undefined') || value == null) {
-    		this.value = null;
-        	this.valueState = 1;    		
-    	} else {
-        	this.value = value;
-        	this.valueState = 0;    		
-    	}
     },
     
     asJSON: function(){

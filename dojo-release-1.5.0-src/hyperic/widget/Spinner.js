@@ -26,7 +26,7 @@
 
 dojo.provide("hyperic.widget.Spinner");
 
-dojo.require("hyperic.widget.base._WallMountItem");
+dojo.require("hyperic.widget.base.MetricItem");
 dojo.require("hyperic.widget.base._Animatable");
 dojo.require("hyperic.util.FontUtil");
 dojo.require("hyperic.unit.UnitsConvert");
@@ -38,7 +38,7 @@ dojo.require("hyperic.data.RangesProperty");
 // TODO: counterclockwise
 
 dojo.declare("hyperic.widget.Spinner",
-    [ hyperic.widget.base._WallMountItem,
+    [ hyperic.widget.base.MetricItem,
       hyperic.widget.base._Animatable,
       hyperic.data.ArrowProperty,
       hyperic.data.RangeSpeedProperty,
