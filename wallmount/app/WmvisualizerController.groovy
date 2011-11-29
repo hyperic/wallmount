@@ -37,7 +37,7 @@ class WmvisualizerController extends BaseWallmountController {
     /** Table schema for single layouts. */
     private final SINGLE_LAYOUT_SCHEMA = [
         getData: {pageInfo, params -> templates},
-        rowId: {it -> 0},
+        rowId: {it},
         defaultSort: null,
         defaultSortOrder: 0,  // descending
         columns: [
@@ -48,7 +48,7 @@ class WmvisualizerController extends BaseWallmountController {
     /** Table schema for multi layouts. */
     private final MULTI_LAYOUT_SCHEMA = [        
         getData: {pageInfo, params -> multitemplates},
-        rowId: {it -> 0},
+        rowId: {it},
         defaultSort: null,
         defaultSortOrder: 0,  // descending
         columns: [
