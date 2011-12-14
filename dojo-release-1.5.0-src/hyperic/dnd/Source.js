@@ -177,6 +177,9 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         if(s) w.setStore(s);
         if(item.mid) w.setMetric(item.mid);
         if(item.eid) w.setEid(item.eid);
+        
+        if(item.tracks && item.scope) w.setTracks(item.tracks, item.scope);
+        else if(item.tracks) w.setTracks(item.tracks);
 
         w._buildContextMenu();
 

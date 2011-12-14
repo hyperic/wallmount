@@ -250,6 +250,9 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
                 }
                                 
                 this.publish(request.scope + data[i].id, [dojo.mixin({status:0},dd)]);                        	
+            } else if(request.scope.indexOf("system") != -1){
+            	dd = data[i];
+                this.publish(request.scope + data[i].id, [dojo.mixin({status:0},dd)]);                        	            	
             }
         }
 	},

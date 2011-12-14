@@ -1,0 +1,23 @@
+{
+    name: 'layout7',
+    items: [
+        {
+            title: "system",
+            x: 20,
+            y: 20,
+            w: 300,
+            h: 400,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.EllipseLabel",
+                    tracks: ['loadAvg1'],
+                    scope: "system/stats/",
+                    units: "none",
+                    size: 200,
+                    title: "my yyy"
+                }
+            ]
+        }
+    ]
+}

@@ -229,14 +229,16 @@ dojo.declare("hyperic.widget.base._WallMountItem",
 
     },
 
-    setTracks: function(/*String[]*/ tracks) {
+    setTracks: function(/*String[]*/ tracks, /*String*/ scope) {
     	// summary:
     	//     XXX
     	
-    	console.log("setTracks:"+tracks);
+    	var _scope = scope || 'metric/0/';
+    	
+    	console.log("setTracks:"+tracks+" "+"scope:"+scope);
     	var _trackObjs = new Array();
     	dojo.forEach(tracks, function(entry, i){
-    		_trackObjs.push({id:entry, scope:'metric/0/', callback:'storeCallback'});
+    		_trackObjs.push({id:entry, scope:_scope, callback:'storeCallback'});
     	});
     	this._setTracks(_trackObjs);
     },

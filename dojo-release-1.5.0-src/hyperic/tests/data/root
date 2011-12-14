@@ -1,4 +1,5 @@
 [
+  {"$ref":"/dojo-release-1.5.0-src/hyperic/tests/data/system","name":"System","children":true},
   {"$ref":"/dojo-release-1.5.0-src/hyperic/tests/data/platform","name":"Platforms","children":true},
   {"$ref":"/dojo-release-1.5.0-src/hyperic/tests/data/group","name":"Groups","children":true}
 ]

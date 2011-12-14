@@ -1,0 +1,35 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/system', name:'System', children: [
+
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/sysloadavg', name: 'System Load Average', children: [
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg1', system:'loadAvg1', name: '1min'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg5', name: '5min'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg15', name: '15min'}
+    ]
+  },
+
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/sysprocstats', name: 'System Processor Stats', children: [
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/sysUserCpu', name: 'User'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/sysSysCpu', name: 'System'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/sysNiceCpu', name: 'Nice'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/sysIdleCpu', name: 'Idle'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/sysWaitCpu', name: 'Wait'}
+    ]
+  },
+
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache', name: 'Cache', children: [
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache/Agent.findByAgentToken', name: 'Agent.findByAgentToken', children:[
+      {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache/Agent.findByAgentToken/size', name: 'Size'},
+      {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache/Agent.findByAgentToken/hits', name: 'Hits'},
+      {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache/Agent.findByAgentToken/misses', name: 'Misses'},
+      {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/cache/Agent.findByAgentToken/ratio', name: 'Hit Ratio'}
+      ]    
+    }
+    ]
+  },
+
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/core/metricsPerMinute', name: 'Metrics collected per minute'},
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/core/numPlatforms', name: 'Platforms'}
+  
+  ]
+}
+

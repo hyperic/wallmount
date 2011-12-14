@@ -53,7 +53,11 @@ dojo.declare("hyperic.data.ResourceTree", dijit.Tree, {
         if(item.mid){
         	return "hypericIconMetric";
         }    	
-    	           
+
+        if(item.system){
+        	return "hypericIconMetric";
+        }    	
+
         return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
     }
 

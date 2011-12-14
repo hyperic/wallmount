@@ -43,7 +43,9 @@ dojo.declare("hyperic.data.TreeDndSource", dijit.tree.dndSource, {
             var dragDndItem = this.getItem(_id);    //get the dnd item for the dragged div
             var dragTreeNode = dragDndItem.data;    //get the treenode of the dragged div
             var dragItem = dragTreeNode.item;       //get the store item bound to the dragged treenode
-            if(dragItem.mid || dragItem.eid){
+            
+            // define which nodes become dnd items
+            if(dragItem.mid || dragItem.eid || dragItem.system){
                 this.inherited(arguments);
             }
         }        	
