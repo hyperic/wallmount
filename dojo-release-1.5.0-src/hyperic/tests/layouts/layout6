@@ -1,0 +1,22 @@
+{
+    name: 'layout6',
+    items: [
+        {
+            title: "window xxx",
+            x: 20,
+            y: 20,
+            w: 300,
+            h: 400,
+            type: "multi",
+            items: [
+                {
+                    type: "hyperic.widget.RatioPie",
+                    tracks: [10301,10302],
+                    units: "none",
+                    size: 200,
+                    title: "my pie 1"
+                }
+            ]
+        }
+    ]
+}
