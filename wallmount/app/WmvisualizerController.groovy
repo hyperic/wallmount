@@ -36,12 +36,16 @@ class WmvisualizerController extends BaseWallmountController {
     
     /** Table schema for single layouts. */
     private final SINGLE_LAYOUT_SCHEMA = [
-        getData: {pageInfo, params -> templates},
-        rowId: {it},
+        getData: {pageInfo, params -> singletemplates},
+        rowId: {it[0]},
         defaultSort: null,
         defaultSortOrder: 0,  // descending
-        columns: [
-            [field:[getValue:{'Layout Name'}, description:'layout name', sortable:false], width:'100%', label:{linkTo(it, [action:'player', layout:it])}]
+        columns: [            
+            [field:[getValue:{'Layout Name'}, description:'layout name', sortable:false], width:'70%', label:{
+                def lparam = (it[1] == 'user' ? 'layout' : 'dynlayout') 
+                linkTo(it[0], [action:'player',"${lparam}":it[0]])
+                }],
+            [field:[getValue:{'Layout Type'}, description:'layout type', sortable:false], width:'30%', label:{it[1]}]
         ]
     ]
 
@@ -79,7 +83,8 @@ class WmvisualizerController extends BaseWallmountController {
 	 * @param params Request parameters.
 	 */
 	def index(params) {
-		render(locals:[singleLayoutsSchema:SINGLE_LAYOUT_SCHEMA])
+		render(locals:[singleLayoutsSchema:SINGLE_LAYOUT_SCHEMA,
+                       multiLayoutsSchema:MULTI_LAYOUT_SCHEMA])
 	}
 
     def designer(params) {
@@ -91,8 +96,14 @@ class WmvisualizerController extends BaseWallmountController {
     }
 
     def player(params) {
-        def useLayout = layoutExists(params.getOne("layout"), true)
-        render(locals:[useLayout: useLayout])
+        def layout = params.getOne("layout")
+        def dynlayout = params.getOne("dynlayout")
+        
+        def lparam = (layout != null ? 'layout' : 'dynlayout')
+        def useLayout = (layout != null ? layout : dynlayout)
+        
+        //def useLayout = layoutExists(params.getOne("layout"), true)
+        render(locals:[useLayout: useLayout, lparam:lparam])
     }
 
     /**

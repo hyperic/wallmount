@@ -169,19 +169,79 @@ abstract class BaseWallmountController extends BaseController {
     }
 
     /**
-    * Returns list of stored multi template names.
-    */
-   protected def getMultitemplates() {
-       def res = []
-       for (f in multiTemplateDir.listFiles()) {
-           if (!f.name.endsWith('.json'))
-               continue
-           def fname = f.name[0..-6]
-           res << fname
-       }
-       log.debug("Found files: " + res)
-       res.sort()
-   }
+     * Returns list of stored multi template names.
+     */
+    protected def getMultitemplates() {
+        def res = []
+        for (f in multiTemplateDir.listFiles()) {
+            if (!f.name.endsWith('.json'))
+                continue
+            def fname = f.name[0..-6]
+            res << fname
+        }
+        log.debug("Found files: " + res)
+        res.sort()
+    }
+
+    /**
+     * Returns template directory for user dynamic layouts
+     */
+    protected def getUserDynTemplateDir() {
+        templateDir // just make sure base dir exists
+        Resource templateResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates/dyn");
+        if(!templateResource.exists()) {
+            def dir = templateResource.file
+            dir.mkdir()
+            return dir;
+        }
+        return templateResource.getFile();
+    }
+
+    /**
+     * Returns template directory for system dynamic layouts
+     */
+    protected def getSystemDynTemplateDir() {
+        Resource templateResource = Bootstrap.getResource("hqu/wmvisualizer/dyn");
+        return templateResource.getFile();
+    }
+
+    /**
+     * Returns list of stored user dynamic template names.
+     */
+    protected def getDyntemplates() {
+        def sres = []
+        for (f in systemDynTemplateDir.listFiles()) {
+            if (!f.name.endsWith('.groovy'))
+                continue
+            def fname = f.name[0..-8]
+            sres << fname
+        }
+        def ures = []
+        for (f in userDynTemplateDir.listFiles()) {
+            if (!f.name.endsWith('.groovy'))
+                continue
+            def fname = f.name[0..-8]
+            if(!sres.contains(fname))
+                ures << fname
+        }
+        def res = []
+        sres.each{
+            res << [it,'system']
+        }
+        ures.each{
+            res << [it,'dynamic']
+        }
+        log.debug("Found files: " + res)
+        res
+    }
+    
+    protected def getSingletemplates() {
+        def res = dyntemplates        
+        templates.each{
+            res << [it,'user']
+        }        
+        res
+    }
 
     /**
      * 

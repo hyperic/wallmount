@@ -48,8 +48,13 @@ class DynResourceApi {
         def plats = resourceHelper.findAllPlatforms()
         plats.each{
             def plat = [:]
+            plat['size'] = 80
+            plat['color'] = 'green'
+            plat['titlePosition'] = 'top'
             plat['eid'] = '1:' + it.instanceId
-            plat['name'] = it.name
+            plat['title'] = it.name
+            plat['legends'] = []
+            plat['supportLegends'] = false
             ret << plat
         }
         ret

@@ -50,8 +50,10 @@ class DynlayoutUtils {
     //"type":"hyperic.widget.AvailIcon"}]}]}
     
     def static addAvailIcon(builder, plat) {
-        builder.eid = plat['eid']
-        builder.name = plat['name']
+        plat.each{ k,v ->
+            builder[k] = v
+        }
+        builder.type = 'hyperic.widget.AvailIcon'
     }
     
 }

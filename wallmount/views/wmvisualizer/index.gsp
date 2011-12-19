@@ -24,7 +24,7 @@
     <div id="Layouts_MultiData">
       <%= dojoTable(id:'multidatatable', title:'Multi Layouts',
                     refresh:60, url:urlFor(action:'getMultiTemplates'),
-                    schema:singleLayoutsSchema, numRows:15) %>
+                    schema:multiLayoutsSchema, numRows:15) %>
     </div>
   </div>
 

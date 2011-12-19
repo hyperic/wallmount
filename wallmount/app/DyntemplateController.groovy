@@ -46,11 +46,22 @@ class DyntemplateController extends BaseWallmountController {
      */
     def executeDynlayout(params) {
         def dynlayout = params.getOne('dynlayout')
-        def fileResource = Bootstrap.getResource(BASE_DYN_PATH + dynlayout + ".groovy")
         def tmplCode = ""
-        fileResource.file.withReader("UTF-8") { r ->
-            tmplCode = r.text
+        
+        def fileResource = Bootstrap.getResource(BASE_DYN_PATH + dynlayout + ".groovy")
+        if(fileResource.exists()) {
+            fileResource.file.withReader("UTF-8") { r ->
+                tmplCode = r.text
+            }
+        } else {
+            fileResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates/dyn/" + dynlayout + ".groovy" );
+            if(fileResource.exists()) {
+                fileResource.file.withReader("UTF-8") { r ->
+                    tmplCode = r.text
+                }
+            }
         }
+        
         def res = executeCode(tmplCode)
         render(inline:"${res}", contentType:'text/json-comment-filtered')
     }
@@ -113,43 +124,6 @@ class DyntemplateController extends BaseWallmountController {
 //        [result: "${res}",
 //         timeStatus: "Executed in ${end - start} ms"]
         res
-    }
-
-    /**
-     * Returns template directory for user dynamic layouts
-     */
-    protected def getUserDynTemplateDir() {
-        templateDir // just make sure base dir exists
-        Resource templateResource = Bootstrap.getResource("WEB-INF/wmvisualizerTemplates/dyn");
-        if(!templateResource.exists()) {
-            def dir = templateResource.file
-            dir.mkdir()
-            return dir;
-        }
-        return templateResource.getFile();
-    }
-
-    /**
-     * Returns template directory for system dynamic layouts
-     */
-    protected def getSystemDynTemplateDir() {
-        Resource templateResource = Bootstrap.getResource("hqu/wmvisualizer/dyn");
-        return templateResource.getFile();
-   }
-
-    /**
-     * Returns list of stored user dynamic template names.
-     */
-    protected def getDyntemplates() {
-        def res = []
-        for (f in systemDynTemplateDir.listFiles()) {
-            if (!f.name.endsWith('.groovy'))
-               continue
-            def fname = f.name[0..-8]
-            res << fname
-        }
-        log.debug("Found files: " + res)
-        res.sort()
     }
 
     /**
