@@ -152,7 +152,7 @@ abstract class BaseWallmountController extends BaseController {
         }
         return templateResource.getFile();
     }
-                
+
     /**
      * Returns list of stored template names.
      */
@@ -182,7 +182,7 @@ abstract class BaseWallmountController extends BaseController {
        log.debug("Found files: " + res)
        res.sort()
    }
-   
+
     /**
      * 
      */
