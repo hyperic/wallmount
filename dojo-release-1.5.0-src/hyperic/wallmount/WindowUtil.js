@@ -103,13 +103,6 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params, /*DOM|String
     var y = ((typeof args.y != 'undefined') ? args.y : 10) + 1;
     var title = (args && args.title) ? args.title : "New Window";
    	
-//   	var style = "position: absolute; " + 
-//        "width: " + w + "px;" +
-//        "height: " + h + "px;" +
-//        "top: " + y + "px;" +
-//        "left: " + x + "px;"; 	
-   	
-//	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
 	var node = dojo.create("div", null, hyperic.wallmount.WindowUtil.getWallmountPane(pane));
     var c = dojo.create("div", null, node);
     var source = new hyperic.dnd.Source(c, {accept: ['treeNode','text']});
@@ -127,7 +120,6 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params, /*DOM|String
         maxable: false,
         closable: true,
         resizable: true,
-//        style: style
         },node);
     pane.startup();
     pane.resize({t:y, l:x, w:w, h:h});
@@ -135,14 +127,14 @@ hyperic.wallmount.WindowUtil.newWindow = function(/*Object*/params, /*DOM|String
 	return source;
 };
 
-hyperic.wallmount.WindowUtil.newEmptyTableWindow = function() {
+hyperic.wallmount.WindowUtil.newEmptyTableWindow = function(/*DOM|String*/pane) {
     // summary:
     //      Just a wrapper function to pass no content
     //      resulting empty table window.
-	hyperic.wallmount.WindowUtil.newTableWindow({});
+	hyperic.wallmount.WindowUtil.newTableWindow({}, pane);
 };
 
-hyperic.wallmount.WindowUtil.newTableWindow = function(/*Object*/params) {
+hyperic.wallmount.WindowUtil.newTableWindow = function(/*Object*/params, /*DOM|String*/pane) {
     // summary:
 	//     Creates window containing table of dnd containers
     
@@ -162,7 +154,7 @@ hyperic.wallmount.WindowUtil.newTableWindow = function(/*Object*/params) {
         "top: " + y + "px;" +
         "left: " + x + "px;"; 	
    	
-	var node = dojo.create("div", null, dojo.byId("wallmountpane"));
+	var node = dojo.create("div", null, hyperic.wallmount.WindowUtil.getWallmountPane(pane));
 	
     var table = dojo.create("table", null, node);
     dojo.addClass(table, "hypericDndTable");
@@ -199,9 +191,9 @@ hyperic.wallmount.WindowUtil.newTableWindow = function(/*Object*/params) {
         maxable: false,
         closable: true,
         resizable: true,
-        style: style
         },node);
     pane.startup();
+    pane.resize({t:y, l:x, w:w, h:h});
     pane.bringToTop();
 	return sources;
 };

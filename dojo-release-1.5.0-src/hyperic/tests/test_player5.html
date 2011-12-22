@@ -20,6 +20,7 @@
     <script type="text/javascript">
       dojo.require("hyperic.wallmount.base");
       dojo.require("hyperic.wallmount.Player");
+      dojo.require("hyperic.wallmount.LayoutUtil");
 //      dojo.require("hyperic.data.MetricStore");
       dojo.require("hyperic.tests.MetricStore");
       
@@ -31,7 +32,7 @@
         
         hyperic.wallmount.base.metricStore.sync(true);
         
-        var url = "layouts/test2";
+        var url = "layouts/test6";
         hyperic.wallmount.Player.loadLayout(url,true);
 //        hyperic.wallmount.Player.loadLayout(url);
                 

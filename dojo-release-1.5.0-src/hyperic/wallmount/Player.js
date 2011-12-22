@@ -97,7 +97,7 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data, /*String*/nod
         if(items[i].type === "table"){
         	var rows = items[i].table.cells.length;
         	var cols = items[i].table.cells[0].length;
-        	var sources = hyperic.wallmount.WindowUtil.newTableWindow(dojo.mixin({rows:rows,cols:cols},args));
+        	var sources = hyperic.wallmount.WindowUtil.newTableWindow(dojo.mixin({rows:rows,cols:cols},args), wallmountPane);
         	
         	for(var rr=0;rr<rows;rr++) {
             	for(var cc=0;cc<cols;cc++) {
