@@ -64,4 +64,18 @@
     	</copy>
     </target>
 
+    <target name="build-expect-dojo-builded" depends="clean,assemble-wallmount">
+        <copy todir="${assemble.dir}/wmvisualizer/public/js">
+            <fileset dir="${dojo.source.dir}/release/dojo">
+                <include name="**"/>
+            </fileset>
+        </copy>
+        <mkdir dir="${dist.dir}"/>
+        <zip file="${dist.dir}/hqu_wmvisualizer-${version}.zip">
+            <fileset dir="${assemble.dir}">
+                <include name="wmvisualizer/**"/>
+            </fileset>
+        </zip>
+    </target>
+
 </project>
