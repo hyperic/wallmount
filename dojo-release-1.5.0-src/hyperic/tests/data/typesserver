@@ -1,0 +1,5 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesserver', name: 'Server Types', children: [   
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dtypeserver/10100', pid: '2:10100', name: 'ActiveMQ 4.0', children: true},
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dtypeserver/10101', pid: '2:10101', name: 'Apache 1.3', children: true}
+]
+}

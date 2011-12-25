@@ -155,6 +155,21 @@ dojo.declare("hyperic.wallmount.Registry",null,{
         }
     	
     	// 4. match resource
+        if(item.pid) {
+            dojo.some(this.plugins,function(plugin){
+                if(plugin.defaults && dojo.some(plugin.defaults,function(def){
+                    return (def.type == 'resourcetype' && def.filter == 'pid');
+                })) {
+                    foundPlugin = plugin.plugin;
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            
+            if(foundPlugin) return foundPlugin;
+            
+        }
     	
     	
     	// nothing found, fall back to plain label

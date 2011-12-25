@@ -68,6 +68,7 @@ class ResourcetreeController extends BaseJSONController {
         } else if(paths.size() == 2) {
             if(paths[1] == 'platform') allPlatforms()
             if(paths[1] == 'group') allGroups()
+            if(paths[1] == 'rtype') allResourceTypes()
         } else if(paths.size() == 3) {
             if(paths[1] == 'platform') {
                 byPlatform(paths[2] as int)
@@ -77,7 +78,7 @@ class ResourcetreeController extends BaseJSONController {
                 metricsByServer(paths[2] as int)
             } else if (paths[1] == 'service') {
                 metricsByService(paths[2] as int)
-            }            
+            }             
         } else if(paths.size() == 5) {
             def typenum = paths[1] == 'platform' ? 1 : 5
             if(paths[3] == 'server' && paths[4] == 'proto') {
@@ -120,7 +121,9 @@ class ResourcetreeController extends BaseJSONController {
         
         obj.put('id', baseUrl + "/server/${eid}/service/proto/${proto}")
         obj.put('name', prototypeName)
-        
+        obj.put('parent', "2:${eid}")
+        obj.put('pid', "3:${proto}")
+
         obj.put('children', children)
 
         renderJSONObj(obj)
@@ -149,6 +152,8 @@ class ResourcetreeController extends BaseJSONController {
         
         obj.put('id', baseUrl + "/platform/${eid}/service/proto/${proto}")
         obj.put('name', prototypeName)
+        obj.put('parent', "1:${eid}")
+        obj.put('pid', "3:${proto}")
         
         obj.put('children', children)
         
@@ -219,6 +224,8 @@ class ResourcetreeController extends BaseJSONController {
             JSONObject o = new JSONObject()
             o.put('$ref', baseUrl + "/server/${eid}/service/proto/${key}")
             o.put("name", value)
+            o.put('parent', "2:${eid}")
+            o.put('pid', "3:${key}")
             o.put("children", true)
             children.put(o)
         }
@@ -255,7 +262,9 @@ class ResourcetreeController extends BaseJSONController {
         
         obj.put('id', baseUrl + "/platform/${eid}/server/proto/${proto}")
         obj.put('name', prototypeName)
-        
+        obj.put('parent', "1:${eid}")
+        obj.put('pid', "2:${proto}")
+
         obj.put('children', children)
         
         renderJSONObj(obj)
@@ -286,6 +295,8 @@ class ResourcetreeController extends BaseJSONController {
             JSONObject o = new JSONObject()
             o.put('$ref', baseUrl + "/${tp}/${eid}/service/proto/${key}")
             o.put("name", value)
+            o.put("pid", "3:${key}")
+            o.put("parent", "1:${eid}")
             o.put("children", true)
             child.put(o)
         }
@@ -323,6 +334,8 @@ class ResourcetreeController extends BaseJSONController {
             JSONObject o = new JSONObject()
             o.put('$ref', baseUrl + "/${tp}/${eid}/server/proto/${key}")
             o.put("name", value)
+            o.put("pid", "2:${key}")
+            o.put("parent", "1:${eid}")
             o.put("children", true)
             child.put(o)
         }
@@ -340,6 +353,7 @@ class ResourcetreeController extends BaseJSONController {
         JSONArray roots = new JSONArray()
         roots.put($ref : baseUrl + '/platform', name: 'Platforms', children: true);
         roots.put($ref : baseUrl + '/group', name: 'Groups', children: true);
+        roots.put($ref : baseUrl + '/rtype', name: 'Resource Types', children: true);
         def ret = roots.toString()
         render(inline:"${ret}", contentType:'text/json-comment-filtered')
     }
@@ -468,5 +482,90 @@ class ResourcetreeController extends BaseJSONController {
         group.put("children", child)
         renderJSONObj(group)
     }
+    
+    /**
+     * All viewable resource types as json
+     */
+    def allResourceTypes() {
+        JSONObject root = new JSONObject()
+        
+        root.put("id", baseUrl + '/rtype')
+        root.put("name","Resource Types")
+        
+        JSONArray rootChilds = new JSONArray()
+        
+        // platform types
+        JSONObject platTypesObj = new JSONObject()
+        JSONArray platTypesArr = new JSONArray()
+        platTypesObj.put("id", baseUrl + '/rtype/platform')
+        platTypesObj.put("name", 'Platform Types')
+        platformManager.getViewablePlatformTypes(user, PageControl.PAGE_ALL).each{
+            platTypesArr.put(id: baseUrl + '/rtype/platform/' + "1:" + it.id,
+                pid: "1:" + it.id,
+                name: it.name)
+        }
+        platTypesObj.put("children", platTypesArr)        
+        rootChilds.put(platTypesObj)
 
+        // getting list of viewable service names        
+        def viewableServiceNames = []
+        serviceManager.getViewableServiceTypes(user, PageControl.PAGE_ALL).each{
+            viewableServiceNames << it.name
+        }
+
+        // we get server and service types within the same iteration
+        JSONObject serverTypesObj = new JSONObject()
+        JSONObject serviceTypesObj = new JSONObject()
+        JSONArray serverTypesArr = new JSONArray()
+        JSONArray serviceTypesArr = new JSONArray()
+
+        serverTypesObj.put("id", baseUrl + '/rtype/server')
+        serverTypesObj.put("name", 'Server Types')
+
+        serviceTypesObj.put("id", baseUrl + '/rtype/service')
+        serviceTypesObj.put("name", 'Platform Service Types')
+
+                        
+        serverManager.getViewableServerTypes(user, PageControl.PAGE_ALL).each{ serverType ->
+            // if server is virtual, it's a placeholder for platform services.
+            // if it's not a virtual, we need to check child services.
+                        
+            if(serverType.virtual) {
+                serviceManager.getServiceTypesByServerType(user, serverType.id).each{ serviceType ->
+                    if(viewableServiceNames.contains(serviceType.name)) {
+                        serviceTypesArr.put(id: baseUrl + '/rtype/service/' + "3:" + serviceType.id,
+                            pid: "3:" + serviceType.id,
+                            name: serviceType.name)
+                    }
+                }
+            } else {
+                // check if there's any services under a server
+                def serverServices = serviceManager.getServiceTypesByServerType(user, serverType.id)
+                JSONObject serverTypesArrObj = new JSONObject()
+                serverTypesArrObj.put("id", baseUrl + '/rtype/server/' + "2:" + serverType.id)
+                serverTypesArrObj.put("pid", "2:" + serverType.id)
+                serverTypesArrObj.put("name", serverType.name)
+                if(serverServices.size() > 0) {
+                    JSONArray serverServicesArr = new JSONArray()
+                    serviceManager.getServiceTypesByServerType(user, serverType.id).each{ serviceType ->
+                        serverServicesArr.put(id: baseUrl + '/rtype/server/service/' + "3:" + serviceType.id,
+                            pid: "3:" + serviceType.id,
+                            name: serviceType.name)
+                    }                                        
+                    serverTypesArrObj.put("children", serverServicesArr)
+                }
+                serverTypesArr.put(serverTypesArrObj)
+            }
+        }
+
+        serverTypesObj.put("children", serverTypesArr)
+        serviceTypesObj.put("children", serviceTypesArr)
+        rootChilds.put(serviceTypesObj)
+        rootChilds.put(serverTypesObj)
+        
+        root.put("children",rootChilds);
+        renderJSONObj(root);
+    }
+
+    
 }

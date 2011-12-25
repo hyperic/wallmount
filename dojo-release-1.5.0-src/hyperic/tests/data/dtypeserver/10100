@@ -1,0 +1,5 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dtypeserver/10100', pid: '2:10100', name: 'ActiveMQ 4.0', children: [   
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/dtypeservice/10200', pid: '3:10200', name: 'ActiveMQ 4.0 Broker'},
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/dtypeservice/10201', pid: '3:10201', name: 'ActiveMQ 4.0 Queue'}
+]
+}

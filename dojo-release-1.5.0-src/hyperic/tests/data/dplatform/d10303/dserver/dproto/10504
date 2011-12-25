@@ -1,4 +1,4 @@
-{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dserver/dproto/10115', name: 'Apache 2.2', children: [
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dserver/dproto/10115', pid: '2:10500', parent: '1:10303', name: 'Apache 2.2', children: [
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dserver/36978', name: 'bear apache 2.0.52', eid:'2:10504', children: true}
 ]
 }

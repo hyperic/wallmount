@@ -1,3 +1,5 @@
+import org.hyperic.hq.appdef.shared.AppdefEntityConstants;
+
 /**
  * NOTE: This copyright does *not* cover user programs that use HQ
  * program services by normal system calls through the application
@@ -27,11 +29,14 @@
 import org.json.JSONArray
 import org.json.JSONObject
 import org.hyperic.hq.appdef.shared.AppdefEntityID
+import org.hyperic.hq.appdef.shared.AppdefEntityTypeID
 import org.hyperic.hq.events.AlertSeverity
 import org.hyperic.hq.events.server.session.AlertSortField
 import org.hyperic.hibernate.PageInfo
 import org.hyperic.util.pager.PageControl
 import org.hyperic.hq.measurement.server.session.Measurement
+import org.hyperic.hq.appdef.shared.AppdefEntityConstants
+import org.hyperic.hq.appdef.shared.AppdefUtil
 
 /**
  * Controller to handle metric requests from wallmount metric store.
@@ -109,6 +114,82 @@ class MetricstoreController extends BaseJSONController {
             def escCount = resEscCount.values().size() > 0 ? resEscCount.values().sum() : 0 
             
             array.put(id: scopes[1], last: last, alerts:alertCount, escalations:escCount)
+        } else if(scopes[0] == 'tavail') {
+            // tavail/1:10100
+            // one id means global
+            // tavail/1:10607/3:10106
+            // two id's means latter within former (e.g. all CPUs within a platform)
+        
+            def aeid = scopes[-1]
+            def within = (scopes[-2] == 'tavail' ? null : scopes[-2])
+            
+            // get resources
+            
+            def resources = []
+            log.info("aeid:"+aeid)
+            log.info("within:"+within)
+            def proto = resourceManager.findResourcePrototype(new AppdefEntityTypeID(aeid))
+            log.info("proto:"+proto)
+            if(within == null) {
+                // we're in global mode
+                resources = resourceManager.findResourcesOfPrototype(proto, PageInfo.getAll(AlertSortField.RESOURCE, true))
+                log.info("resources1:"+resources)
+            } else {
+                def eid = new AppdefEntityID(within)
+                if(eid.isPlatform() && aeid.startsWith("3:")) {
+                    def plat = resourceManager.findResource(eid)
+                    log.info("plat.id1:"+plat.id)
+                    log.info("plat.id2:"+eid.id)
+                    def tId = new AppdefEntityTypeID(aeid).id
+                    log.info("tId:"+tId)
+                    
+                    resources = serviceManager.getPlatformServices(user, eid.id, tId, PageControl.PAGE_ALL)
+                    log.info("resources2:"+resources)
+                } else if(eid.isPlatform() && aeid.startsWith("2:")) {
+                
+                    def tId = new AppdefEntityTypeID(aeid).id
+                    log.info("tId:"+tId)
+                    resources = serverManager.getServersByPlatform(user, eid.id, tId, true, PageControl.PAGE_ALL)
+                    log.info("resources3:"+resources)
+                    
+                } else if(eid.isServer() && aeid.startsWith("3:")) {
+                    def tId = new AppdefEntityTypeID(aeid).id
+                    log.info("tId:"+tId)
+                    def serviceValues = serviceManager.getServicesByServer(user, eid.id,tId ,PageControl.PAGE_ALL)
+                    log.info("serviceValues:"+serviceValues)
+                    serviceValues.each{
+                        resources << resourceManager.getResourceById(it.resourceId)
+                    }
+                    log.info("resources4:"+resources)
+                }
+            }
+            
+            // avails for resources
+            def last = null
+            def avails = availabilityManager.getLastAvail(resources,null) 
+            avails.each{ key, value ->
+                if(last==null) {
+                    last = value.value
+                } else if(last < value.value) {
+                   last = value.value
+                }
+            }
+            
+            def ress = []
+            resources.each{
+                ress << AppdefUtil.newAppdefEntityId(it).toString()
+            }
+
+            def resAlertCount = resourcesWithUnfixedAlerts()
+            resAlertCount.keySet().retainAll(ress)
+            def alertCount = resAlertCount.values().size() > 0 ? resAlertCount.values().sum() : 0
+                        
+            def resEscCount = resourcesWithRunningEscalation()
+            resEscCount.keySet().retainAll(ress)
+            def escCount = resEscCount.values().size() > 0 ? resEscCount.values().sum() : 0
+            
+            
+            array.put(id: aeid, last: last, alerts:alertCount, escalations:escCount)
         }
         
         render(inline:"${array}", contentType:'text/json-comment-filtered')
@@ -145,6 +226,9 @@ class MetricstoreController extends BaseJSONController {
         resAlertCount
     }
     
+    /**
+     * 
+     */
     protected resourcesWithRunningEscalation() {
         def resEscCount = [:]
         

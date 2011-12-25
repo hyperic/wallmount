@@ -1,4 +1,4 @@
-{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dservice/dproto/10109', name: 'CPU', children: [
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/dplatform/d10303/dservice/dproto/10109', name: 'CPU', pid: '3:10600', parent: '1:10303', children: [
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dservice/26978', name: 'bear Linux CPU 1 (2490Mhz Intel Xeon)', eid:'3:26978', children: true},
   { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/dservice/26979', name: 'bear Linux CPU 1 (2490Mhz Intel Xeon)', eid:'3:26968', children: true}
 ]

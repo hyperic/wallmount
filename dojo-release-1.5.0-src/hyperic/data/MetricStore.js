@@ -72,9 +72,12 @@ dojo.declare("hyperic.data.MetricStore", null, {
     //     /hyperic/ravail/5:12345 (group)
     //
     //     resource type: availability
-    //     /hyperic/tavail/1:12345 (platform)
-    //     /hyperic/tavail/2:12345 (server)
-    //     /hyperic/tavail/3:12345 (service)
+    //     /hyperic/tavail/1:12345 (all platforms)
+    //     /hyperic/tavail/2:12345 (all servers)
+    //     /hyperic/tavail/3:12345 (all services)
+	//
+    //     /hyperic/tavail/1:12345/2:23456 (for platform 12345, for server type 23456)
+    //     /hyperic/tavail/1:12345/3:23456 (for platform 12345, for service type 23456)
 	//
 
     // url: String

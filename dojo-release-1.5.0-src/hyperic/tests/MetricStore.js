@@ -253,6 +253,27 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
             } else if(request.scope.indexOf("system") != -1){
             	dd = data[i];
                 this.publish(request.scope + data[i].id, [dojo.mixin({status:0},dd)]);                        	            	
+            } else if(request.scope.indexOf("tavail") != -1){
+            	if(data[i].id === '2:10500'){
+                    dd = {
+                        last: 1,
+                        alerts: Math.floor(Math.random()*4),
+                        escalations: Math.floor(Math.random()*2)
+                    };                              		
+            	} else if(data[i].id === '3:10600'){
+                    dd = {
+                            last: 1,
+                            alerts: Math.floor(Math.random()*4),
+                            escalations: Math.floor(Math.random()*2)
+                        };                              		
+            	} else if(data[i].id === '1:10100'){
+                    dd = {
+                        last: 1,
+                        alerts: Math.floor(Math.random()*4),
+                        escalations: Math.floor(Math.random()*2)
+                    };                              		
+            	}
+                this.publish(request.scope + data[i].id, [dojo.mixin({status:0},dd)]);                        	            	
             }
         }
 	},
@@ -448,7 +469,7 @@ dojo.declare("hyperic.tests.MetricStore", hyperic.data.MetricStore, {
         if(!id)
            return this.url;        	
         if(this.idToBaseUrl) {        
-           return this.url + id.replace(":","-");        	
+           return this.url + id.replace(/:/g,"-");        	
         } else {
            return this.url;
         }

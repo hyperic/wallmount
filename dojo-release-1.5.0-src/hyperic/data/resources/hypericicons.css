@@ -4,6 +4,12 @@
   width: 16px;
 }
 
+.hypericIconPlatformType {
+  background-image: url("icons/platformtype.png");
+  height: 16px;
+  width: 16px;
+}
+
 .hypericIconMetric {
   background-image: url("icons/metric.png");
   height: 16px;
@@ -16,8 +22,20 @@
   width: 16px;
 }
 
+.hypericIconServerType {
+  background-image: url("icons/servertype.png");
+  height: 16px;
+  width: 16px;
+}
+
 .hypericIconService {
   background-image: url("icons/service.png");
+  height: 16px;
+  width: 16px;
+}
+
+.hypericIconServiceType {
+  background-image: url("icons/servicetype.png");
   height: 16px;
   width: 16px;
 }

@@ -49,7 +49,16 @@ dojo.declare("hyperic.data.ResourceTree", dijit.Tree, {
            if(item.eid.indexOf("5:") === 0)
                return "hypericIconGroup";            
         }
-    	
+
+        if(item.pid){
+            if(item.pid.indexOf("1:") === 0)
+                return "hypericIconPlatformType";        	
+            if(item.pid.indexOf("2:") === 0)
+                return "hypericIconServerType";            
+            if(item.pid.indexOf("3:") === 0)
+                return "hypericIconServiceType";            
+        }
+
         if(item.mid){
         	return "hypericIconMetric";
         }    	

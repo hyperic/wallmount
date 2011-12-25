@@ -1,0 +1,5 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatform', name: 'Platform Types', children: [
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatform/10100', pid: '1:10100', name: 'Win32' },
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatform/10101', pid: '1:10101', name: 'Linux' }
+]
+}

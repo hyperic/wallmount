@@ -1,0 +1,5 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatformservice', name: 'Platform Service Types', children: [
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatformservice/10100', pid: '3:10100', name: 'HTTP' },
+  { id: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatformservice/10101', pid: '3:10101', name: 'Script' }
+]
+}

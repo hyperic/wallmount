@@ -333,6 +333,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
 
     destroy: function(){
     	if(this.store && this._storeSubsHdl) this.store.unsubscribe(this._storeSubsHdl);    	
+    	this._unSubscribeHandles();
     	this.inherited(arguments);
     },
     

@@ -1,0 +1,6 @@
+{ id: '/dojo-release-1.5.0-src/hyperic/tests/data/types', name: 'Resource Types', children: [   
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatform', name: 'Platform Types', children: true},
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/typesplatformservice', name: 'Platform Service Types', children: true},
+  { $ref: '/dojo-release-1.5.0-src/hyperic/tests/data/typesserver', name: 'Server Types', children: true}
+]
+}
