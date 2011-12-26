@@ -143,13 +143,19 @@ class MetricstoreController extends BaseJSONController {
                     def tId = new AppdefEntityTypeID(aeid).id
                     log.info("tId:"+tId)
                     
-                    resources = serviceManager.getPlatformServices(user, eid.id, tId, PageControl.PAGE_ALL)
+                    def serviceValues = serviceManager.getPlatformServices(user, eid.id, tId, PageControl.PAGE_ALL)
+                    serviceValues.each{
+                        resources << resourceManager.findResource(it.entityId)
+                    }
                     log.info("resources2:"+resources)
                 } else if(eid.isPlatform() && aeid.startsWith("2:")) {
                 
                     def tId = new AppdefEntityTypeID(aeid).id
                     log.info("tId:"+tId)
-                    resources = serverManager.getServersByPlatform(user, eid.id, tId, true, PageControl.PAGE_ALL)
+                    def serverValues = serverManager.getServersByPlatform(user, eid.id, tId, true, PageControl.PAGE_ALL)
+                    serverValues.each{
+                        resources << resourceManager.findResource(it.entityId)
+                    }
                     log.info("resources3:"+resources)
                     
                 } else if(eid.isServer() && aeid.startsWith("3:")) {
@@ -158,12 +164,15 @@ class MetricstoreController extends BaseJSONController {
                     def serviceValues = serviceManager.getServicesByServer(user, eid.id,tId ,PageControl.PAGE_ALL)
                     log.info("serviceValues:"+serviceValues)
                     serviceValues.each{
-                        resources << resourceManager.getResourceById(it.resourceId)
+                        resources << resourceManager.findResource(it.entityId)
                     }
                     log.info("resources4:"+resources)
                 }
             }
-            
+            resources.each{
+                log.info("class:"+it.class)
+            }
+
             // avails for resources
             def last = null
             def avails = availabilityManager.getLastAvail(resources,null) 
