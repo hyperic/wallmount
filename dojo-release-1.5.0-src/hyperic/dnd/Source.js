@@ -181,8 +181,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         if(item.tracks && item.scope) w.setTracks(item.tracks, item.scope);
         else if(item.tracks) w.setTracks(item.tracks);
         
-        if(item.pid && item.parent) w.setTracks([item.pid], "tavail/" + item.parent + "/");
-        else if(item.pid) w.setTracks([item.pid], "tavail/");
+        if(item.pid && item.parent) w.setTracksByScope([item.pid], "tavail/" + item.parent + "/");
+        else if(item.pid) w.setTracksByScope([item.pid], "tavail/");
 
         w._buildContextMenu();
 

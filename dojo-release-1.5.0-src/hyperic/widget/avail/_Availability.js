@@ -317,7 +317,13 @@ dojo.declare("hyperic.widget.avail._Availability",
     
     asParams: function(){
     	var paramObj = this.inherited(arguments);
-    	paramObj['eid'] = this.eid;
+    	if(this.eid) {
+    		paramObj['eid'] = this.eid;
+    	}
+    	var trackObj = this.getTracks();
+    	if (trackObj) {
+    		paramObj['tracks'] = trackObj;    		
+    	}
         paramObj['legends'] = this.asLegendsParams();
         paramObj['supportLegends'] = this.supportLegends;
     	return paramObj;

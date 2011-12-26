@@ -222,25 +222,51 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	if(this.store) {
     		for(var i=0; i<tracks.length; i++){
     			var entry = tracks[i];
-        		var _handle = this.store.subscribe(entry.scope + entry.id, this, entry.callback);
+    			var callback = entry.callback || 'storeCallback'
+        		var _handle = this.store.subscribe(entry.scope + entry.id, this, callback);
         		this._addSubscribeHandle(_handle);    			
     		}
     	}
 
     },
 
-    setTracks: function(/*String[]*/ tracks, /*String*/ scope) {
+    setTracks: function(/*Object[]*/ tracks) {
+    	// summary:
+    	//     XXX
+    	    	
+    	this._setTracks(tracks);
+    },
+
+    setTracksByScope: function(/*String[]*/ tracks, /*String*/ scope) {
     	// summary:
     	//     XXX
     	
     	var _scope = scope || 'metric/0/';
     	
-    	console.log("setTracks:"+tracks+" "+"scope:"+scope);
     	var _trackObjs = new Array();
     	dojo.forEach(tracks, function(entry, i){
     		_trackObjs.push({id:entry, scope:_scope, callback:'storeCallback'});
     	});
     	this._setTracks(_trackObjs);
+    },
+    
+    getTracks: function() {
+    	// summary:
+    	//     XXX
+    	
+    	var ret = [];
+    	for(var i=0; i<this._storeSubsHdls.length; i++){
+    		var _str = this._storeSubsHdls[i][0].replace("/hyperic/","")
+    		var _split = _str.split("/")
+    		var scope = "";
+    		for(var j=0; j<_split.length-1; j++) {
+    			scope += _split[j];
+    			scope += "/";
+    		}
+    		var id = _split[_split.length-1]
+    		ret.push({id:id, scope:scope})
+    	}
+    	return ret;
     },
     
     isTracksStale: function() {
