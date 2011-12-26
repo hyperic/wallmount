@@ -255,7 +255,17 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	//     XXX
     	
     	var ret = [];
+    	if(!this._storeSubsHdls) {
+    		return null;
+    	}
     	for(var i=0; i<this._storeSubsHdls.length; i++){
+    		// XXX: for now just get subscribes containing 'tavail'.
+    		//      need to make this more clever!!!
+    		//      it might be better to keep track info in
+    		//      separately outside of subs handles.
+    		if(this._storeSubsHdls[i][0].indexOf("tavail") === -1) {
+    			continue;
+    		}
     		var _str = this._storeSubsHdls[i][0].replace("/hyperic/","")
     		var _split = _str.split("/")
     		var scope = "";
