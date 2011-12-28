@@ -1,9 +1,9 @@
 { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system', name:'System', children: [
 
   { id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/sysloadavg', name: 'System Load Average', children: [
-    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg1', system:'loadAvg1', name: '1min'},
-    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg5', name: '5min'},
-    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg15', name: '15min'}
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg1', scope:'system/stats/', track:'loadAvg1', name: '1min'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg5', scope:'system/stats/', track:'loadAvg5', name: '5min'},
+    {id: '/dojo-release-1.5.0-src/hyperic/tests/data/system/stats/loadAvg15', scope:'system/stats/', track:'loadAvg15', name: '15min'}
     ]
   },
 

@@ -37,6 +37,9 @@ import org.hyperic.util.pager.PageControl
 import org.hyperic.hq.measurement.server.session.Measurement
 import org.hyperic.hq.appdef.shared.AppdefEntityConstants
 import org.hyperic.hq.appdef.shared.AppdefUtil
+import org.hyperic.hq.common.Humidor
+import org.hyperic.util.PrintfFormat
+import java.text.DateFormat
 
 /**
  * Controller to handle metric requests from wallmount metric store.
@@ -52,6 +55,21 @@ import org.hyperic.hq.appdef.shared.AppdefUtil
  * what kind of data the requester wants to receive.
  */
 class MetricstoreController extends BaseJSONController {
+    
+    /**
+     * Local static cache which spans to all instances of
+     * this controller.
+     * 
+     * cache(system) contains timestamp and a map(value)
+     * which contains actual cached key/value pairs.
+     */
+    private static def cache = [system:[time:0,value:[:]]]
+    
+    /**
+     * Static lock to prevent simultaneous requests to
+     * update cache at the same time. 
+     */
+    private static Object systemCacheLock = new Object()
     
     /**
      * Returns requested metrics.
@@ -199,9 +217,27 @@ class MetricstoreController extends BaseJSONController {
             
             
             array.put(id: aeid, last: last, alerts:alertCount, escalations:escCount)
+        } else if(scopes[0] == 'system') {
+            // need to sync through static lock.
+            // only first request within time window
+            // will actually update cached values
+            synchronized(systemCacheLock) {
+                updateSystemStatsCache()
+            }
+            array.put(id: scopes[-1], last: cache.system.value[scope])
         }
         
         render(inline:"${array}", contentType:'text/json-comment-filtered')
+    }
+    
+    protected void updateSystemStatsCache() {
+        // is cache older than 25 sec?
+        long time = now()
+        if(cache.system.time < time-25000) {
+            def stats = getSystemStats()
+            cache.system.value = stats
+            cache.system.time = time
+        }
     }
     
     /**
@@ -258,6 +294,105 @@ class MetricstoreController extends BaseJSONController {
         
         resEscCount
     }
+
+    /**
+     * Returns a map of system statistics.
+     */
+    private Map getSystemStats() {
+        def s = Humidor.instance.sigar
+        def loadAvgFmt = new PrintfFormat('%.2f')
+        def dateFormat = DateFormat.getDateTimeInstance()
         
-    
+        def cpu      = s.cpuPerc
+        def sysMem   = s.mem
+        def sysSwap  = s.swap
+        def pid      = s.pid
+        def procFds  = 'unknown'
+        def procMem  = s.getProcMem(pid)
+        def procCpu  = s.getProcCpu(pid)
+        def procTime = s.getProcTime(pid)
+        def NA       = 'N/A' //XXX localeBundle?
+        def loadAvg1 = NA
+        def loadAvg5 = NA
+        def loadAvg15 = NA
+        def runtime  = Runtime.runtime
+            
+        try {
+            procFds = s.getProcFd(pid).total
+        } catch(Exception e) {
+        }
+
+        try {
+            def loadAvg = s.loadAverage
+            loadAvg1  = loadAvgFmt.sprintf(loadAvg[0])
+            loadAvg5  = loadAvgFmt.sprintf(loadAvg[1])
+            loadAvg15 = loadAvgFmt.sprintf(loadAvg[2])
+        } catch(Exception e) {
+            //SigarNotImplementedException on Windows
+        }
+
+        //e.g. Linux
+        def free;
+        def used;
+        if ((sysMem.free != sysMem.actualFree ||
+            (sysMem.used != sysMem.actualUsed))) {
+            free = sysMem.actualFree
+            used = sysMem.actualUsed
+        } else {
+            free = sysMem.free
+            used = sysMem.used
+        }
+
+        [
+            'system/syscpu/sysUserCpu':     (int)(cpu.user * 100),
+            'system/syscpu/sysSysCpu':      (int)(cpu.sys * 100),
+            'system/syscpu/sysNiceCpu':     (int)(cpu.nice * 100),
+            'system/syscpu/sysIdleCpu':     (int)(cpu.idle * 100),
+            'system/syscpu/sysWaitCpu':     (int)(cpu.wait * 100),
+            'system/syscpu/sysPercCpu':     (int)(100 - cpu.idle * 100),
+            'system/sysloadavg/loadAvg1':   loadAvg1,
+            'system/sysloadavg/loadAvg5':   loadAvg5,
+            'system/sysloadavg/loadAvg15':  loadAvg15,
+            'system/sysmem/totalMem':       sysMem.total,
+            'system/sysmem/usedMem':        used,
+            'system/sysmem/freeMem':        free,
+            'system/sysswap/totalSwap':     sysSwap.total,
+            'system/sysswap/usedSwap':      sysSwap.used,
+            'system/sysswap/freeSwap':      sysSwap.free,
+            'system/proc/procOpenFds':      procFds,
+            'system/proc/procMemSize':      procMem.size,
+            'system/proc/procMemRes':       procMem.resident,
+            'system/proc/procMemShare':     procMem.share,
+            'system/jvm/jvmTotalMem':       runtime.totalMemory(),
+            'system/jvm/jvmFreeMem':        runtime.freeMemory(),
+            'system/jvm/jvmMaxMem':         runtime.maxMemory(),
+            'system/hq/numPlatforms':       resourceHelper.find(count:'platforms'),
+            'system/hq/numCpus':            resourceHelper.find(count:'cpus'),
+            'system/hq/numAgents':          agentHelper.find(count:'agents'),
+            'system/hq/numActiveAgents':    agentHelper.find(count:'activeAgents'),
+            'system/hq/numServers':         resourceHelper.find(count:'servers'),
+            'system/hq/numServices':        resourceHelper.find(count:'services'),
+            'system/hq/numApplications':    resourceHelper.find(count:'applications'),
+            'system/hq/numRoles':           resourceHelper.find(count:'roles'),
+            'system/hq/numUsers':           resourceHelper.find(count:'users'),
+            'system/hq/numAlertDefs':       resourceHelper.find(count:'alertDefs'),
+            'system/hq/numResources':       resourceHelper.find(count:'resources'),
+            'system/hq/numResourceTypes':   resourceHelper.find(count:'resourceTypes'),
+            'system/hq/numGroups':          resourceHelper.find(count:'groups'),
+            'system/hq/numEsc':             resourceHelper.find(count:'escalations'),
+            'system/hq/numActiveEsc':       resourceHelper.find(count:'activeEscalations'),
+            'system/hq/metricsPerMinute':   metricsPerMinute
+        ]
+    }
+
+    private getMetricsPerMinute() {
+        def vals  = measurementManager.findMetricCountSummaries()
+        def total = 0.0
+        
+        for (v in vals) {
+            total = total + (float)v.total / (float)v.interval
+        }
+        (int)total
+    }
+
 }

@@ -69,6 +69,7 @@ class ResourcetreeController extends BaseJSONController {
             if(paths[1] == 'platform') allPlatforms()
             if(paths[1] == 'group') allGroups()
             if(paths[1] == 'rtype') allResourceTypes()
+            if(paths[1] == 'system') allSystem()
         } else if(paths.size() == 3) {
             if(paths[1] == 'platform') {
                 byPlatform(paths[2] as int)
@@ -354,6 +355,7 @@ class ResourcetreeController extends BaseJSONController {
         roots.put($ref : baseUrl + '/platform', name: 'Platforms', children: true);
         roots.put($ref : baseUrl + '/group', name: 'Groups', children: true);
         roots.put($ref : baseUrl + '/rtype', name: 'Resource Types', children: true);
+        roots.put($ref : baseUrl + '/system', name: 'System', children: true);
         def ret = roots.toString()
         render(inline:"${ret}", contentType:'text/json-comment-filtered')
     }
@@ -562,6 +564,143 @@ class ResourcetreeController extends BaseJSONController {
         serviceTypesObj.put("children", serviceTypesArr)
         rootChilds.put(serviceTypesObj)
         rootChilds.put(serverTypesObj)
+        
+        root.put("children",rootChilds);
+        renderJSONObj(root);
+    }
+    
+    def allSystem() {
+        JSONObject root = new JSONObject()
+        root.put("id", baseUrl + '/system')
+        root.put("name","System")
+        
+        JSONArray rootChilds = new JSONArray()
+        
+        // System Load Average
+        JSONObject obj = new JSONObject()
+        obj.put("id", baseUrl + '/system/sysloadavg')
+        obj.put("name","System Load Average")
+        JSONArray childs = new JSONArray()
+        childs.put(id: baseUrl + '/system/sysloadavg/loadAvg1',
+            name: 'System Load 1min',
+            scope: 'system/sysloadavg/',
+            track: 'loadAvg1')
+        childs.put(id: baseUrl + '/system/sysloadavg/loadAvg5',
+            name: 'System Load 5min',
+            scope: 'system/sysloadavg/',
+            track: 'loadAvg5')
+        childs.put(id: baseUrl + '/system/sysloadavg/loadAvg15',
+            name: 'System Load 15min',
+            scope: 'system/sysloadavg/',
+            track: 'loadAvg15')
+        obj.put("children",childs);        
+        rootChilds.put(obj)
+        
+        // System CPU
+        obj = new JSONObject()
+        obj.put("id", baseUrl + '/system/syscpu')
+        obj.put("name","System CPU")
+        childs = new JSONArray()
+        childs.put(id: baseUrl + '/system/syscpu/sysUserCpu',
+            name: 'System CPU User',
+            format: 'percent',
+            scope: 'system/syscpu/',
+            track: 'sysUserCpu')
+        childs.put(id: baseUrl + '/system/syscpu/sysSysCpu',
+            name: 'System CPU System',
+            format: 'percent',
+            scope: 'system/syscpu/',
+            track: 'sysSysCpu')
+        childs.put(id: baseUrl + '/system/syscpu/sysNiceCpu',
+            name: 'System CPU Nice',
+            format: 'percent',
+            scope: 'system/syscpu/',
+            track: 'sysNiceCpu')
+        childs.put(id: baseUrl + '/system/syscpu/sysIdleCpu',
+            name: 'System CPU Idle',
+            format: 'percent',
+            scope: 'system/syscpu/',
+            track: 'sysIdleCpu')
+        childs.put(id: baseUrl + '/system/syscpu/sysWaitCpu',
+            name: 'System CPU Wait',
+            format: 'percent',
+            scope: 'system/syscpu/',
+            track: 'sysWaitCpu')
+        obj.put("children",childs);
+        rootChilds.put(obj)
+        
+        // Hyperic stats
+        obj = new JSONObject()
+        obj.put("id", baseUrl + '/system/hq')
+        obj.put("name","Hyperic Stats")
+        childs = new JSONArray()
+        childs.put(id: baseUrl + '/system/hq/numPlatforms',
+            name: 'HQ Num of Platforms',
+            scope: 'system/hq/',
+            track: 'numPlatforms')
+        childs.put(id: baseUrl + '/system/hq/numCpus',
+            name: 'HQ Num of Cpus',
+            scope: 'system/hq/',
+            track: 'numCpus')
+        childs.put(id: baseUrl + '/system/hq/numAgents',
+            name: 'HQ Num of Agents',
+            scope: 'system/hq/',
+            track: 'numAgents')
+        childs.put(id: baseUrl + '/system/hq/numActiveAgents',
+            name: 'HQ Num of Active Agents',
+            scope: 'system/hq/',
+            track: 'numActiveAgents')
+        childs.put(id: baseUrl + '/system/hq/numServers',
+            name: 'HQ Num of Servers',
+            scope: 'system/hq/',
+            track: 'numServers')
+        childs.put(id: baseUrl + '/system/hq/numServices',
+            name: 'HQ Num of Services',
+            scope: 'system/hq/',
+            track: 'numServices')
+        childs.put(id: baseUrl + '/system/hq/numApplications',
+            name: 'HQ Num of Applications',
+            scope: 'system/hq/',
+            track: 'numApplications')
+        childs.put(id: baseUrl + '/system/hq/numRoles',
+            name: 'HQ Num of Roles',
+            scope: 'system/hq/',
+            track: 'numRoles')
+        childs.put(id: baseUrl + '/system/hq/numUsers',
+            name: 'HQ Num of Users',
+            scope: 'system/hq/',
+            track: 'numUsers')
+        childs.put(id: baseUrl + '/system/hq/numAlertDefs',
+            name: 'HQ Num of Alert Definitions',
+            scope: 'system/hq/',
+            track: 'numAlertDefs')
+        childs.put(id: baseUrl + '/system/hq/numResources',
+            name: 'HQ Num of Resources',
+            scope: 'system/hq/',
+            track: 'numResources')
+        childs.put(id: baseUrl + '/system/hq/numResourceTypes',
+            name: 'HQ Num of Resource Types',
+            scope: 'system/hq/',
+            track: 'numResourceTypes')
+        childs.put(id: baseUrl + '/system/hq/numGroups',
+            name: 'HQ Num of Groups',
+            scope: 'system/hq/',
+            track: 'numGroups')
+        childs.put(id: baseUrl + '/system/hq/numEsc',
+            name: 'HQ Num of Escalations',
+            scope: 'system/hq/',
+            track: 'numEsc')
+        childs.put(id: baseUrl + '/system/hq/numActiveEsc',
+            name: 'HQ Num of Active Escalations',
+            scope: 'system/hq/',
+            track: 'numActiveEsc')
+        childs.put(id: baseUrl + '/system/hq/metricsPerMinute',
+            name: 'HQ Metrics Received Per Minute',
+            scope: 'system/hq/',
+            track: 'metricsPerMinute')
+        obj.put("children",childs);
+        rootChilds.put(obj)
+
         
         root.put("children",rootChilds);
         renderJSONObj(root);

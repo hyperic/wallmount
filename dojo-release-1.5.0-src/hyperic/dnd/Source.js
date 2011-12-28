@@ -184,6 +184,8 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         if(item.pid && item.parent) w.setTracksByScope([item.pid], "tavail/" + item.parent + "/");
         else if(item.pid) w.setTracksByScope([item.pid], "tavail/");
 
+        if(item.scope && item.track) w.setTracksByScope([item.track], item.scope);
+
         w._buildContextMenu();
 
         item['wmwidget'] = w;

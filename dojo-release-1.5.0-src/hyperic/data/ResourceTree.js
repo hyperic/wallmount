@@ -63,7 +63,7 @@ dojo.declare("hyperic.data.ResourceTree", dijit.Tree, {
         	return "hypericIconMetric";
         }    	
 
-        if(item.system){
+        if(item.track){
         	return "hypericIconMetric";
         }    	
 
