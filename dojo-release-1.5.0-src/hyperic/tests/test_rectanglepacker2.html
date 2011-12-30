@@ -1,0 +1,271 @@
+<html>
+    <head>
+        <title>Rectangle Packing Test 2 - scalepack</title>
+        <style type="text/css">
+        @import "../../dojo/resources/dojo.css";
+        @import "../../dijit/themes/tundra/tundra.css";
+        @import "../../dijit/themes/dijit.css";
+        @import "../../dijit/tests/css/dijitTests.css";
+        @import "../../dojox/form/resources/RangeSlider.css";
+        </style>
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
+
+    <style type="text/css" media="screen">
+    #canvasContainer {
+        float: left;
+        width: 645px;
+        height: 510px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    #controls {
+        margin-left: 650px;
+        width: 12em !important;
+        width: auto;
+        padding: 1em;
+    }
+
+    </style>
+
+    <script type="text/javascript" src="../../dojo/dojo.js" djConfig="isDebug:true, parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("hyperic.layout.RectanglePacker");
+        dojo.require("dijit.form.NumberSpinner");
+        dojo.require("dijit.form.DropDownButton");
+        dojo.require("dijit.form.Select");
+        dojo.require("dijit.form.CheckBox");
+        dojo.require("dojox.gfx");
+        dojo.require("hyperic.util.FontUtil");
+
+        createSurface = function(){
+        surface = dojox.gfx.createSurface("canvas", 650, 500);
+        surface.whenLoaded(refresh);
+        };
+
+        makeText = function(surface, text, font, fill, x, y, w, h){
+            var params = {x: x+w/2, y: y+ (h-(h*0.22)), text: text, align: "middle"};
+            var t = surface.createText(params);
+            if(font)   t.setFont(font);
+            if(fill)   t.setFill(fill);
+            return t;
+        };
+
+        refresh = function(){
+            var params = {};
+            var canvasSize = dijit.byId("canvasSize").get('value').split('x');
+        
+            params.canvasWidth = parseInt(canvasSize[0]);
+            params.canvasHeight = parseInt(canvasSize[1]);
+    
+            params.blocks = dijit.byId("blocksNo").get('value');
+            params.minWidth = dijit.byId("minWidth").get('value');
+            params.maxWidth = dijit.byId("maxWidth").get('value');
+            params.minHeight = dijit.byId("minHeight").get('value');
+            params.maxHeight = dijit.byId("maxHeight").get('value');
+            params.sort = dijit.byId("sort").get('value');
+            params.reverse = dijit.byId("reverse").get('checked');  
+        
+            render(params)  
+        }
+
+        render = function(params){
+
+            var sorting = {
+                'none'  : function (a,b) { return  0 },
+                'width' : function (a,b) { return a.w - b.w },
+                'height': function (a,b) { return a.h - b.h },
+                'area'  : function (a,b) { return a.w*a.h - b.w*b.h },
+                'magic' : function (a,b) { return Math.max(a.w,a.h) - Math.max(b.w,b.h) }
+            }       
+
+            var rblocks = []
+            for (var i=0; i<params.blocks; i++) {
+                rblocks[i] = { 
+                    w: params.minWidth + Math.round((params.maxWidth-params.minWidth) * Math.random()),
+                    h: params.minHeight + Math.round((params.maxHeight-params.minHeight) * Math.random())
+                };
+            }
+
+            rblocks.sort(sorting[params.sort]);     
+            if (params.reverse)
+                rblocks.reverse();
+        
+            var packer = new hyperic.layout.RectanglePacker(params.canvasWidth, params.canvasHeight);
+
+            var totalArea = 0, fitted = 0;
+
+            packer.reset(params.canvasWidth, params.canvasHeight);
+            var res = packer.scalepack(rblocks);
+            
+            var blocks = [];
+            for (var i=0; i<res.fit.length; i++) {
+                blocks.push(res.fit[i]);
+            }
+            for (var i=0; i<res.nofit.length; i++) {
+                var tmp = res.nofit[i];
+                tmp.noFit = true;
+                blocks.push(tmp);
+            }
+
+            surface.clear();
+
+            surface.createRect({x: 1, y: 1, width: params.canvasWidth, height: params.canvasHeight}).
+                setFill("white").setStroke({
+                    color: "black",
+                    width: 1,
+                    join: "round"
+            });
+
+
+            var nofittext = "";
+
+            for (var i=0; i<blocks.length; i++) {
+
+                if (blocks[i].noFit) {
+                    nofittext = nofittext + "<li>" + i + " " + blocks[i].w + 'x' + blocks[i].h + "</li>";
+                    continue;
+                }
+                fitted++;
+                totalArea += blocks[i].w * blocks[i].h;
+
+
+                //console.log("block:"+blocks[i]);
+                surface.createRect({x: blocks[i].x+1, y: blocks[i].y+1, width: blocks[i].w, height: blocks[i].h}).
+                    setFill("yellow").setStroke({
+                        color: "black",
+                        width: 1,
+                        join: "round"
+                });
+
+                var tmpsize = hyperic.util.FontUtil.findGoodSizeFontByRect(i,blocks[i].w,blocks[i].h);
+                makeText(surface,
+                    i,
+                    {family: "Helvetica", size: tmpsize+"px", weight: "bold"},
+                    "black",
+                    blocks[i].x,
+                    blocks[i].y,
+                    blocks[i].w,
+                    blocks[i].h);
+
+            }
+
+            dojo.byId("nofit").innerHTML = nofittext;
+
+            var dim = packer.getDimensions();
+            dojo.byId("statusCalcSize").innerHTML = dim.w + 'x' + dim.h;
+            dojo.byId("statusFilled").innerHTML = ((totalArea*100) / (dim.w*dim.h)).toFixed(2);
+            dojo.byId("statusFitted").innerHTML = ((fitted*100) / blocks.length).toFixed(0);
+        }
+
+
+        dojo.addOnLoad(createSurface);
+    </script>
+
+    </head>
+
+    <body class="claro">
+        <h1>Rectangle Packing Test 2 - scalepack</h1>
+        <div id="canvasContainer">
+            <div id="status">
+                <a class="refresh" href="#" onclick="refresh(); return false;">Refresh</a>
+                <span class="label">Calculated size:</span> <span id="statusCalcSize">000x000</span> 
+              | <span class="label">% Filled:</span> <span id="statusFilled">00</span>%
+              | <span class="label">% Blocks Fitted:</span> <span id="statusFitted">00</span>%
+            </div>
+
+            <div id="canvas"></div>
+        </div>
+    
+        <div id="controls">
+            <label for="canvasSize">Max Canvas Size</label>
+            <select dojoType="dijit.form.Select" 
+                id="canvasSize"
+                name="canvasSize"
+                dojoAttachPoint="titleposition"
+                class="textbox"
+                intermediateChanges="true"
+                onChange="refresh">
+                <option value="600x400">600 x 400</option>
+                <option value="500x300">500 x 300</option>
+                <option value="400x300">400 x 300</option>
+                <option value="300x200">300 x 200</option>
+            </select>
+            <br/>
+
+            <label for="blocksNo">Blocks No.</label>
+            <input dojoType="dijit.form.NumberSpinner"
+                onChange="refresh"
+                intermediateChanges="true"
+                value="5"
+                constraints="{max:200,min:1}"
+                name="blocksNo"
+                id="blocksNo">
+
+            <label for="minWidth">minWidth</label>
+            <input dojoType="dijit.form.NumberSpinner"
+                onChange="refresh"
+                intermediateChanges="true"
+                value="20"
+                constraints="{max:200,min:1}"
+                name="minWidth"
+                id="minWidth">
+
+            <label for="maxWidth">maxWidth</label>
+            <input dojoType="dijit.form.NumberSpinner"
+                onChange="refresh"
+                intermediateChanges="true"
+                value="130"
+                constraints="{max:200,min:1}"
+                name="maxWidth"
+                id="maxWidth">
+
+            <label for="minHeight">minHeight</label>
+            <input dojoType="dijit.form.NumberSpinner"
+                onChange="refresh"
+                intermediateChanges="true"
+                value="10"
+                constraints="{max:200,min:1}"
+                name="minHeight"
+                id="minHeight">
+
+            <label for="maxHeight">maxHeight</label>
+            <input dojoType="dijit.form.NumberSpinner"
+                onChange="refresh"
+                intermediateChanges="true"
+                value="100"
+                constraints="{max:200,min:1}"
+                name="maxHeight"
+                id="maxHeight">
+
+            <label for="sort">Sort Method</label>
+            <select dojoType="dijit.form.Select" 
+                id="sort"
+                name="sort"
+                dojoAttachPoint="titleposition"
+                class="textbox"
+                intermediateChanges="true"
+                onChange="refresh">
+                <option value="none">None</option>
+                <option value="width">Width</option>
+                <option value="height">Height</option>
+                <option value="area">Area</option>
+                <option value="magic">Magic</option>
+            </select>
+            <br/>
+
+            <label for="reverse">Reverse Sorting?</label>
+            <input name="reverse" 
+                id="reverse"
+                type="checkbox"
+                value="false"
+                dojoType="dijit.form.CheckBox"
+                onClick="refresh">
+    
+            <h3 class="nofit">Nofit blocks</h3>
+            <ul id="nofit">
+            </ul>
+
+        </div>
+
+    </body>
+</html>
