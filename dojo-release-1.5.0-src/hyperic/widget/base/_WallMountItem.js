@@ -259,11 +259,12 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     		return null;
     	}
     	for(var i=0; i<this._storeSubsHdls.length; i++){
-    		// XXX: for now just get subscribes containing 'tavail'.
+    		// XXX: for now just get subscribes containing 'tavail' and 'system'.
     		//      need to make this more clever!!!
     		//      it might be better to keep track info in
     		//      separately outside of subs handles.
-    		if(this._storeSubsHdls[i][0].indexOf("tavail") === -1) {
+    		var tmp = this._storeSubsHdls[i][0];
+    		if(!tmp.indexOf("tavail") === -1 || !tmp.indexOf("system") === -1) {
     			continue;
     		}
     		var _str = this._storeSubsHdls[i][0].replace("/hyperic/","")
@@ -467,6 +468,10 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	} else {
             paramObj['width'] = this.width;    		
             paramObj['height'] = this.height;         
+    	}
+    	var trackObj = this.getTracks();
+    	if (trackObj) {
+    		paramObj['tracks'] = trackObj;    		
     	}
         paramObj['color'] = this.color;
         paramObj['titlePosition'] = this.getTitlePosition();
