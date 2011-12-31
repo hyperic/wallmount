@@ -27,6 +27,7 @@
 dojo.provide("hyperic.wallmount.Player");
 
 dojo.require("hyperic.wallmount.WindowUtil");
+dojo.require("hyperic.util.Util");
 dojo.require("hyperic.data.MetricStore");
 
 hyperic.wallmount.Player.loadLayout = function(/*String*/url, /*Boolean*/ sendAnim, /*String*/node) {
@@ -84,7 +85,11 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data, /*String*/nod
     dojo.style(wallmountPane,'width',data.w||9999);
     dojo.style(wallmountPane,'height',data.h||9999);
 	
-    var items = data.items;
+    // items should be a list (items:[{},{}...]
+    // if it's an object, we assume list with one object
+    // -> make conversion
+    var items = hyperic.util.Util.toArray(data.items);    
+    
     for(var i=0; i<items.length; i++) {
     	var args = {
     		x: items[i].x,
@@ -119,8 +124,10 @@ hyperic.wallmount.Player.createLayout = function(/*jsondata*/data, /*String*/nod
                 source = hyperic.wallmount.WindowUtil.newWindow(args, wallmountPane);          
             }
             
-            for(var j = 0; j<items[i].items.length; j++){
-                var witem = items[i].items[j];
+            var widgetItems = hyperic.util.Util.toArray(items[i].items);
+            
+            for(var j = 0; j<widgetItems.length; j++){
+                var witem = widgetItems[j];
                   source.insertNodes(false, [witem]);
             }        	
         }

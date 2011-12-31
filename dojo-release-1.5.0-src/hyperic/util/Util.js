@@ -36,3 +36,10 @@ hyperic.util.Util.zeroMinInsets = function(/*Object*/obj){
         right: Math.max(obj.right,0)
     };
 };
+
+hyperic.util.Util.toArray = function(t){
+    // summary:
+    //     Converts object to array of size 1. If it's
+	//     already an array, return it unmodified.
+	return dojo.isArray(t) ? t : [t];
+};
