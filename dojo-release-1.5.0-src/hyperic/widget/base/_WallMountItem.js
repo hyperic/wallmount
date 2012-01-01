@@ -222,6 +222,10 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	if(this.store) {
     		for(var i=0; i<tracks.length; i++){
     			var entry = tracks[i];
+    			// TODO: When we replace widget in Source.js we pass array without callback.
+    			//       This only works because we don't use custom callbacks at the moment
+    			//       and we just fall back to default. Need to re-think this if it 
+    			//       becomes a problem.
     			var callback = entry.callback || 'storeCallback'
         		var _handle = this.store.subscribe(entry.scope + entry.id, this, callback);
         		this._addSubscribeHandle(_handle);    			

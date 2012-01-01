@@ -55,6 +55,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
     	var _eid = obj.eid;	
         var _subscribeId = obj.subscribeId; 
         var _format = obj.format; 
+        var _tracks = obj.getTracks();
     	
         var parent = dojo.byId(item).parentNode;        
 
@@ -83,6 +84,7 @@ dojo.declare("hyperic.dnd.Source",[dojo.dnd.Source],{
         if(s) w.setStore(s);
         if(_subscribeId) w.setMetric(_subscribeId);
         if(_eid) w.setEid(_eid);
+        if(_tracks) w._setTracks(_tracks);
         
         w._buildContextMenu();
 

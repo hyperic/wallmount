@@ -187,8 +187,17 @@ dojo.declare("hyperic.wallmount.Registry",null,{
         		} else if(item.subscribeId!=null && att.type=="metric") {
         			return true;
         		} else {
-        			return false;
+        			var tracks = item.getTracks();
+        			return tracks && dojo.some(tracks, function(track){
+        				if(track.scope.indexOf("system") == 0 && att.type=="system")
+        					return true;
+        				else if(track.scope.indexOf("tavail") == 0 && att.type=="resourcetype")
+        					return true;
+        				else
+        					return false;
+        			});
         		}
+    			return false;
         	})) { 
         	   foundPlugins.push(plugin.plugin);	
         	}

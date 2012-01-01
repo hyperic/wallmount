@@ -44,16 +44,16 @@
     <div dojoType="hyperic.wallmount.Registry"
          id="registry"
          jsId="hyperic.wallmount.Registry._registry"
-         plugins="[
-             {plugin: 'hyperic.widget.Tank', attach:[{type:'metric'}], properties:{width:100,height:150}},
-             {plugin: 'hyperic.widget.ProgressTube', attach:[{type:'metric'}], properties:{width:200,height:100}},
-             {plugin: 'hyperic.widget.EllipseLabel', attach:[{type:'metric'}], properties:{size:160,labelColor:'#fff8dc'}},
-             {plugin: 'hyperic.widget.HorizontalArrowPipe', attach:[{type:'metric'}], properties:{width:150,height:60}},
-             {plugin: 'hyperic.widget.VerticalArrowPipe', attach:[{type:'metric'}], properties:{width:60,height:150}},
-             {plugin: 'hyperic.widget.Spinner', attach:[{type:'metric'}], defaults:[{type:'metric', filter:'name', include:'Load Average 5 Minutes'}], properties:{size:120}},
+         plugins="[         
+             {plugin: 'hyperic.widget.Tank', attach:[{type:'metric'},{type:'system'}], properties:{width:100,height:150}},
+             {plugin: 'hyperic.widget.ProgressTube', attach:[{type:'metric'},{type:'system'}], properties:{width:200,height:100}},
+             {plugin: 'hyperic.widget.EllipseLabel', attach:[{type:'metric'},{type:'system'}], properties:{size:160,labelColor:'#fff8dc'}},
+             {plugin: 'hyperic.widget.HorizontalArrowPipe', attach:[{type:'metric'},{type:'system'}], properties:{width:150,height:60}},
+             {plugin: 'hyperic.widget.VerticalArrowPipe', attach:[{type:'metric'},{type:'system'}], properties:{width:60,height:150}},
+             {plugin: 'hyperic.widget.Spinner', attach:[{type:'metric'},{type:'system'}], defaults:[{type:'metric', filter:'name', include:'Load Average 5 Minutes'}], properties:{size:120}},
              {plugin: 'hyperic.widget.AvailText', attach:[{type:'resourcetype'}], defaults:[{type:'metric', filter:'name', include:'availability'}], properties:{size:90}},
              {plugin: 'hyperic.widget.AvailIcon', attach:[{type:'resourcetype'}], defaults:[{type:'resourcetype', filter:'eid', include:'*'},{type:'resourcetype', filter:'pid', include:'*'}], properties:{size:80}},
-             {plugin: 'hyperic.widget.label.Label', attach:[{type:'metric'}], properties:{width:200,height:80}},
+             {plugin: 'hyperic.widget.label.Label', attach:[{type:'metric'},{type:'system'}], properties:{width:200,height:80}},
              {plugin: 'hyperic.widget.chart.Chart', attach:[{type:'metric'}], properties:{width:200,height:120}}
          ]"></div>
     <div id="main"
