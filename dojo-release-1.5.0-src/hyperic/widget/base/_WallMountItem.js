@@ -458,7 +458,6 @@ dojo.declare("hyperic.widget.base._WallMountItem",
         jsonObj['type'] = this.declaredClass;
     	if(this.subscribeId) {
             jsonObj['mid'] = this.subscribeId;
-    		jsonObj['format'] = this.format;
     	}    	
     	return jsonObj;
     }, 
@@ -477,6 +476,7 @@ dojo.declare("hyperic.widget.base._WallMountItem",
     	if (trackObj) {
     		paramObj['tracks'] = trackObj;    		
     	}
+        paramObj['format'] = this.format;
         paramObj['color'] = this.color;
         paramObj['titlePosition'] = this.getTitlePosition();
     	paramObj['title'] = this.getTitle();
