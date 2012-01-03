@@ -1,2 +1,0 @@
-def b = new JsonGroovyBuilder()
-def l = b{

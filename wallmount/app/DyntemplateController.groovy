@@ -38,9 +38,6 @@ class DyntemplateController extends BaseWallmountController {
    
     private static BASE_DYN_PATH = "hqu/wmvisualizer/dyn/"
     
-    private static startCodeContent = null
-    private static endCodeContent = null
-
     /**
      * Executes a given dynamic layout.    
      */
@@ -89,9 +86,7 @@ class DyntemplateController extends BaseWallmountController {
         File tmp = File.createTempFile('dyntemplate', null)
         log.info "Writing tmp file: ${tmp.absolutePath}"
         tmp.withWriter("UTF-8") { writer ->
-            writer.write(startCode)
             writer.write(code)
-            writer.write(endCode)
         }
         
         def eng = new GroovyScriptEngine('.', Thread.currentThread().contextClassLoader)
@@ -109,6 +104,8 @@ class DyntemplateController extends BaseWallmountController {
             Binding binding = new Binding()
             binding.setVariable("resourceHelper", resourceHelper)
             binding.setVariable("util", DynlayoutUtils.class)
+            binding.setVariable("c", DynObjectCreator.class)
+            binding.setVariable("win", DynWinUtils.class)
             binding.setVariable("api", new DynResourceApi(user))
             def runnee = [run: {res = eng.run(script, binding)}] as Runnee
             
@@ -121,36 +118,7 @@ class DyntemplateController extends BaseWallmountController {
         }
         
         long end = now()
-//        [result: "${res}",
-//         timeStatus: "Executed in ${end - start} ms"]
         res
     }
-
-    /**
-     * 
-     */
-    def getStartCode() {
-        if(startCodeContent == null) {
-            def fileResource = Bootstrap.getResource(BASE_DYN_PATH + "START_CODE")
-            fileResource.file.withReader("UTF-8") { r ->
-                startCodeContent = r.text
-            }
-        }
-        startCodeContent
-    }
-
-    /**
-     *
-     */
-    def getEndCode() {
-        if(endCodeContent == null) {
-            def fileResource = Bootstrap.getResource(BASE_DYN_PATH + "END_CODE")
-            fileResource.file.withReader("UTF-8") { r ->
-                endCodeContent = r.text
-            }
-        }
-        endCodeContent
-    }
-
 
 }

@@ -102,5 +102,33 @@ class StatUtil {
         type: "hyperic.widget.label.Label"
     ]
     
-        
+    /**
+     * Defaults for hyperic.widget.label.Label widget.
+     */
+    static final def defsAvailIcon = [
+        size: 80, color: "green",
+        titlePosition: "top", legends:[],
+        supportLegends:false,
+        type: "hyperic.widget.AvailIcon"
+    ]
+    
+    /**
+     * Defaults for hyperic.widget.Spinner widget.
+     */
+    static final def defsSpinner = [
+        size: 100, color: "green", titlePosition: "top", 
+        arrowCount:3, arrowWidth:20, arrowGap:20,
+        arrowHeadLength:10, minRange:0, maxRange:4, speedTime:1000,
+        type: "hyperic.widget.Spinner"
+    ]
+
+    /**
+     * Defaults for hyperic.widget.Spinner widget.
+     */
+    static final def defsEllipseLabel = [
+        size: 160, color: "green", titlePosition: "top",
+        labelColor:"#fff8dc", ranges:[],
+        type: "hyperic.widget.EllipseLabel"
+    ]
+
 }

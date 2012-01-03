@@ -26,6 +26,7 @@
 
 import org.hyperic.hq.hqu.rendit.helpers.ResourceHelper
 import org.hyperic.hq.authz.server.session.AuthzSubject
+import org.hyperic.hq.authz.shared.AuthzConstants
 
 /**
  * Custom api for accessing resources from HQ's other public and
@@ -43,21 +44,102 @@ class DynResourceApi {
         this.user = user
     }
     
-    def findPlatforms() {
+    /**
+     * Returns all platforms.
+     */
+    def getAllPlatforms() {
         def ret = []
         def plats = resourceHelper.findAllPlatforms()
         plats.each{
-            def plat = [:]
-            plat['size'] = 80
-            plat['color'] = 'green'
-            plat['titlePosition'] = 'top'
-            plat['eid'] = '1:' + it.instanceId
-            plat['title'] = it.name
-            plat['legends'] = []
-            plat['supportLegends'] = false
-            ret << plat
+            ret << [eid: '1:' + it.instanceId, title: it.name]
         }
         ret
+    }
+
+    public Map getPlatform(String fqdn) {
+        def ret = [:]
+        ret
+    }
+
+    public List getResourcesByPrototype(String fqdn) {
+        def ret = []
+        ret
+    }
+
+    def getMetrics(map) {
+        def ret = []
+        ret
+    }
+
+    def getResources(map) {
+        def ret = []
+        ret
+    }
+
+    /**
+     * Returns resource types
+     * 
+     * Map keys:
+     * name     - Name of the resource type. Either single String or
+     *            a list of Strings.
+     */
+    def getResourcePrototype(map) {
+        def ret = []
+        def resource = resourceHelper.find(prototype:map.name)
+        ret << [title: resource.name, tracks:[[id:resourceProtoToEid(resource), scope:"tavail/"]]]
+        ret
+    }
+
+    /**
+     * Returns system metrics.
+     * 
+     * Map keys:
+     * category - Limit metrics to category. Possible values are 
+     *            system_sysloadavg, system_syscpu, system_hq,
+     *            system_sysmem, system_sysswap, system_proc,
+     *            system_jvm.
+     * name     - More filtering based on name of the metric.
+     * 
+     * @param map Parameter map to define what will be returned
+     * 
+     * @return Returns a list of maps containing title and tracks.
+     */
+    def getSystemMetrics(map) {
+        def ret = []
+        
+        def range
+        switch(map['category']) {
+            case 'system_sysloadavg': range = 0..0; break; 
+            case 'system_syscpu': range = 1..1; break; 
+            case 'system_hq': range = 2..2; break;
+            case 'system_sysmem': range = 3..3; break;
+            case 'system_sysswap': range = 4..4; break;
+            case 'system_proc': range = 5..5; break;
+            case 'system_jvm': range = 6..6; break;
+            default: range = 0..6;
+        }
+
+        def pattern = map.containsKey("name") ? map.name : '.+'
+        
+        StatUtil.sysMetricMap[range].each{
+            it.childs.each{
+                if(it.name =~ pattern)
+                    ret << [title:it.name, tracks:[[id:it.track, scope:it.scope]], format: it.format != null ? it.format : "none"]
+            }
+        }
+        
+        ret
+    }
+    
+    private String resourceProtoToEid(res) {
+        def id = res.resourceType.id
+        def ret
+        switch(id) {
+            case AuthzConstants.authzPlatformProto: ret = "1:"; break;
+            case AuthzConstants.authzServerProto: ret = "2:"; break;
+            case AuthzConstants.authzServiceProto: ret = "3:"; break;
+        }
+        ret + res.instanceId
     }
     
     private resourceHelperInternal = null

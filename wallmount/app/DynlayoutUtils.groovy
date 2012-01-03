@@ -28,7 +28,12 @@
  * Utility methods for dynamic layout templates.
  */
 class DynlayoutUtils {
-    
+
+    /**
+     * Adds dimenstions.
+     * 
+     * 
+     */
     def static addDimensions(builder, x, y, width, height) {
         builder.x = x
         builder.y = y
@@ -40,14 +45,13 @@ class DynlayoutUtils {
         builder.w = width
         builder.h = height
     }
+    
+    def static addObject(builder, resource) {
+        resource.each{ k,v ->
+            builder[k] = v
+        }
+    }
 
-    //{"name":"test1","theme":"Basic","w":900,"h":700,
-    //"items":[{"w":292,"h":396,"y":73,"x":120,"title":"New Window",
-    //"type":"multi",
-    //"items":[{"size":80,"color":"green","titlePosition":"top",
-    //"title":"my-custom-plat","eid":"1:10607",
-    //"legends":[],"supportLegends":false,
-    //"type":"hyperic.widget.AvailIcon"}]}]}
     
     def static addAvailIcon(builder, plat) {
         plat.each{ k,v ->
