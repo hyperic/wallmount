@@ -99,5 +99,13 @@ class DynObjectCreator {
         // Override defaults with given map values
         StatUtil.defsChart + map
     }
-    
+
+    /**
+     *
+     */
+    def static getTank(map) {
+        // Override defaults with given map values
+        StatUtil.defsTank + map
+    }
+
 }

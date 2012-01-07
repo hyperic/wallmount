@@ -181,4 +181,20 @@ class StatUtil {
         type:"hyperic.widget.chart.Chart"
     ]
 
+    /**
+     * Defaults for hyperic.widget.Tank widget.
+     */
+    static final def defsTank = [
+        width:100,
+        height:150,
+        titlePosition:"top",
+        emptyColor:"#c0c0c0",
+        fullColor:"#696969",
+        lowRange:0,
+        highRange:1000,
+        ranges:[],
+        type:"hyperic.widget.Tank"
+    ]
+
+    
 }
