@@ -92,4 +92,12 @@ class DynObjectCreator {
         StatUtil.defsHorizontalArrowPipe + map
     }
 
+    /**
+     * 
+     */
+    def static getChart(map) {
+        // Override defaults with given map values
+        StatUtil.defsChart + map
+    }
+    
 }

@@ -166,4 +166,19 @@ class StatUtil {
         type:"hyperic.widget.HorizontalArrowPipe"
     ]
 
+    /**
+     * Defaults for hyperic.widget.chart.Chart widget.
+     */
+    static final def defsChart = [
+        width:200,
+        height:120,
+        titlePosition:"top",
+        chartType:"Lines",
+        chartTheme:"simple",
+        chartColors:["#228b22"],
+        chartTimeScale:"8h",
+        labelColor:"#808080",
+        type:"hyperic.widget.chart.Chart"
+    ]
+
 }
