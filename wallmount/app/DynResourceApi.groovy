@@ -301,6 +301,30 @@ class DynResourceApi {
         
         ret
     }
+    
+    /**
+     * Gets server resource types for existing
+     * server resources in a platform.
+     * 
+     * Map keys:
+     * resource - A map representing a platform resource.
+     * 
+     * @return Returns a list of maps containing title and tracks.
+     */
+    def getServerPrototypesByPlatform(map) {
+        def ret = []
+        def platId = map.resource.eid[2..-1] as Integer
+        
+        def types = [:]
+        
+        serverManager.getServersByPlatform(user, platId, true, PageControl.PAGE_ALL).each{
+            types[it.serverType.id] = it.serverType.name
+        }
+        types.each{ key, value ->
+            ret << [title: value, tracks:[[id:"2:" + key, scope:"tavail/1:" + platId +"/"]]]
+        }
+        ret
+    }
 
         
     private String resourceProtoToEid(res) {
