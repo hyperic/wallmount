@@ -27,6 +27,14 @@
 import org.hyperic.hq.hqu.rendit.helpers.ResourceHelper
 import org.hyperic.hq.authz.server.session.AuthzSubject
 import org.hyperic.hq.authz.shared.AuthzConstants
+import org.hyperic.util.pager.PageControl
+import org.hyperic.hq.context.Bootstrap
+import org.hyperic.hq.appdef.shared.PlatformManager
+import org.hyperic.hq.appdef.shared.ServerManager
+import org.hyperic.hq.appdef.shared.ServiceManager
+import org.hyperic.hq.appdef.shared.AppdefUtil
+import org.hyperic.hq.measurement.shared.MeasurementManager
+import org.hyperic.hq.appdef.shared.AppdefEntityID
 
 /**
  * Custom api for accessing resources from HQ's other public and
@@ -39,13 +47,23 @@ import org.hyperic.hq.authz.shared.AuthzConstants
 class DynResourceApi {
     
     private AuthzSubject user
+    private PlatformManager platformManager
+    private MeasurementManager measurementManager
+    private ServerManager serverManager
+    private ServiceManager serviceManager
     
-    public DynResourceApi(user) {
+    public DynResourceApi(user, platformManager, measurementManager, serverManager, serviceManager) {
         this.user = user
+        this.platformManager = platformManager
+        this.measurementManager = measurementManager
+        this.serverManager = serverManager
+        this.serviceManager = serviceManager
     }
     
     /**
      * Returns all platforms.
+     * 
+     * @return Returns a list of maps containing title and eid.
      */
     def getAllPlatforms() {
         def ret = []
@@ -56,53 +74,109 @@ class DynResourceApi {
         ret
     }
 
-    public Map getPlatform(String fqdn) {
-        def ret = [:]
-        ret
-    }
-
-    public List getResourcesByPrototype(String fqdn) {
+    /**
+     * Gets platforms.
+     * 
+     * Map keys:
+     * fqdn     - Search by fully qualified domain name
+     * name     - Search by a platform name
+     * 
+     * @return Returns a list of maps containing title and eid.
+     */
+    def getPlatforms(map) {
         def ret = []
-        ret
-    }
+        
+        if(map.containsKey("fqdn")) {
+            def resource = resourceHelper.find(byFqdn:map.fqdn)
+            if(resource != null) {
+                ret << [title: resource.name, eid:AppdefUtil.newAppdefEntityId(resource).toString()]
+            }
+        }
 
-    def getMetrics(map) {
-        def ret = []
-        ret
-    }
+        if(map.containsKey("name")) {
+            def resource = resourceHelper.find(platform:map.name)
+            if(resource != null) {
+                ret << [title: resource.name, eid:AppdefUtil.newAppdefEntityId(resource).toString()]
+            }
+        }
 
-    def getResources(map) {
-        def ret = []
         ret
     }
 
     /**
-     * Returns resource types
+     * Gets resources by a resource type name.
+     * 
+     * @param name Name of the resource type
+     * 
+     * @return Returns a list of maps containing title and eid.
+     */
+    def getResourcesByPrototype(name) {
+        def ret = []
+        def resources = resourceHelper.find(byPrototype:name)
+        resources.each{
+            ret << [title: it.name, eid:AppdefUtil.newAppdefEntityId(it).toString()]
+        }
+        ret
+    }
+
+    /**
+     * Gets platform resource types
+     * 
+     * Map keys:
+     * viewable - If true return only existing and allowed types,
+     *            if false return all types.
+     *            
+     * @return Returns a list of maps containing title and tracks.
+     */
+    def getPlatformPrototypes(map) {
+        def ret = []
+
+        if(map.get("viewable", true)) {
+            platformManager.getViewablePlatformTypes(user, PageControl.PAGE_ALL).each{
+                ret << [title: it.name, tracks:[[id:"1:" + it.id, scope:"tavail/"]]]
+            }    
+        } else {
+            platformManager.getAllPlatformTypes(user, PageControl.PAGE_ALL).each{
+                ret << [title: it.name, tracks:[[id:"1:" + it.id, scope:"tavail/"]]]
+            }
+        }
+
+        ret
+    }
+        
+    /**
+     * Gets resource types
      * 
      * Map keys:
      * name     - Name of the resource type. Either single String or
      *            a list of Strings.
+     *            
+     * @return Returns a list of maps containing title and tracks.
      */
-    def getResourcePrototype(map) {
+    def getResourcePrototypes(map) {
         def ret = []
-        def resource = resourceHelper.find(prototype:map.name)
-        ret << [title: resource.name, tracks:[[id:resourceProtoToEid(resource), scope:"tavail/"]]]
+        def names = (map.name instanceof java.util.List) ? map.name : map.get("name",[])
+        names.each{
+            def resource = resourceHelper.find(prototype:it)
+            if(resource != null)
+                ret << [title: resource.name, tracks:[[id:resourceProtoToEid(resource), scope:"tavail/"]]]
+        }
         ret
     }
 
     /**
-     * Returns system metrics.
+     * Gets system metrics.
      * 
      * Map keys:
      * category - Limit metrics to category. Possible values are 
      *            system_sysloadavg, system_syscpu, system_hq,
      *            system_sysmem, system_sysswap, system_proc,
      *            system_jvm.
-     * name     - More filtering based on name of the metric.
+     * name     - Regex filtering based on name of the metric.
      * 
      * @param map Parameter map to define what will be returned
      * 
-     * @return Returns a list of maps containing title and tracks.
+     * @return Returns a list of maps containing title, tracks and format.
      */
     def getSystemMetrics(map) {
         def ret = []
@@ -130,7 +204,105 @@ class DynResourceApi {
         
         ret
     }
+
     
+    /**
+     * Gets metrics.
+     *
+     * Map keys:
+     * resource - A map representing a resource.
+     * name     - Name of the metric.
+     *
+     * @return Returns a list of maps containing title, mid and format.
+     */
+    def getMeasurements(map) {
+        def ret = []
+        
+        def pattern = map.containsKey("name") ? map.name : '.+'
+        
+        if(map.resource && map.resource.eid) {
+            measurementManager.findMeasurements(user, new AppdefEntityID(map.resource.eid), null, PageControl.PAGE_ALL).each{
+                if(it.template.name =~ pattern)
+                    ret << [title: it.template.name, format: it.template.units, mid: it.id]
+            }
+        }
+         
+        ret
+    }
+
+    /**
+     * Gets server resources.
+     *
+     * Map keys:
+     * resource - A map representing a platform resource.
+     * name     - A Server name to find
+     *
+     * @return Returns a list of maps containing title and eid.
+     */
+    def getServers(map) {
+        def ret = []
+        
+        def platId = map.resource.eid[2..-1] as Integer
+        
+        def pattern = map.containsKey("name") ? map.name : '.+'
+        
+        serverManager.getServersByPlatform(user, platId, true, PageControl.PAGE_ALL).each{
+            if(it.name =~ pattern)
+                ret << [title: it.name, eid: it.entityId.toString()]
+        }
+        
+        ret
+    }
+
+    /**
+     * Gets service resources.
+     *
+     * Map keys:
+     * resource - A map representing a server resource.
+     * name     - A Service name to find
+     *
+     * @return Returns a list of maps containing title and eid.
+     */
+    def getServices(map) {
+        def ret = []
+        
+        def serverId = map.resource.eid[2..-1] as Integer
+        
+        def pattern = map.containsKey("name") ? map.name : '.+'
+        
+        serviceManager.getServicesByServer(user, serverId, PageControl.PAGE_ALL).each{
+            if(it.name =~ pattern)
+                ret << [title: it.name, eid: "3:" + it.id]
+        }
+        
+        ret
+    }
+
+    /**
+     * Gets resources.
+     *
+     * Map keys:
+     * resource - A map representing a platform resource.
+     * name     - A Server name to find
+     *
+     * @return Returns a list of maps containing title and eid.
+     */
+    def getPlatformServices(map) {
+        def ret = []
+        
+        def platId = map.resource.eid[2..-1] as Integer
+        
+        def pattern = map.containsKey("name") ? map.name : '.+'
+        
+        serviceManager.getPlatformServices(user, platId).each{
+            if(it.name =~ pattern)
+                ret << [title: it.name, eid: "3:" + it.id]
+        }
+        
+        ret
+    }
+
+        
     private String resourceProtoToEid(res) {
         def id = res.resourceType.id
         def ret
@@ -149,5 +321,6 @@ class DynResourceApi {
         }
         resourceHelperInternal
     }
-
+    
+    
 }

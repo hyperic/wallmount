@@ -48,29 +48,48 @@ class DynObjectCreator {
             getSpinner(map)
         else if(map.widget == "hyperic.widget.EllipseLabel")
             getEllipseLabel(map)
+        else if(map.widget == "hyperic.widget.HorizontalArrowPipe")
+            getHorizontalArrowPipe(map)
     }
     
     /**
      * 
      */
     def static getLabel(map) {
-        // Override label defaults with given map values
+        // Override defaults with given map values
         StatUtil.defsLabel + map
     }
 
+    /**
+     * 
+     */
     def static getAvailIcon(map) {
-        // Override label defaults with given map values
+        // Override defaults with given map values
         StatUtil.defsAvailIcon + map
     }
 
+    /**
+     * 
+     */
     def static getSpinner(map) {
-        // Override label defaults with given map values
+        // Override defaults with given map values
         StatUtil.defsSpinner + map
     }
 
+    /**
+     * 
+     */
     def static getEllipseLabel(map) {
-        // Override label defaults with given map values
+        // Override defaults with given map values
         StatUtil.defsEllipseLabel + map
+    }
+
+    /**
+     * 
+     */
+    def static getHorizontalArrowPipe(map) {
+        // Override defaults with given map values
+        StatUtil.defsHorizontalArrowPipe + map
     }
 
 }

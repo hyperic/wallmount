@@ -97,8 +97,11 @@ class StatUtil {
      * Defaults for hyperic.widget.label.Label widget.
      */
     static final def defsLabel = [
-        width:100, height: 50, color: "green", 
-        titlePosition: "top", ranges:[],
+        width:100,
+        height: 50,
+        color: "green", 
+        titlePosition: "top",
+        ranges:[],
         type: "hyperic.widget.label.Label"
     ]
     
@@ -106,8 +109,10 @@ class StatUtil {
      * Defaults for hyperic.widget.label.Label widget.
      */
     static final def defsAvailIcon = [
-        size: 80, color: "green",
-        titlePosition: "top", legends:[],
+        size: 80,
+        color: "green",
+        titlePosition: "top",
+        legends:[],
         supportLegends:false,
         type: "hyperic.widget.AvailIcon"
     ]
@@ -116,9 +121,16 @@ class StatUtil {
      * Defaults for hyperic.widget.Spinner widget.
      */
     static final def defsSpinner = [
-        size: 100, color: "green", titlePosition: "top", 
-        arrowCount:3, arrowWidth:20, arrowGap:20,
-        arrowHeadLength:10, minRange:0, maxRange:4, speedTime:1000,
+        size: 100,
+        color: "green",
+        titlePosition: "top", 
+        arrowCount:3,
+        arrowWidth:20, 
+        arrowGap:20,
+        arrowHeadLength:10,
+        minRange:0,
+        maxRange:4,
+        speedTime:1000,
         type: "hyperic.widget.Spinner"
     ]
 
@@ -126,9 +138,32 @@ class StatUtil {
      * Defaults for hyperic.widget.Spinner widget.
      */
     static final def defsEllipseLabel = [
-        size: 160, color: "green", titlePosition: "top",
-        labelColor:"#fff8dc", ranges:[],
+        size: 160,
+        color: "green",
+        titlePosition: "top",
+        labelColor:"#fff8dc",
+        ranges:[],
         type: "hyperic.widget.EllipseLabel"
+    ]
+
+    /**
+     * Defaults for hyperic.widget.HorizontalArrowPipe widget.
+     */
+    static final def defsHorizontalArrowPipe = [
+        width:150,
+        height:60,
+        titlePosition:"top",
+        arrowCount:3,
+        arrowGap:25,
+        arrowHeadLength:15,
+        minRange:0,
+        maxRange:100,
+        speedTime:1000,
+        arrowColor:"blue",
+        reverse:false,
+        ranges:[],
+        labelColor:"#808080",
+        type:"hyperic.widget.HorizontalArrowPipe"
     ]
 
 }

@@ -102,11 +102,10 @@ class DyntemplateController extends BaseWallmountController {
             }
             
             Binding binding = new Binding()
-            binding.setVariable("resourceHelper", resourceHelper)
             binding.setVariable("util", DynlayoutUtils.class)
             binding.setVariable("c", DynObjectCreator.class)
             binding.setVariable("win", DynWinUtils.class)
-            binding.setVariable("api", new DynResourceApi(user))
+            binding.setVariable("api", new DynResourceApi(user, platformManager, measurementManager, serverManager, serviceManager))
             def runnee = [run: {res = eng.run(script, binding)}] as Runnee
             
             runnee.run()
