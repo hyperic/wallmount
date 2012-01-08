@@ -106,7 +106,7 @@ class StatUtil {
     ]
     
     /**
-     * Defaults for hyperic.widget.label.Label widget.
+     * Defaults for hyperic.widget.AvailIcon widget.
      */
     static final def defsAvailIcon = [
         size: 80,
@@ -116,7 +116,20 @@ class StatUtil {
         supportLegends:false,
         type: "hyperic.widget.AvailIcon"
     ]
-    
+
+    /**
+     * Defaults for hyperic.widget.AvailText widget.
+     */
+    static final def defsAvailText = [
+        size: 80,
+        color: "green",
+        titlePosition: "top",
+        legends:[],
+        supportLegends:false,
+        type: "hyperic.widget.AvailText"
+    ]
+
+        
     /**
      * Defaults for hyperic.widget.Spinner widget.
      */
@@ -167,6 +180,26 @@ class StatUtil {
     ]
 
     /**
+     * Defaults for hyperic.widget.VerticalArrowPipe widget.
+     */
+    static final def defsVerticalArrowPipe = [
+        width:150,
+        height:60,
+        titlePosition:"top",
+        arrowCount:3,
+        arrowGap:25,
+        arrowHeadLength:15,
+        minRange:0,
+        maxRange:100,
+        speedTime:1000,
+        arrowColor:"blue",
+        reverse:false,
+        ranges:[],
+        labelColor:"#808080",
+        type:"hyperic.widget.VerticalArrowPipe"
+    ]
+     
+    /**
      * Defaults for hyperic.widget.chart.Chart widget.
      */
     static final def defsChart = [
@@ -196,5 +229,20 @@ class StatUtil {
         type:"hyperic.widget.Tank"
     ]
 
-    
+    /**
+     * Defaults for hyperic.widget.ProgressTube widget.
+     */
+    static final def defsProgressTube = [
+        width:200,
+        height:100,
+        titlePosition:"top",
+        emptyColor:"#808080",
+        fullColor:"#c0c0c0",
+        lowRange:0,
+        highRange:500,
+        ranges:[],
+        labelColor:"#808080",
+        type:"hyperic.widget.ProgressTube"
+    ]
+
 }

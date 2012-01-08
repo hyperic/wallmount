@@ -44,12 +44,20 @@ class DynObjectCreator {
             getLabel(map)
         else if(map.widget == "hyperic.widget.AvailIcon")
             getAvailIcon(map)
+        else if(map.widget == "hyperic.widget.AvailText")
+            getAvailText(map)
         else if(map.widget == "hyperic.widget.Spinner")
             getSpinner(map)
         else if(map.widget == "hyperic.widget.EllipseLabel")
             getEllipseLabel(map)
+        else if(map.widget == "hyperic.widget.Tank")
+            getTank(map)
+        else if(map.widget == "hyperic.widget.ProgressTube")
+            getProgressTube(map)
         else if(map.widget == "hyperic.widget.HorizontalArrowPipe")
             getHorizontalArrowPipe(map)
+        else if(map.widget == "hyperic.widget.VerticalArrowPipe")
+            getVerticalArrowPipe(map)
     }
     
     /**
@@ -66,6 +74,14 @@ class DynObjectCreator {
     def static getAvailIcon(map) {
         // Override defaults with given map values
         StatUtil.defsAvailIcon + map
+    }
+
+    /**
+     *
+     */
+    def static getAvailText(map) {
+        // Override defaults with given map values
+        StatUtil.defsAvailText + map
     }
 
     /**
@@ -91,6 +107,14 @@ class DynObjectCreator {
         // Override defaults with given map values
         StatUtil.defsHorizontalArrowPipe + map
     }
+    
+    /**
+     *
+     */
+    def static getVerticalArrowPipe(map) {
+        // Override defaults with given map values
+        StatUtil.defsVerticalArrowPipe + map
+    }
 
     /**
      * 
@@ -106,6 +130,14 @@ class DynObjectCreator {
     def static getTank(map) {
         // Override defaults with given map values
         StatUtil.defsTank + map
+    }
+
+    /**
+     *
+     */
+    def static getProgressTube(map) {
+        // Override defaults with given map values
+        StatUtil.defsProgressTube + map
     }
 
 }
