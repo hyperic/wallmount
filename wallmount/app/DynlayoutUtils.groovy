@@ -32,7 +32,11 @@ class DynlayoutUtils {
     /**
      * Adds dimenstions.
      * 
-     * 
+     * @param builder Instance of JsonGroovyBuilder
+     * @param x x-position to add
+     * @param y y-position to add
+     * @param width Width to add
+     * @param height Height to add
      */
     def static addDimensions(builder, x, y, width, height) {
         builder.x = x
@@ -41,23 +45,28 @@ class DynlayoutUtils {
         builder.h = height
     }
 
+    /**
+     * Adds size.
+     * 
+     * @param builder Instance of JsonGroovyBuilder
+     * @param width Width to add
+     * @param height Height to add
+     */
     def static addSize(builder, width, height) {
         builder.w = width
         builder.h = height
     }
     
+    /**
+     * Adds an object.
+     * 
+     * @param builder Instance of JsonGroovyBuilder
+     * @param resource Resource object to add
+     */
     def static addObject(builder, resource) {
         resource.each{ k,v ->
             builder[k] = v
         }
-    }
-
-    
-    def static addAvailIcon(builder, plat) {
-        plat.each{ k,v ->
-            builder[k] = v
-        }
-        builder.type = 'hyperic.widget.AvailIcon'
     }
     
 }
