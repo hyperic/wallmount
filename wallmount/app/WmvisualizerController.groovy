@@ -28,6 +28,7 @@ import org.hyperic.hq.hqu.rendit.html.DojoUtil
  
 import org.json.JSONArray
 import org.json.JSONObject
+import org.hyperic.hibernate.PageInfo
 
 /**
  * Base controller for this plugin.
@@ -36,7 +37,9 @@ class WmvisualizerController extends BaseWallmountController {
     
     /** Table schema for single layouts. */
     private final SINGLE_LAYOUT_SCHEMA = [
-        getData: {pageInfo, params -> singletemplates},
+        getData: {pageInfo, params ->
+            getDojoSingleTemplates(pageInfo)
+        },
         rowId: {it[0]},
         defaultSort: null,
         defaultSortOrder: 0,  // descending
@@ -51,7 +54,9 @@ class WmvisualizerController extends BaseWallmountController {
 
     /** Table schema for multi layouts. */
     private final MULTI_LAYOUT_SCHEMA = [        
-        getData: {pageInfo, params -> multitemplates},
+        getData: {pageInfo, params ->
+            getDojoMultiTemplates(pageInfo)
+        },
         rowId: {it},
         defaultSort: null,
         defaultSortOrder: 0,  // descending
@@ -66,10 +71,40 @@ class WmvisualizerController extends BaseWallmountController {
 	def WmvisualizerController() {
         setJSONMethods(['saveLayout','saveMultiLayout','getSingleTemplates','getMultiTemplates','encodeUrl'])
 	}
-    
+
+    /** Returns data for single layout table. */
+    def getDojoSingleTemplates(PageInfo pageInfo) {
+        def ret = []
+        def allTemplates = singletemplates
+        def total = allTemplates.size
+        def start = pageInfo.startRow-pageInfo.startRow%(pageInfo.pageSize-1)                
+        def end = start+pageInfo.pageSize
+        for(int i=start; i<end; i++) {
+            if(i<total) {
+                ret << allTemplates[i]
+            }
+        }
+        ret
+    }
+
     /** Returns data for single layout table. */
     def getSingleTemplates(params) {
         DojoUtil.processTableRequest(SINGLE_LAYOUT_SCHEMA, params)
+    }
+
+    /** Returns data for multi layout table. */
+    def getDojoMultiTemplates(PageInfo pageInfo) {
+        def ret = []
+        def allTemplates = multitemplates
+        def total = allTemplates.size
+        def start = pageInfo.startRow-pageInfo.startRow%(pageInfo.pageSize-1)                
+        def end = start+pageInfo.pageSize
+        for(int i=start; i<end; i++) {
+            if(i<total) {
+                ret << allTemplates[i]
+            }
+        }
+        ret
     }
 
     /** Returns data for multi layout table. */
