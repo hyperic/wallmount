@@ -32,6 +32,7 @@ import org.hyperic.hq.context.Bootstrap
 import org.hyperic.hq.appdef.shared.PlatformManager
 import org.hyperic.hq.appdef.shared.ServerManager
 import org.hyperic.hq.appdef.shared.ServiceManager
+import org.hyperic.hq.authz.shared.ResourceManager
 import org.hyperic.hq.appdef.shared.AppdefUtil
 import org.hyperic.hq.measurement.shared.MeasurementManager
 import org.hyperic.hq.appdef.shared.AppdefEntityID
@@ -51,13 +52,15 @@ class DynResourceApi {
     private MeasurementManager measurementManager
     private ServerManager serverManager
     private ServiceManager serviceManager
+    private ResourceManager resourceManager
     
-    public DynResourceApi(user, platformManager, measurementManager, serverManager, serviceManager) {
+    public DynResourceApi(user, platformManager, measurementManager, serverManager, serviceManager, resourceManager) {
         this.user = user
         this.platformManager = platformManager
         this.measurementManager = measurementManager
         this.serverManager = serverManager
         this.serviceManager = serviceManager
+        this.resourceManager = resourceManager
     }
     
     /**
@@ -323,6 +326,37 @@ class DynResourceApi {
         types.each{ key, value ->
             ret << [title: value, tracks:[[id:"2:" + key, scope:"tavail/1:" + platId +"/"]]]
         }
+        ret
+    }
+    
+    /**
+     * Gets resource config options and custom properties.
+     * 
+     * Map keys:
+     * resource - A map representing a resource.
+     * 
+     * @return Returns a map of properties.
+     */
+    def getResourceProperties(map) {
+        def ret = [:]
+        def aeid = new AppdefEntityID(map.resource.eid)
+        def r = resourceManager.findResource(aeid)
+        
+        try {
+            def config = r.getConfig()
+            config.each { k, v ->
+                if (v.type.equals("configResponse")) {
+                    ret.put(k, v.value)
+                }
+            }
+            config.each { k, v ->
+                if (v.type.equals("cprop")) {
+                    ret.put(k, v.value)
+                }
+            }
+        } catch (Throwable t) {
+        }
+
         ret
     }
 
