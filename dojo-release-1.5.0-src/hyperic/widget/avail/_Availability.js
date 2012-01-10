@@ -33,7 +33,8 @@ dojo.require("hyperic.util.FontUtil");
 
 dojo.declare("hyperic.widget.avail._Availability",
     [ hyperic.widget.base.ResourceItem,
-      hyperic.data.LegendsProperty ],{
+      hyperic.data.LegendsProperty,
+      hyperic.widget.base.MetricMixin],{
     // summary:
     //      This is a base class for widgets tracking resource
     //      availabilities.
