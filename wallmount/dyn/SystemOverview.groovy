@@ -7,14 +7,14 @@ def l = b{
 
     name = 'SystemOverview'
     theme = 'Basic'
-    util.addSize(b,800,600)
+    dutil.addSize(b,800,600)
 
     // table window with 1min, 5min and 15 spinners.
     // JVM free memory, System used swap and System
     // free memory as ellipse label
     items(){
         title = "HQ Server"
-        util.addDimensions(b,10,10,300,400)
+        dutil.addDimensions(b,10,10,300,400)
         type = 'table'
 
         // 3 rows, 2 columns
@@ -28,8 +28,8 @@ def l = b{
         
         sNames.each{
             def row = []
-            row << [items: [c.getWidget([widget:'hyperic.widget.Spinner'] + api.getSystemMetrics([category:it.getAt(0), name:it.getAt(1)]).first())]]
-            row << [items: [c.getWidget([widget:'hyperic.widget.EllipseLabel'] + api.getSystemMetrics([category:it.getAt(2), name:it.getAt(3)]).first())]]
+            row << [items: [dobj.getWidget([widget:'hyperic.widget.Spinner'] + dapi.getSystemMetrics([category:it.getAt(0), name:it.getAt(1)]).first())]]
+            row << [items: [dobj.getWidget([widget:'hyperic.widget.EllipseLabel'] + dapi.getSystemMetrics([category:it.getAt(2), name:it.getAt(3)]).first())]]
             _cells << row
         }
 
@@ -42,7 +42,7 @@ def l = b{
     // and active escalations
     items(){
         title = "System Base Numbers"
-        util.addDimensions(b,10,420,300,300)
+        dutil.addDimensions(b,10,420,300,300)
         type = 'multi'
 
         def sNames = [
@@ -55,13 +55,13 @@ def l = b{
         sNames.each{ i ->
             items() {
 
-                def w = c.getWidget([widget:'hyperic.widget.label.Label'] +
+                def w = dobj.getWidget([widget:'hyperic.widget.label.Label'] +
                         labelPrefs2 +
-                        api.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first())
+                        dapi.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first())
 
                 w.title = w.title.replaceAll("HQ Num of ","")
 
-                util.addObject(b, w)
+                dutil.addObject(b, w)
                 
             }
         }
@@ -72,7 +72,7 @@ def l = b{
     // active agents
     items(){
         title = "Agents Overview"
-        util.addDimensions(b,800,10,200,400)
+        dutil.addDimensions(b,800,10,200,400)
         type = 'multi'
 
         def sNames = [
@@ -83,13 +83,13 @@ def l = b{
         sNames.each{ i ->
             items() {
 
-                def w = c.getWidget([widget:'hyperic.widget.label.Label'] +
+                def w = dobj.getWidget([widget:'hyperic.widget.label.Label'] +
                         labelPrefs1 +
-                        api.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first())
+                        dapi.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first())
 
                 w.title = w.title.replaceAll("HQ Num of ","")
 
-                util.addObject(b, w)
+                dutil.addObject(b, w)
             }
         }
     }
@@ -97,13 +97,13 @@ def l = b{
     // platforms overview
     items(){
         title = "Platforms Overview"
-        util.addDimensions(b,350,420,650,300)
+        dutil.addDimensions(b,350,420,650,300)
         type = 'multi'
 
         items = []
-        api.getPlatformPrototypes([viewable:true]).each{ r ->
+        dapi.getPlatformPrototypes([viewable:true]).each{ r ->
             items() {
-                util.addObject(b, c.getWidget([widget:'hyperic.widget.AvailIcon'] + r + [size:100]))
+                dutil.addObject(b, dobj.getWidget([widget:'hyperic.widget.AvailIcon'] + r + [size:100]))
             }
         }
 
@@ -113,10 +113,10 @@ def l = b{
 
     items(){
         title = ""
-        util.addDimensions(b,310,100,400,100)
+        dutil.addDimensions(b,310,100,400,100)
         type = 'single'
 
-    def sNames = [
+        def sNames = [
             ["system_hq","Metrics Received"]
         ]
 
@@ -124,10 +124,10 @@ def l = b{
 
         sNames.each{ i ->
             items() {
-                util.addObject(b,
-                    c.getWidget([widget:'hyperic.widget.HorizontalArrowPipe'] +
+                dutil.addObject(b,
+                    dobj.getWidget([widget:'hyperic.widget.HorizontalArrowPipe'] +
                         arrowPrefs +
-                        api.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first()
+                        dapi.getSystemMetrics([category:i.getAt(0), name:i.getAt(1)]).first()
                     )
                 )
             }
