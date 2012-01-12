@@ -2,6 +2,10 @@
     background-color: black;
 }
 
+#rotatorpane > div {
+    background-color: black;
+}
+
 .container:empty {
     background: none repeat scroll 0 0 transparent;
 }

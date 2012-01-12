@@ -1,0 +1,91 @@
+<html>
+
+  <head>
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <title>Wallmount Multi Player Test 3 - using ntest6 and ntest7 with night theme</title>
+    
+    <link rel="stylesheet" type="text/css" title="Basic"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombined.css" />
+          
+    <link rel="alternate stylesheet" type="text/css" title="Night"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombinedNight.css" />    
+
+    <link rel="alternate stylesheet" type="text/css" title="Matrix"
+          href="../../release/dojo/hyperic/wallmount/resources/DesignerCombinedMatrix.css" />    
+      
+    <script type="text/javascript"
+            src="../../dojo/dojo.js"
+            djConfig="parseOnLoad: true, isDebug: true"></script>
+          
+    <script type="text/javascript">
+    dojo.require("dojo.parser");
+      dojo.require("hyperic.wallmount.base");
+      dojo.require("hyperic.wallmount.Player");
+      dojo.require("hyperic.wallmount.LayoutUtil");
+      dojo.require("hyperic.tests.MetricStore");
+      
+      dojo.require("dojox.widget.AutoRotator");
+      dojo.require("dojox.widget.rotator.Fade");
+      dojo.require("dojox.widget.rotator.Pan");
+      dojo.require("dojox.widget.rotator.Slide");
+      dojo.require("dojox.widget.rotator.Wipe");
+
+      function createrotator(){
+          rotator = new dojox.widget.AutoRotator({
+              id: "rotator",
+              duration: 2000,
+              autoStart: false,
+              transition: "dojox.widget.rotator.pan"
+          },
+          dojo.byId("rotatorpane")
+          );
+      }
+
+      function init(){
+        hyperic.wallmount.base.metricStore = new hyperic.tests.MetricStore(
+            {url: "/dojo-release-1.5.0-src/hyperic/tests/mstore/",
+             idToBaseUrl: true}
+        );
+        
+        hyperic.wallmount.base.metricStore.sync(true);
+        
+        var url1 = "layouts/ntest6";
+        var url2 = "layouts/ntest7";
+        var urls = [url1, url2];
+        hyperic.wallmount.Player.loadLayouts(urls,true);
+
+      }
+
+      dojo.addOnLoad(init);
+    </script>
+        
+  </head>
+
+  
+  <body class="claro">
+
+    <p>
+    <button onclick="rotator.play();">Play</button>
+    <button onclick="rotator.pause();">Pause</button>
+    <button onclick="rotator.prev();">Prev</button>
+    <button onclick="rotator.next();">Next</button>
+    <button onclick="rotator.go(0);">Goto 0</button>
+    <button onclick="rotator.go(1);">Goto 1</button>
+    <button onclick="createrotator();">Create</button>
+    </p>
+
+    <div dojoType="dojox.widget.AutoRotator"
+         id="rotatorpane"
+         jsId="rotator"
+         autoStart="true"
+         style="z-index:50;width:900px;height:700px;overflow:hidden;"
+         duration="1500"
+         transition="dojox.widget.rotator.slideDown">
+      <div id="wallmountpane0" style="position:absolute;"></div>
+      <div id="wallmountpane1" style="position:absolute;"></div>
+    </div>
+  
+  
+  </body>
+
+</html>
